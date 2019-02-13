@@ -1,7 +1,7 @@
 package foodappbackend.controllers;
 
-import groep1foodappbackendspringbootgradle.foodapp_backend.db.Day;
-import groep1foodappbackendspringbootgradle.foodapp_backend.db.DayRepository;
+import foodappbackend.model.Day;
+import foodappbackend.repositories.DayRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -14,9 +14,12 @@ import java.time.format.DateTimeFormatter;
 
 @RestController
 public class DayRepositoryController {
-
-    @Autowired
     private DayRepository dayRepository;
+
+    public DayRepositoryController(DayRepository dayRepository){
+        this.dayRepository = dayRepository;
+        dayRepository.save(new Day());
+    }
 
     @RequestMapping(value = "/api/day", method = RequestMethod.GET)
     public Day getDayRepository(@RequestParam(name = "date", required = false) String date) {
