@@ -1,6 +1,8 @@
 package foodappbackend.controllers;
 
 import foodappbackend.model.Day;
+import foodappbackend.model.EnumCategory;
+import foodappbackend.model.Vegetable;
 import foodappbackend.repositories.DayRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -10,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 
 
 @RestController
@@ -18,11 +21,15 @@ public class DayRepositoryController {
 
     public DayRepositoryController(DayRepository dayRepository){
         this.dayRepository = dayRepository;
-        dayRepository.save(new Day());
-    }
 
+    }
+    @RequestMapping(value = "/api/days", method = RequestMethod.GET)
+    public Iterable<Day> getDayRepository() {
+
+        return this.dayRepository.findAll();
+    }
     @RequestMapping(value = "/api/day", method = RequestMethod.GET)
-    public Day getDayRepository(@RequestParam(name = "date", required = false) String date) {
+    public Day getDay(@RequestParam(name = "date", required = false) String date) {
 
         LocalDate localDate;
 
@@ -39,5 +46,11 @@ public class DayRepositoryController {
 
         return dayRepository.save(new Day(localDate));
     }
+    @RequestMapping(value = "/api/day/vegetables", method = RequestMethod.GET)
+    public  int getDayVegetableRepository(@RequestParam(name = "date", required = false) String date) {
+        Day day = this.getDay(date);
+        return day.getPointsCategory(EnumCategory.VEGETABLE);
+    }
+
 
 }

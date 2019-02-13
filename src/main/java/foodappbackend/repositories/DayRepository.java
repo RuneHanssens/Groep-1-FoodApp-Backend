@@ -3,6 +3,7 @@ package foodappbackend.repositories;
 
 import foodappbackend.model.Day;
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.stereotype.Repository;
 
 import java.time.LocalDate;
 

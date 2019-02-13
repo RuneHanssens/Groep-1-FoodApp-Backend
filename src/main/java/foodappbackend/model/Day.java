@@ -1,13 +1,15 @@
 package foodappbackend.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import org.springframework.stereotype.Repository;
 
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @Table(name = "day_table")
 public class Day {
@@ -15,40 +17,33 @@ public class Day {
     @JsonFormat(pattern="yyyy-MM-dd")
     private LocalDate creationDate;
 
-//    private MovementRepository movementRepository;
-//    private WaterRepository waterRepository;
-//    private FruitRepository fruitRepository;
-//    private VegetableRepository vegetableRepository;
-//    private DairyFishPoultryRepository dairyFishPoultryRepository;
-//    private FattyRepository fattyRepository;
-//    private NutsRepository nutsRepository;
-//    private StarchRepository starchRepository;
-//    private SnackRepository snackRepository;
+    @OneToMany(cascade = CascadeType.ALL)
+    @CollectionTable(name="list_of_categories")
+    private List<Category> categories;
 
     public Day() {
         creationDate = LocalDate.now();
-//        movementRepository = new MovementRepository();
-//        waterRepository = new WaterRepository();
-//        fruitRepository = new FruitRepository();
-//        vegetableRepository = new VegetableRepository();
-//        dairyFishPoultryRepository = new DairyFishPoultryRepository();
-//        fattyRepository = new FattyRepository();
-//        nutsRepository = new NutsRepository();
-//        starchRepository = new StarchRepository();
-//        snackRepository = new SnackRepository();
+        categories = new ArrayList<Category>();
     }
 
     public Day(LocalDate localDate) {
         creationDate = localDate;
-//        movementRepository = new MovementRepository();
-//        waterRepository = new WaterRepository();
-//        fruitRepository = new FruitRepository();
-//        vegetableRepository = new VegetableRepository();
-//        dairyFishPoultryRepository = new DairyFishPoultryRepository();
-//        fattyRepository = new FattyRepository();
-//        nutsRepository = new NutsRepository();
-//        starchRepository = new StarchRepository();
-//        snackRepository = new SnackRepository();
+        categories = new ArrayList<Category>();
+    }
+
+
+    public int getPointsCategory(EnumCategory enumCategory){
+        int points = 0;
+        for (Category c: categories) {
+            System.out.println("zit in getPoints for categorie");
+            if (c.enumCategory == enumCategory){
+                points += c.getPoints();
+            }
+        }
+        return points;
+    }
+    public void add(Category category){
+        categories.add(category);
     }
 
     public LocalDate getDate() {
@@ -63,75 +58,4 @@ public class Day {
         this.creationDate = creationDate;
     }
 
-//    public MovementRepository getMovementRepository() {
-//        return movementRepository;
-//    }
-//
-//    public void setMovementRepository(MovementRepository movementRepository) {
-//        this.movementRepository = movementRepository;
-//    }
-//
-//    public WaterRepository getWaterRepository() {
-//        return waterRepository;
-//    }
-//
-//    public void setWaterRepository(WaterRepository waterRepository) {
-//        this.waterRepository = waterRepository;
-//    }
-//
-//    public FruitRepository getFruitRepository() {
-//        return fruitRepository;
-//    }
-//
-//    public void setFruitRepository(FruitRepository fruitRepository) {
-//        this.fruitRepository = fruitRepository;
-//    }
-//
-//    public VegetableRepository getVegetableRepository() {
-//        return vegetableRepository;
-//    }
-//
-//    public void setVegetableRepository(VegetableRepository vegetableRepository) {
-//        this.vegetableRepository = vegetableRepository;
-//    }
-//
-//    public DairyFishPoultryRepository getDairyFishPoultryRepository() {
-//        return dairyFishPoultryRepository;
-//    }
-//
-//    public void setDairyFishPoultryRepository(DairyFishPoultryRepository dairyFishPoultryRepository) {
-//        this.dairyFishPoultryRepository = dairyFishPoultryRepository;
-//    }
-//
-//    public FattyRepository getFattyRepository() {
-//        return fattyRepository;
-//    }
-//
-//    public void setFattyRepository(FattyRepository fattyRepository) {
-//        this.fattyRepository = fattyRepository;
-//    }
-//
-//    public NutsRepository getNutsRepository() {
-//        return nutsRepository;
-//    }
-//
-//    public void setNutsRepository(NutsRepository nutsRepository) {
-//        this.nutsRepository = nutsRepository;
-//    }
-//
-//    public StarchRepository getStarchRepository() {
-//        return starchRepository;
-//    }
-//
-//    public void setStarchRepository(StarchRepository starchRepository) {
-//        this.starchRepository = starchRepository;
-//    }
-//
-//    public SnackRepository getSnackRepository() {
-//        return snackRepository;
-//    }
-//
-//    public void setSnackRepository(SnackRepository snackRepository) {
-//        this.snackRepository = snackRepository;
-//    }
 }
