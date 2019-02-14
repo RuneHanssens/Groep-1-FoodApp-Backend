@@ -1,9 +1,23 @@
-//package foodappbackend.model;
-//
-//public class Nuts extends Food {
-//    public Nuts(boolean outdoor) {
-//        this.outdoor = outdoor;
-//        if(outdoor) value = 20;
-//        else value = 50;
-//    }
-//}
+package foodappbackend.model;
+
+public class Nuts extends Category {
+    private boolean outdoor;
+
+    public Nuts() { }
+
+    public Nuts(boolean outdoor) {
+        this.setEnumCategory();
+        this.outdoor = outdoor;
+        this.setPoints();
+    }
+
+    @Override
+    protected void setPoints() {
+
+    }
+
+    @Override
+    protected void setEnumCategory() {
+        this.enumCategory = EnumCategory.NUTS;
+    }
+}
