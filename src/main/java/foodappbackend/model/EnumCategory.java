@@ -1,7 +1,8 @@
 package foodappbackend.model;
 
 public enum EnumCategory {
-    VEGETABLE(100,1000);
+    VEGETABLE(100,1000),
+    WATER(100,1000);
 
     private long min;
     private long max;

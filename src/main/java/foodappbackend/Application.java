@@ -1,6 +1,7 @@
 package foodappbackend;
 import foodappbackend.model.Day;
 import foodappbackend.model.Vegetable;
+import foodappbackend.model.Water;
 import foodappbackend.repositories.DayRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -27,6 +28,7 @@ public class Application {
 
             Day today = new Day(LocalDate.now());
             today.add(new Vegetable(false,true));
+            today.add(new Water());
             dayRepository.save(today);
         };
     }
