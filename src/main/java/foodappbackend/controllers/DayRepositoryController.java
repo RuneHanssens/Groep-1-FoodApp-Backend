@@ -55,8 +55,8 @@ public class DayRepositoryController {
     }
 
     @RequestMapping(value = "/api/day/water", method = RequestMethod.POST)
-    public void putWaterInDayRepository(@RequestBody Water water, @RequestParam(name = "date", required = false) String date) {
-        this.addToDayRepo(water, date);
+    public int putWaterInDayRepository(@RequestBody Water water, @RequestParam(name = "date", required = false) String date) {
+        return this.addToDayRepo(water, date);
     }
 
     @RequestMapping(value = "/api/day/snack", method = RequestMethod.GET)
@@ -92,13 +92,18 @@ public class DayRepositoryController {
         this.addToDayRepo(movement, date);
     }
 
-    private void addToDayRepo(Category item, String date) {
-        if(item == null) throw new DayRepositoryControllerException("Adding empty item is not allowed");
+    private int addToDayRepo(Category item, String date) {
+        if(item == null) {
+            throw new DayRepositoryControllerException("Adding empty item is not allowed");
+        }
         else {
             Day day = this.getDay(date);
             day.add(item);
             this.dayRepository.save(day);
+            System.out.println("water has been added to the day:" + day.getDate() + " : " + item.toString());
+            return this.getDayWaterPoints(date);
         }
+
     }
 
     @RequestMapping(value = "/api/day/water/points", method = RequestMethod.GET)
