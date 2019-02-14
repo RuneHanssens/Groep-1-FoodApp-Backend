@@ -51,6 +51,11 @@ public class DayRepositoryController {
         Day day = this.getDay(date);
         return day.getPointsCategory(EnumCategory.VEGETABLE);
     }
+    @RequestMapping(value = "/api/day/waters", method = RequestMethod.GET)
+    public  int getDayWaterRepository(@RequestParam(name = "date", required = false) String date) {
+        Day day = this.getDay(date);
+        return day.getPointsCategory(EnumCategory.WATER);
+    }
 
 
 }
