@@ -1,7 +1,7 @@
 package foodappbackend.model;
 
 public class Fruit extends Category {
-    private int pieces;
+    private int amount;
     private boolean outdoor;
 
     public Fruit() { }
@@ -9,14 +9,14 @@ public class Fruit extends Category {
     public Fruit(boolean outdoor, int pieces) {
         this.setEnumCategory();
         this.outdoor = outdoor;
-        this.pieces = pieces;
+        this.amount = pieces;
         this.setPoints();
     }
 
     @Override
     protected void setPoints() {
         if(outdoor) this.points = 20;
-        else this.points = pieces * 40;
+        else this.points = amount * 40;
     }
 
     @Override

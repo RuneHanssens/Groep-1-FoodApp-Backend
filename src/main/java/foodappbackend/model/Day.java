@@ -31,11 +31,22 @@ public class Day {
         categories = new ArrayList<Category>();
     }
 
-
+    public ArrayList<Category> getCategory(EnumCategory enumCategory){
+        ArrayList<Category> categories = new ArrayList<>();
+        for (Category c: this.categories) {
+            if (c.enumCategory == enumCategory){
+                categories.add(c);
+            }
+        }
+//        if(category == null){
+//            throw new CategoryException("Deze categorie is niet aanwezig in het dag object!");
+//        }
+        return categories;
+    }
     public int getPointsCategory(EnumCategory enumCategory){
         int points = 0;
         for (Category c: categories) {
-            System.out.println("zit in getPoints for categorie");
+            //System.out.println("zit in getPoints for categorie");
             if (c.enumCategory == enumCategory){
                 points += c.getPoints();
             }
