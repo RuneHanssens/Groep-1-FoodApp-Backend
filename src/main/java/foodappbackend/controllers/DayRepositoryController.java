@@ -1,9 +1,6 @@
 package foodappbackend.controllers;
 
-import foodappbackend.model.Category;
-import foodappbackend.model.Day;
-import foodappbackend.model.EnumCategory;
-import foodappbackend.model.Water;
+import foodappbackend.model.*;
 import foodappbackend.repositories.DayRepository;
 import org.springframework.web.bind.annotation.*;
 
@@ -59,14 +56,48 @@ public class DayRepositoryController {
 
     @RequestMapping(value = "/api/day/water", method = RequestMethod.POST)
     public void putWaterInDayRepository(@RequestBody Water water, @RequestParam(name = "date", required = false) String date) {
-        if (water == null) {
-            System.out.println("adding empty water is not allowed: DayRepositoryController : putWaterInDayWaterRepository");
-            throw new DayRepositoryControllerException("adding empty water is not allowed: DayRepositoryController : putWaterInDayWaterRepository");
-        } else {
+        this.addToDayRepo(water, date);
+    }
+
+    @RequestMapping(value = "/api/day/snack", method = RequestMethod.GET)
+    public Iterable<Category> getSnackInDayRepository(@RequestParam(name = "date", required = false) String date) {
+        Day day = this.getDay(date);
+        return day.getCategory(EnumCategory.SNACK);
+    }
+
+    @RequestMapping(value = "/api/day/snack", method = RequestMethod.POST)
+    public void putSnackInDayRepository(@RequestBody Snack snack, @RequestParam(name = "date", required = false) String date) {
+        this.addToDayRepo(snack, date);
+    }
+
+    @RequestMapping(value = "/api/day/nuts", method = RequestMethod.GET)
+    public Iterable<Category> getNutsInDayRepository(@RequestParam(name = "date", required = false) String date) {
+        Day day = this.getDay(date);
+        return day.getCategory(EnumCategory.NUTS);
+    }
+
+    @RequestMapping(value = "/api/day/nuts", method = RequestMethod.POST)
+    public void putNutsInDayRepository(@RequestBody Nuts nuts, @RequestParam(name = "date", required = false) String date) {
+        this.addToDayRepo(nuts, date);
+    }
+
+    @RequestMapping(value = "/api/day/movement", method = RequestMethod.GET)
+    public Iterable<Category> getMovementInDayRepository(@RequestParam(name = "date", required = false) String date) {
+        Day day = this.getDay(date);
+        return day.getCategory(EnumCategory.MOVEMENT);
+    }
+
+    @RequestMapping(value = "/api/day/movement", method = RequestMethod.POST)
+    public void putMovementInDayRepository(@RequestBody Movement movement, @RequestParam(name = "date", required = false) String date) {
+        this.addToDayRepo(movement, date);
+    }
+
+    private void addToDayRepo(Category item, String date) {
+        if(item == null) throw new DayRepositoryControllerException("Adding empty item is not allowed");
+        else {
             Day day = this.getDay(date);
-            day.add(water);
+            day.add(item);
             this.dayRepository.save(day);
-            System.out.println("water has been added to the day:" + day.getDate() + " : " + water.toString());
         }
     }
 
