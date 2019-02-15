@@ -3,6 +3,8 @@ package foodappbackend.model;
 public class Movement extends Category {
     private Type type = Type.ANDERS;
 
+    public Movement(){};
+
     public enum Type {
         ZWEMMEN("Zwemmen", 50),
         LOPEN("Lopen", 50),

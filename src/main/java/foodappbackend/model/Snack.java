@@ -8,6 +8,8 @@ public class Snack extends Category {
     private Amount amount = Amount.EENBEETJE;
     private boolean outdoors = false;
 
+    public Snack(){};
+
     public enum Amount {
         EENHEELKLEINBEETJE("Een heel klein beetje", 25),
         EENBEETJE("Een beetje", 50),

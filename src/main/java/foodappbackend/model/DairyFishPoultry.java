@@ -4,6 +4,9 @@ public class DairyFishPoultry extends Category {
     private boolean outdoor = false;
     private Type type = Type.DAIRY;
 
+    public DairyFishPoultry() {
+    }
+
     public enum Type {
         FISH("Vis", 100),
         DAIRY("Zuivelproducten", 50),

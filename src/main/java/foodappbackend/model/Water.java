@@ -6,6 +6,8 @@ import javax.persistence.Entity;
 public class Water extends Category {
     private int amount = 1;
 
+    public Water(){};
+
     public Water(int amount){
         this.setEnumCategory();
         this.setAmount(amount);
