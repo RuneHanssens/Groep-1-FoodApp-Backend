@@ -4,47 +4,75 @@ import javax.persistence.Entity;
 
 @Entity
 public class Snack extends Category {
-    private Type type;
-    private Amount amount;
-    private boolean outdoors;
+    private Type type = Type.ALCOHOL;
+    private Amount amount = Amount.EENBEETJE;
+    private boolean outdoors = false;
 
+    public enum Amount {
+        EENHEELKLEINBEETJE("Een heel klein beetje", 25),
+        EENBEETJE("Een beetje", 50),
+        WELWAT("Wel wat", 75),
+        VEEL("Veel", 100);
+
+        private final String fullName;
+        private final int points;
+
+        Amount(String fullName, int points) {
+            this.fullName = fullName;
+            this.points = points;
+        }
+        public int getPoints(){
+            return points;
+        }
+        @Override
+        public String toString() {
+            return this.fullName;
+        }
+    }
     public enum Type {
         ALCOHOL,
         FRISDRANK,
         SNOEP,
         FASTFOOD
     }
-    public enum Amount {
-        EENHEELKLEINBEETJE,
-        EENBEETJE,
-        WELWAT,
-        VEEL
-    }
 
-    public Snack() { }
-
-    public Snack(Type type, Amount amount) {
+    public Snack(Boolean outdoor, Type type, Amount amount) {
         this.setEnumCategory();
-        this.type = type;
-        this.amount = amount;
-        this.setPoints();
+        this.setType(type);
+        this.setAmount(amount);
+        this.setOutdoors(outdoor);
     }
 
     @Override
     protected void setPoints() {
-        switch(amount) {
-            case EENHEELKLEINBEETJE:
-                points = 50;
-                break;
-            case EENBEETJE:
-                points = 100;
-                break;
-            case WELWAT:
-                points = 150;
-                break;
-            case VEEL:
-                points = 200;
-        }
+        this.points = amount.points;
+    }
+
+    public Type getType() {
+        return type;
+    }
+
+    public void setType(Type type) {
+        this.type = type;
+        this.setPoints();
+    }
+
+    public Amount getAmount() {
+        return amount;
+    }
+
+    public void setAmount(Amount amount) {
+        this.amount = amount;
+        this.setPoints();
+    }
+
+    public boolean isOutdoors() {
+        return outdoors;
+    }
+
+    public void setOutdoors(boolean outdoors) {
+        this.outdoors = outdoors;
+        this.setPoints();
     }
 
     @Override
