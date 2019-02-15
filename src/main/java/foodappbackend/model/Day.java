@@ -57,16 +57,19 @@ public class Day {
         categories.add(category);
     }
 
+    public List<Category> getCategories() {
+        return this.categories;
+    }
+
     public LocalDate getDate() {
         return creationDate;
     }
-
+    //        return creationDate;
 //    public LocalDate getCreationDate() {
-//        return creationDate;
+
 //    }
 
     public void setCreationDate(LocalDate creationDate) {
         this.creationDate = creationDate;
     }
-
 }

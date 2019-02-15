@@ -1,5 +1,7 @@
 package foodappbackend.model;
 
+import javax.persistence.Entity;
+
 public enum EnumCategory {
     VEGETABLE(100,1000),
     WATER(100,1000),

@@ -6,6 +6,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.HashMap;
+import java.util.Map;
 
 
 @RestController
@@ -17,12 +19,13 @@ public class DayRepositoryController {
 
     }
 
+    /************************************ DAYS **************************************/
     @RequestMapping(value = "/api/days", method = RequestMethod.GET)
     public Iterable<Day> getDayRepository() {
-
         return this.dayRepository.findAll();
     }
 
+    /************************************ DAY **************************************/
     @RequestMapping(value = "/api/day", method = RequestMethod.GET)
     public Day getDay(@RequestParam(name = "date", required = false) String date) {
 
@@ -42,12 +45,25 @@ public class DayRepositoryController {
         return dayRepository.save(new Day(localDate));
     }
 
+
+    @RequestMapping(value = "/api/day/points", method = RequestMethod.GET)
+    public Map<String, Integer> getDayPoints(@RequestParam(name = "date", required = false) String date) {
+        Map<String, Integer> map = new HashMap<>();
+        Day day = this.getDay(date);
+        for (EnumCategory c : EnumCategory.values()) {
+            map.put(c.toString(), day.getPointsCategory(c));
+        }
+        return map;
+    }
+
+    /************************************ VEGETABLES **************************************/
     @RequestMapping(value = "/api/day/vegetables", method = RequestMethod.GET)
     public int getDayVegetableRepository(@RequestParam(name = "date", required = false) String date) {
         Day day = this.getDay(date);
         return day.getPointsCategory(EnumCategory.VEGETABLE);
     }
 
+    /************************************ WATER ******************************************/
     @RequestMapping(value = "/api/day/water", method = RequestMethod.GET)
     public Iterable<Category> getWaterInDayRepository(@RequestParam(name = "date", required = false) String date) {
         Day day = this.getDay(date);
@@ -59,6 +75,13 @@ public class DayRepositoryController {
         return this.addToDayRepo(water, date);
     }
 
+    @RequestMapping(value = "/api/day/water/points", method = RequestMethod.GET)
+    public int getDayWaterPoints(@RequestParam(name = "date", required = false) String date) {
+        Day day = this.getDay(date);
+        return day.getPointsCategory(EnumCategory.WATER);
+    }
+
+    /************************************ SNACK ******************************************/
     @RequestMapping(value = "/api/day/snack", method = RequestMethod.GET)
     public Iterable<Category> getSnackInDayRepository(@RequestParam(name = "date", required = false) String date) {
         Day day = this.getDay(date);
@@ -70,6 +93,7 @@ public class DayRepositoryController {
         this.addToDayRepo(snack, date);
     }
 
+    /************************************ NUTS ******************************************/
     @RequestMapping(value = "/api/day/nuts", method = RequestMethod.GET)
     public Iterable<Category> getNutsInDayRepository(@RequestParam(name = "date", required = false) String date) {
         Day day = this.getDay(date);
@@ -81,6 +105,7 @@ public class DayRepositoryController {
         this.addToDayRepo(nuts, date);
     }
 
+    /************************************ MOVEMENT ******************************************/
     @RequestMapping(value = "/api/day/movement", method = RequestMethod.GET)
     public Iterable<Category> getMovementInDayRepository(@RequestParam(name = "date", required = false) String date) {
         Day day = this.getDay(date);
@@ -93,10 +118,9 @@ public class DayRepositoryController {
     }
 
     private int addToDayRepo(Category item, String date) {
-        if(item == null) {
+        if (item == null) {
             throw new DayRepositoryControllerException("Adding empty item is not allowed");
-        }
-        else {
+        } else {
             Day day = this.getDay(date);
             day.add(item);
             this.dayRepository.save(day);
@@ -104,11 +128,5 @@ public class DayRepositoryController {
             return this.getDayWaterPoints(date);
         }
 
-    }
-
-    @RequestMapping(value = "/api/day/water/points", method = RequestMethod.GET)
-    public int getDayWaterPoints(@RequestParam(name = "date", required = false) String date) {
-        Day day = this.getDay(date);
-        return day.getPointsCategory(EnumCategory.WATER);
     }
 }
