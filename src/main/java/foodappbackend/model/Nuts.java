@@ -3,6 +3,8 @@ package foodappbackend.model;
 public class Nuts extends Category {
     private boolean outdoor = false;
 
+    public Nuts(){};
+
     public Nuts(boolean outdoor) {
         this.setEnumCategory();
         this.setOutdoor(outdoor);

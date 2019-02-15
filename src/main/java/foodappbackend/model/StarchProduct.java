@@ -36,6 +36,8 @@ public class StarchProduct extends Category {
     private boolean outdoor = false;
     private Type type = Type.AARDAPPELEN;
 
+    public StarchProduct(){};
+
     public enum Type {
         WITBROOD("Wit Brood", 20),
         DONKERBROOD("Donker Brood", 70),

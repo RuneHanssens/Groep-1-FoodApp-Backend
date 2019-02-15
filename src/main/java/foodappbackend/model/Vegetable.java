@@ -8,7 +8,9 @@ import java.util.UUID;
 
 @Entity
 public class Vegetable extends Category {
-    private Type type;
+    private Type type = Type.LESS;
+
+    public Vegetable(){};
 
     public enum Type {
         MORE("Meer dan 400", 50),

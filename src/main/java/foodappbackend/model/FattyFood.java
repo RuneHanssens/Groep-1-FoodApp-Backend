@@ -4,6 +4,9 @@ public class FattyFood extends Category {
     private boolean outdoor = false;
     private Type type = Type.BUTTER;
 
+    public FattyFood(){
+
+    }
     public enum Type {
         BUTTER("Boter", 50),
         MEAT("Vlees", 100);

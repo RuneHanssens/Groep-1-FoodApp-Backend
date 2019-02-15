@@ -23,12 +23,12 @@ public class Application {
     public CommandLineRunner DayCommandLineRunner(DayRepository dayRepository){
         return (args) -> {
             Day day = new Day(LocalDate.of(1999,1,1));
-            day.add(new Vegetable(false,false));
+            day.add(new Vegetable(Vegetable.Type.LESS));
             dayRepository.save(day);
 
             Day today = new Day(LocalDate.now());
-            today.add(new Vegetable(false,true));
-            today.add(new Water());
+            today.add(new Vegetable(Vegetable.Type.OUTDOOR));
+            today.add(new Water(1));
             dayRepository.save(today);
         };
     }
