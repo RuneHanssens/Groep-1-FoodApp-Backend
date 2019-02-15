@@ -11,19 +11,24 @@ public abstract class Category {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
-    protected EnumCategory enumCategory;
-    protected int points;
 
+    protected EnumCategory enumCategory;
+
+    protected int points;
     public Category(){
         this.setEnumCategory();
     }
+
     public int getPoints() {
         return points;
     }
-
     protected abstract void setPoints();
+
     protected abstract void setEnumCategory();
 
+    public EnumCategory getEnumCategory() {
+        return enumCategory;
+    }
 
 }
 
