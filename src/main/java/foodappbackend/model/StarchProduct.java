@@ -33,42 +33,66 @@
 package foodappbackend.model;
 
 public class StarchProduct extends Category {
-    private boolean outdoor;
-    private Type type;
+    private boolean outdoor = false;
+    private Type type = Type.AARDAPPELEN;
 
     public enum Type {
-        WITBROOD("Wit Brood"),
-        DONKERBROOD("Donker Brood"),
-        WITTERIJST("Witte Rijst"),
-        VOLKORENRIJST("Volkorenrijst"),
-        AARDAPPELEN("Aardappelen"),
-        WITTEPASTA("Witte Pasta"),
-        VOLKORENPASTA("Volkorenpasta"),
-        GRANOLAHAVERMOUT("Granola / Havermout");
+        WITBROOD("Wit Brood", 20),
+        DONKERBROOD("Donker Brood", 70),
+        WITTERIJST("Witte Rijst", 20),
+        VOLKORENRIJST("Volkorenrijst", 50),
+        AARDAPPELEN("Aardappelen", 60),
+        WITTEPASTA("Witte Pasta", 20),
+        VOLKORENPASTA("Volkorenpasta", 70),
+        GRANOLAHAVERMOUT("Granola / Havermout", 70);
         private final String fullName;
+        private final int points;
 
-        Type(String fullName) {
+        Type(String fullName, int points) {
             this.fullName = fullName;
+            this.points = points;
         }
-
+        public int getPoints(){
+            return points;
+        }
         @Override
         public String toString() {
             return this.fullName;
         }
     }
 
-    public StarchProduct() { }
-
     public StarchProduct(boolean outdoor, Type type) {
         this.setEnumCategory();
-        this.outdoor = outdoor;
-        this.type = type;
-        this.setPoints();
+        this.setOutdoor(outdoor);
+        this.setType(type);
     }
 
     @Override
     protected void setPoints() {
+        if (outdoor) {
+            this.points = type.points - 20;
+        } else {
+            this.points = type.points;
+        }
 
+    }
+
+    public boolean isOutdoor() {
+        return outdoor;
+    }
+
+    public void setOutdoor(boolean outdoor) {
+        this.outdoor = outdoor;
+        this.setPoints();
+    }
+
+    public Type getType() {
+        return type;
+    }
+
+    public void setType(Type type) {
+        this.type = type;
+        this.setPoints();
     }
 
     @Override

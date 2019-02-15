@@ -1,19 +1,25 @@
 package foodappbackend.model;
 
 public class Nuts extends Category {
-    private boolean outdoor;
-
-    public Nuts() { }
+    private boolean outdoor = false;
 
     public Nuts(boolean outdoor) {
         this.setEnumCategory();
-        this.outdoor = outdoor;
-        this.setPoints();
+        this.setOutdoor(outdoor);
     }
 
     @Override
     protected void setPoints() {
+        this.points = 50;
+    }
 
+    public boolean isOutdoor() {
+        return outdoor;
+    }
+
+    public void setOutdoor(boolean outdoor) {
+        this.outdoor = outdoor;
+        this.setPoints();
     }
 
     @Override

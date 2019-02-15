@@ -1,40 +1,41 @@
 package foodappbackend.model;
 
-public class FattyFoods extends Category {
-    private boolean outdoor;
-    private Type type;
+public class FattyFood extends Category {
+    private boolean outdoor = false;
+    private Type type = Type.BUTTER;
 
     public enum Type {
-        BUTTER("Boter"),
-        MEAT("Vlees");
+        BUTTER("Boter", 50),
+        MEAT("Vlees", 100);
+
         private final String fullName;
+        private final int points;
 
-        Type(String fullName) {
+        Type(String fullName, int points) {
             this.fullName = fullName;
+            this.points = points;
         }
-
+        public int getPoints(){
+            return points;
+        }
         @Override
         public String toString() {
             return this.fullName;
         }
     }
 
-    public FattyFoods(boolean outdoor, Type type) {
+    public FattyFood(boolean outdoor, Type type) {
         this.setEnumCategory();
-        this.outdoor = outdoor;
-        this.type = type;
-        this.setPoints();
+        this.setOutdoor(outdoor);
+        this.setType(type);
     }
 
     @Override
     protected void setPoints() {
-        switch(type) {
-            case BUTTER:
-                this.points = 20;
-                break;
-            case MEAT:
-                this.points = 80;
+        if (outdoor){
+            this.points = this.getType().points - 20;
         }
+        this.points = this.getType().points;
     }
 
     public boolean isOutdoor() {
@@ -43,6 +44,7 @@ public class FattyFoods extends Category {
 
     public void setOutdoor(boolean outdoor) {
         this.outdoor = outdoor;
+        this.setPoints();
     }
 
     public Type getType() {
@@ -51,6 +53,7 @@ public class FattyFoods extends Category {
 
     public void setType(Type type) {
         this.type = type;
+        this.setPoints();
     }
 
     @Override
