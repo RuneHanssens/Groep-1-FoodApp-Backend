@@ -57,8 +57,17 @@ public class DayRepositoryController {
     }
 
     /************************************ VEGETABLES **************************************/
-    @RequestMapping(value = "/api/day/vegetables", method = RequestMethod.GET)
+    @RequestMapping(value = "/api/day/vegetable", method = RequestMethod.GET)
     public int getDayVegetableRepository(@RequestParam(name = "date", required = false) String date) {
+        Day day = this.getDay(date);
+        return day.getPointsCategory(EnumCategory.VEGETABLE);
+    }
+    @RequestMapping(value = "/api/day/vegetable", method = RequestMethod.POST)
+    public int putVegetableInDayRepository(@RequestBody Vegetable vegetable, @RequestParam(name = "date", required = false) String date) {
+        return this.addToDayRepo(vegetable, date);
+    }
+    @RequestMapping(value = "/api/day/vegetable/points", method = RequestMethod.GET)
+    public int getDayVegetablePoints(@RequestParam(name = "date", required = false) String date) {
         Day day = this.getDay(date);
         return day.getPointsCategory(EnumCategory.VEGETABLE);
     }
@@ -92,6 +101,11 @@ public class DayRepositoryController {
     public void putSnackInDayRepository(@RequestBody Snack snack, @RequestParam(name = "date", required = false) String date) {
         this.addToDayRepo(snack, date);
     }
+    @RequestMapping(value = "/api/day/snack/points", method = RequestMethod.GET)
+    public int getDaySnackPoints(@RequestParam(name = "date", required = false) String date) {
+        Day day = this.getDay(date);
+        return day.getPointsCategory(EnumCategory.SNACK);
+    }
 
     /************************************ NUTS ******************************************/
     @RequestMapping(value = "/api/day/nuts", method = RequestMethod.GET)
@@ -103,6 +117,11 @@ public class DayRepositoryController {
     @RequestMapping(value = "/api/day/nuts", method = RequestMethod.POST)
     public void putNutsInDayRepository(@RequestBody Nuts nuts, @RequestParam(name = "date", required = false) String date) {
         this.addToDayRepo(nuts, date);
+    }
+    @RequestMapping(value = "/api/day/nuts/points", method = RequestMethod.GET)
+    public int getDayNutsPoints(@RequestParam(name = "date", required = false) String date) {
+        Day day = this.getDay(date);
+        return day.getPointsCategory(EnumCategory.NUTS);
     }
 
     /************************************ MOVEMENT ******************************************/
@@ -117,6 +136,80 @@ public class DayRepositoryController {
         this.addToDayRepo(movement, date);
     }
 
+    @RequestMapping(value = "/api/day/movement/points", method = RequestMethod.GET)
+    public int getDaymovementPoints(@RequestParam(name = "date", required = false) String date) {
+        Day day = this.getDay(date);
+        return day.getPointsCategory(EnumCategory.MOVEMENT);
+    }
+    /************************************ FRUIT ******************************************/
+    @RequestMapping(value = "/api/day/fruit", method = RequestMethod.GET)
+    public Iterable<Category> getFruitInDayRepository(@RequestParam(name = "date", required = false) String date) {
+        Day day = this.getDay(date);
+        return day.getCategory(EnumCategory.FRUIT);
+    }
+
+    @RequestMapping(value = "/api/day/fruit", method = RequestMethod.POST)
+    public void putFruitInDayRepository(@RequestBody Fruit fruit, @RequestParam(name = "date", required = false) String date) {
+        this.addToDayRepo(fruit, date);
+    }
+
+    @RequestMapping(value = "/api/day/fruit/points", method = RequestMethod.GET)
+    public int getDayFruitPoints(@RequestParam(name = "date", required = false) String date) {
+        Day day = this.getDay(date);
+        return day.getPointsCategory(EnumCategory.FRUIT);
+    }
+    /************************************ STARCHPRODUCT ******************************************/
+    @RequestMapping(value = "/api/day/starchproduct", method = RequestMethod.GET)
+    public Iterable<Category> getStarchProductInDayRepository(@RequestParam(name = "date", required = false) String date) {
+        Day day = this.getDay(date);
+        return day.getCategory(EnumCategory.STARCHPRODUCT);
+    }
+
+    @RequestMapping(value = "/api/day/starchproduct", method = RequestMethod.POST)
+    public void putStarchProductInDayRepository(@RequestBody StarchProduct starchProduct, @RequestParam(name = "date", required = false) String date) {
+        this.addToDayRepo(starchProduct, date);
+    }
+
+    @RequestMapping(value = "/api/day/starchproduct/points", method = RequestMethod.GET)
+    public int getDayStarchProductPoints(@RequestParam(name = "date", required = false) String date) {
+        Day day = this.getDay(date);
+        return day.getPointsCategory(EnumCategory.STARCHPRODUCT);
+    }
+    /************************************ DAIRYFISHPOULTRY ******************************************/
+    @RequestMapping(value = "/api/day/dairyfishpoultry", method = RequestMethod.GET)
+    public Iterable<Category> getDairyFishPoultryInDayRepository(@RequestParam(name = "date", required = false) String date) {
+        Day day = this.getDay(date);
+        return day.getCategory(EnumCategory.DAIRYFISHPOULTRY);
+    }
+
+    @RequestMapping(value = "/api/day/dairyfishpoultry", method = RequestMethod.POST)
+    public void putDairyFishPoultryInDayRepository(@RequestBody DairyFishPoultry dairyFishPoultry, @RequestParam(name = "date", required = false) String date) {
+        this.addToDayRepo(dairyFishPoultry, date);
+    }
+
+    @RequestMapping(value = "/api/day/dairyfishpoultry/points", method = RequestMethod.GET)
+    public int getDayDairyFishPoultryPoints(@RequestParam(name = "date", required = false) String date) {
+        Day day = this.getDay(date);
+        return day.getPointsCategory(EnumCategory.DAIRYFISHPOULTRY);
+    }
+    /************************************ FATTYFOOD ******************************************/
+    @RequestMapping(value = "/api/day/fattyfood", method = RequestMethod.GET)
+    public Iterable<Category> getFattyFoodInDayRepository(@RequestParam(name = "date", required = false) String date) {
+        Day day = this.getDay(date);
+        return day.getCategory(EnumCategory.FATTYFOOD);
+    }
+
+    @RequestMapping(value = "/api/day/fattyfood", method = RequestMethod.POST)
+    public void putFattyFoodInDayRepository(@RequestBody FattyFood fattyFood, @RequestParam(name = "date", required = false) String date) {
+        this.addToDayRepo(fattyFood, date);
+    }
+
+    @RequestMapping(value = "/api/day/fattyfood/points", method = RequestMethod.GET)
+    public int getDayFattyFoodPoints(@RequestParam(name = "date", required = false) String date) {
+        Day day = this.getDay(date);
+        return day.getPointsCategory(EnumCategory.FATTYFOOD);
+    }
+/****************************************** SIDE FUNCTIONS ************************/
     private int addToDayRepo(Category item, String date) {
         if (item == null) {
             throw new DayRepositoryControllerException("Adding empty item is not allowed");
