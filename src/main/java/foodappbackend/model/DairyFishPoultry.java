@@ -1,17 +1,23 @@
 package foodappbackend.model;
 
 public class DairyFishPoultry extends Category {
-    private boolean outdoor;
-    private Type type;
+    private boolean outdoor = false;
+    private Type type = Type.DAIRY;
 
     public enum Type {
-        FISH("Vis"),
-        DAIRY("Zuivelproducten"),
-        POULTRY("Gevogelte");
+        FISH("Vis", 100),
+        DAIRY("Zuivelproducten", 50),
+        POULTRY("Gevogelte", 100);
         private final String fullName;
+        private final int points;
 
-        Type(String fullName) {
+        Type(String fullName, int points) {
             this.fullName = fullName;
+            this.points = points;
+        }
+
+        public int getPoints(){
+            return points;
         }
 
         @Override
@@ -20,26 +26,37 @@ public class DairyFishPoultry extends Category {
         }
     }
 
-    public DairyFishPoultry() { }
-
     public DairyFishPoultry(boolean outdoor, Type type) {
         this.setEnumCategory();
-        this.outdoor = outdoor;
+        this.setType(type);
+        this.setOutdoor(outdoor);
+    }
+
+
+    public Type getType() {
+        return type;
+    }
+
+    private void setType(Type type) {
         this.type = type;
+        this.setPoints();
+    }
+
+    public boolean isOutdoor() {
+        return outdoor;
+    }
+
+    public void setOutdoor(boolean outdoor) {
+        this.outdoor = outdoor;
         this.setPoints();
     }
 
     @Override
     protected void setPoints() {
-        switch(type) {
-            case FISH:
-                this.points = 80;
-                break;
-            case DAIRY:
-                this.points = 60;
-                break;
-            case POULTRY:
-                this.points = 80;
+        if (outdoor){
+            this.points = this.type.getPoints() - 100;
+        } else {
+            this.points = this.type.getPoints();
         }
     }
 
