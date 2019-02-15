@@ -14,6 +14,9 @@ public abstract class Category {
     protected EnumCategory enumCategory;
     protected int points;
 
+    public Category(){
+        this.setEnumCategory();
+    }
     public int getPoints() {
         return points;
     }

@@ -19,8 +19,6 @@ public class FattyFoods extends Category {
         }
     }
 
-    public FattyFoods() { }
-
     public FattyFoods(boolean outdoor, Type type) {
         this.setEnumCategory();
         this.outdoor = outdoor;
@@ -37,6 +35,22 @@ public class FattyFoods extends Category {
             case MEAT:
                 this.points = 80;
         }
+    }
+
+    public boolean isOutdoor() {
+        return outdoor;
+    }
+
+    public void setOutdoor(boolean outdoor) {
+        this.outdoor = outdoor;
+    }
+
+    public Type getType() {
+        return type;
+    }
+
+    public void setType(Type type) {
+        this.type = type;
     }
 
     @Override

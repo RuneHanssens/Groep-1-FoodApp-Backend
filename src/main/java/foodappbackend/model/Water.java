@@ -9,18 +9,17 @@ public class Water extends Category {
 
     public Water(){
         this.setEnumCategory();
-        this.setPoints();
     }
 
     public Water(int amount){
-        setAmount(amount);
+        this.setAmount(amount);
         this.setEnumCategory();
-        this.setPoints();
     }
 
 
     public void setAmount(int amount) {
         this.amount = amount;
+        this.setPoints();
     }
 
     public int getAmount() {
@@ -29,7 +28,7 @@ public class Water extends Category {
 
     @Override
     protected void setPoints() {
-        points = 50;
+        points = 20 * amount;
     }
 
     @Override
