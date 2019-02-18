@@ -1,8 +1,10 @@
 package foodappbackend;
 import foodappbackend.model.Day;
+import foodappbackend.model.User;
 import foodappbackend.model.Vegetable;
 import foodappbackend.model.Water;
 import foodappbackend.repositories.DayRepository;
+import foodappbackend.repositories.UserRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -22,14 +24,25 @@ public class Application {
     @Bean
     public CommandLineRunner DayCommandLineRunner(DayRepository dayRepository){
         return (args) -> {
-            Day day = new Day(LocalDate.of(1999,1,1));
-            day.add(new Vegetable(Vegetable.Type.LESS));
-            dayRepository.save(day);
-
-            Day today = new Day(LocalDate.now());
-            today.add(new Vegetable(Vegetable.Type.OUTDOOR));
-            today.add(new Water(1));
-            dayRepository.save(today);
+//            Day day = new Day(LocalDate.of(1999,1,1));
+//            day.add(new Vegetable(Vegetable.Type.LESS));
+//            dayRepository.save(day);
+//
+//            Day today = new Day(LocalDate.now());
+//            today.add(new Vegetable(Vegetable.Type.OUTDOOR));
+//            today.add(new Water(1));
+//            dayRepository.save(today);
+        };
+    }
+    @Bean
+    public CommandLineRunner UserCommandLineRunner(UserRepository userRepository){
+        return (args) -> {
+            User user = new User();
+            userRepository.save(user);
+            User user2 = new User("Reinout","Vanhauwaert","Reinout.Vanhauwaert@student.ucll.be","t",23,true);
+            userRepository.save(user2);
+            User user3 = new User("Gebruiker","Gebruiker","Gebruiker@Gebruiker.com","t",26,false);
+            userRepository.save(user3);
         };
     }
 

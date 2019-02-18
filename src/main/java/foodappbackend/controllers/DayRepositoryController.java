@@ -18,6 +18,11 @@ public class DayRepositoryController {
         this.dayRepository = dayRepository;
 
     }
+    /************************************ STATUS ************************************/
+    @RequestMapping(value = "/api/status", method = RequestMethod.GET)
+    public String checkStatus() {
+        return "200 OK";
+    }
 
     /************************************ DAYS **************************************/
     @RequestMapping(value = "/api/days", method = RequestMethod.GET)
