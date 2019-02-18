@@ -1,0 +1,18 @@
+version: '3'
+
+services:
+  traefik:
+      image: traefik
+      command: --api --docker # Enables the web UI and tells Træfik to listen to docker
+      ports:
+        - "8080:80"     # The HTTP port
+      volumes:
+        - /var/run/docker.sock:/var/run/docker.sock
+  food:
+      image: food-app-backend:0.7.1-SNAPSHOT
+      restart: unless-stopped
+      ports:
+        - 8234:8080
+      labels:
+        - "traefik.port=8080"
+        - "traefik.frontend.rule=PathPrefix:/foodapp-backend/"

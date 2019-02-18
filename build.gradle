@@ -7,6 +7,10 @@ buildscript {
     }
 }
 
+plugins {
+    id 'com.google.cloud.tools.jib' version '0.10.0'
+}
+
 apply plugin: 'java'
 apply plugin: 'eclipse'
 apply plugin: 'idea'
@@ -30,4 +34,11 @@ dependencies {
     compile("com.h2database:h2")
     compile("org.springframework.boot:spring-boot-starter-web")
     testCompile("junit:junit")
+}
+
+jib {
+    to {
+        image = "food-app-backend:0.7.1-SNAPSHOT"
+    }
+    allowInsecureRegistries = true
 }
