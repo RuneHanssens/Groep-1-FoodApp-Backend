@@ -1,5 +1,8 @@
 package foodappbackend.model;
 
+import javax.persistence.Entity;
+
+@Entity
 public class Fruit extends Category {
     private int amount = 1;
     private boolean outdoor = false;

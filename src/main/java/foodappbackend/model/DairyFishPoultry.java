@@ -1,5 +1,8 @@
 package foodappbackend.model;
 
+import javax.persistence.Entity;
+
+@Entity
 public class DairyFishPoultry extends Category {
     private boolean outdoor = false;
     private Type type = Type.DAIRY;

@@ -32,6 +32,9 @@
 
 package foodappbackend.model;
 
+import javax.persistence.Entity;
+
+@Entity
 public class StarchProduct extends Category {
     private boolean outdoor = false;
     private Type type = Type.AARDAPPELEN;

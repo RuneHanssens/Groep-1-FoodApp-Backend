@@ -1,5 +1,8 @@
 package foodappbackend.model;
 
+import javax.persistence.Entity;
+
+@Entity
 public class Nuts extends Category {
 
     public Nuts() {

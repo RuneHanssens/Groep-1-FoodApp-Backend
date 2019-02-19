@@ -1,16 +1,26 @@
 package foodappbackend.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+import javax.persistence.Entity;
+
+@Entity
 public class Movement extends Category {
     private Type type = Type.ANDERS;
-    private int time;
+    private int time = 0;
 
     public Movement(){}
 
     public enum Type {
+        @JsonProperty("Zwemmen")
         ZWEMMEN("Zwemmen", 50),
+        @JsonProperty("Lopen")
         LOPEN("Lopen", 50),
+        @JsonProperty("Fietsen")
         FIETSEN("Fietsen", 50),
+        @JsonProperty("Wandelen")
         WANDELEN("Wandelen", 50),
+        @JsonProperty("Anders")
         ANDERS("Anders", 50);
 
         private final String fullName;
@@ -39,6 +49,10 @@ public class Movement extends Category {
         this.time = time;
     }
 
+    public int getTime() {
+        return this.time;
+    }
+
     @Override
     protected void setPoints() {
         this.points = type.points;
@@ -48,9 +62,8 @@ public class Movement extends Category {
         return type;
     }
 
-    public void setType(Type type) {
+    private void setType(Type type) {
         this.type = type;
-        this.setPoints();
     }
 
     @Override

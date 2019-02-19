@@ -1,5 +1,8 @@
 package foodappbackend.model;
 
+import javax.persistence.Entity;
+
+@Entity
 public class FattyFood extends Category {
     private boolean outdoor = false;
     private Type type = Type.BUTTER;
