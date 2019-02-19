@@ -8,47 +8,29 @@ import java.util.UUID;
 
 @Entity
 public class Vegetable extends Category {
-    private Type type = Type.LESS;
+    private boolean more;
 
-    public Vegetable(){};
+    public Vegetable(){}
 
-    public enum Type {
-        MORE("Meer dan 400", 50),
-        LESS("Minder dan 400", 30),
-        OUTDOOR("Buitenshuis", 20);
-
-        private final String fullName;
-        private final int points;
-
-        Type(String fullName, int points) {
-            this.fullName = fullName;
-            this.points = points;
-        }
-        public int getPoints(){
-            return points;
-        }
-        @Override
-        public String toString() {
-            return this.fullName;
-        }
-    }
-
-    public Vegetable(Type type){
+    public Vegetable(boolean more){
         this.setEnumCategory();
-        this.setType(type);
+        this.setMore(more);
     }
 
     @Override
     protected void setPoints() {
-        this.points = type.getPoints();
+        if(more)
+            this.points = 50;
+        else
+            this.points = 20;
     }
 
-    public Type getType() {
-        return type;
+    public boolean getMore() {
+        return more;
     }
 
-    public void setType(Type type) {
-        this.type = type;
+    public void setMore(boolean more) {
+        this.more = more;
         this.setPoints();
     }
 

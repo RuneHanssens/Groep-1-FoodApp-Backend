@@ -38,6 +38,7 @@ import javax.persistence.Entity;
 public class StarchProduct extends Category {
     private boolean outdoor = false;
     private Type type = Type.AARDAPPELEN;
+    private SubType subType;
 
     public StarchProduct(){};
 
@@ -64,6 +65,10 @@ public class StarchProduct extends Category {
         public String toString() {
             return this.fullName;
         }
+    }
+
+    public enum SubType {
+        
     }
 
     public StarchProduct(boolean outdoor, Type type) {

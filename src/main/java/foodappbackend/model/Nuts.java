@@ -4,15 +4,28 @@ import javax.persistence.Entity;
 
 @Entity
 public class Nuts extends Category {
+    private boolean salted;
 
     public Nuts() {
         this.setEnumCategory();
         this.setPoints();
     }
 
+    public boolean getSalted() {
+        return this.salted;
+    }
+
+    private void setSalted(boolean salted) {
+        this.salted = salted;
+        this.setPoints();
+    }
+
     @Override
     protected void setPoints() {
-        this.points = 50;
+        if(salted)
+            this.points = 50;
+        else
+            this.points = 20;
     }
 
     @Override
