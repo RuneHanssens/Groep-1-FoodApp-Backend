@@ -2,8 +2,9 @@ package foodappbackend.model;
 
 public class Movement extends Category {
     private Type type = Type.ANDERS;
+    private int time;
 
-    public Movement(){};
+    public Movement(){}
 
     public enum Type {
         ZWEMMEN("Zwemmen", 50),
@@ -28,9 +29,14 @@ public class Movement extends Category {
         }
     }
 
-    public Movement(Type type) {
+    public Movement(Type type, int time) {
         this.setEnumCategory();
         this.setType(type);
+        this.setTime(time);
+    }
+
+    private void setTime(int time) {
+        this.time = time;
     }
 
     @Override
