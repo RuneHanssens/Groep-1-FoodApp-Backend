@@ -1,5 +1,7 @@
 package foodappbackend.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import javax.persistence.Entity;
 
 @Entity
@@ -11,8 +13,11 @@ public class DairyFishPoultry extends Category {
     }
 
     public enum Type {
+        @JsonProperty("Vis")
         FISH("Vis", 100),
+        @JsonProperty("Zuivel")
         DAIRY("Zuivelproducten", 50),
+        @JsonProperty("Gevogelte")
         POULTRY("Gevogelte", 100);
         private final String fullName;
         private final int points;

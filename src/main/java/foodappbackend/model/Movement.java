@@ -47,6 +47,7 @@ public class Movement extends Category {
 
     private void setTime(int time) {
         this.time = time;
+        this.setPoints();
     }
 
     public int getTime() {
