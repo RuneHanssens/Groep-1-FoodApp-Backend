@@ -6,55 +6,43 @@ import javax.persistence.Entity;
 
 @Entity
 public class FattyFood extends Category {
-    private boolean outdoor = false;
     private Type type = Type.BUTTER;
 
-    public FattyFood(){
+    public FattyFood() { }
 
-    }
     public enum Type {
         @JsonProperty("Boter")
-        BUTTER("Boter", 50),
-        @JsonProperty("Vlees")
-        MEAT("Vlees", 100);
-
-        private final String fullName;
-        private final int points;
+        BUTTER("Boter", 20),
+        @JsonProperty("Rood Vlees")
+        REDMEAT("Vlees", 40),
+        @JsonProperty("Bewerkt Vlees")
+        PROCESSEDMEAT("Bewerkt Vlees",80);
+        private final String FULLNAME;
+        private final int POINTS;
 
         Type(String fullName, int points) {
-            this.fullName = fullName;
-            this.points = points;
+            this.FULLNAME = fullName;
+            this.POINTS = points;
         }
+
         public int getPoints(){
-            return points;
+            return POINTS;
         }
+
         @Override
         public String toString() {
-            return this.fullName;
+            return this.FULLNAME;
         }
     }
 
     public FattyFood(boolean outdoor, Type type) {
         this.setEnumCategory();
-        this.setOutdoor(outdoor);
         this.setType(type);
     }
 
     @Override
     protected void setPoints() {
-        if (outdoor){
-            this.points = this.getType().points - 20;
-        }
-        this.points = this.getType().points;
-    }
-
-    public boolean isOutdoor() {
-        return outdoor;
-    }
-
-    public void setOutdoor(boolean outdoor) {
-        this.outdoor = outdoor;
-        this.setPoints();
+        this.points = type.getPoints();
     }
 
     public Type getType() {

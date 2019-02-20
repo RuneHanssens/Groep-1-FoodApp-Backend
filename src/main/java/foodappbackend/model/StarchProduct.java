@@ -32,6 +32,8 @@
 
 package foodappbackend.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import javax.persistence.Entity;
 
 @Entity
@@ -40,35 +42,70 @@ public class StarchProduct extends Category {
     private Type type = Type.AARDAPPELEN;
     private SubType subType;
 
-    public StarchProduct(){};
+    public StarchProduct(){}
 
     public enum Type {
-        WITBROOD("Wit Brood", 20),
-        DONKERBROOD("Donker Brood", 70),
-        WITTERIJST("Witte Rijst", 20),
-        VOLKORENRIJST("Volkorenrijst", 50),
-        AARDAPPELEN("Aardappelen", 60),
-        WITTEPASTA("Witte Pasta", 20),
-        VOLKORENPASTA("Volkorenpasta", 70),
-        GRANOLAHAVERMOUT("Granola / Havermout", 70);
-        private final String fullName;
-        private final int points;
+        @JsonProperty("Brood")
+        BROOD("Brood"),
+        @JsonProperty("Rijst")
+        RIJST("Rijst"),
+        @JsonProperty("Aardappelen")
+        AARDAPPELEN("Aardappelen"),
+        @JsonProperty("Pasta")
+        PASTA("Pasta"),
+        @JsonProperty("Cornflakes")
+        CORNFLAKES("Cornflakes", 55),
+        @JsonProperty("Granola of Havermout")
+        GRANOLA("Granola", 20);
+        private final String FULLNAME;
+        private int points = 0;
+
+        Type(String fullName) {
+            this.FULLNAME = fullName;
+        }
 
         Type(String fullName, int points) {
-            this.fullName = fullName;
+            this.FULLNAME = fullName;
             this.points = points;
         }
-        public int getPoints(){
-            return points;
-        }
+
         @Override
         public String toString() {
-            return this.fullName;
+            return this.FULLNAME;
         }
     }
 
     public enum SubType {
-        
+        @JsonProperty("Wit")
+        WIT("Wit",55),        // Wit Brood, Witte Rijst, Witte Pasta
+        @JsonProperty("Volkoren")
+        VOLKOREN("Volkoren",20),   // Volkorenrijst, Volkorenpasta
+        @JsonProperty("Donker")
+        DONKER("Donker",20),     // Donker Brood
+        @JsonProperty("Gekookt")
+        GEKOOKT("Gekookt",20),    // Gekookte Aardappelen
+        @JsonProperty("Gebakken")
+        GEBAKKEN("Gebakken",40),   // Gebakken Aardappelen
+        @JsonProperty("Gratin")
+        GRATIN("Gratin",40),     // Aardappelgratin
+        @JsonProperty("Frieten")
+        FRIETEN("Frieten",55);    // Frieten
+        private final String FULLNAME;
+        private final int POINTS;
+
+        SubType(String fullName, int points) {
+            this.FULLNAME = fullName;
+            this.POINTS = points;
+        }
+
+        public int getPoints() {
+            return this.POINTS;
+        }
+
+        @Override
+        public String toString() {
+            return this.FULLNAME;
+        }
     }
 
     public StarchProduct(boolean outdoor, Type type) {
@@ -79,12 +116,9 @@ public class StarchProduct extends Category {
 
     @Override
     protected void setPoints() {
-        if (outdoor) {
-            this.points = type.points - 20;
-        } else {
-            this.points = type.points;
-        }
-
+        if(subType == null)
+            this.points = outdoor ? type.points + 10 : type.points;
+        else this.points = outdoor ? subType.POINTS + 10 : subType.POINTS;
     }
 
     public boolean isOutdoor() {
@@ -102,6 +136,11 @@ public class StarchProduct extends Category {
 
     public void setType(Type type) {
         this.type = type;
+        this.setPoints();
+    }
+
+    public void setSubType(SubType subType) {
+        this.subType = subType;
         this.setPoints();
     }
 

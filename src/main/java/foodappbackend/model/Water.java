@@ -15,7 +15,7 @@ public class Water extends Category {
 
     @Override
     protected void setPoints() {
-        points = 5 * amount;
+        points = 20 * amount;
     }
 
     public void setAmount(int amount) {

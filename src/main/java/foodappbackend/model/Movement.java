@@ -23,19 +23,20 @@ public class Movement extends Category {
         @JsonProperty("Anders")
         ANDERS("Anders", 50);
 
-        private final String fullName;
+        private final String FULLNAME;
         private final int points;
 
         Type(String fullName, int points) {
-            this.fullName = fullName;
+            this.FULLNAME = fullName;
             this.points = points;
         }
         public int getPoints(){
             return points;
         }
+
         @Override
         public String toString() {
-            return this.fullName;
+            return this.FULLNAME;
         }
     }
 

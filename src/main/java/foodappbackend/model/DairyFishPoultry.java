@@ -6,43 +6,79 @@ import javax.persistence.Entity;
 
 @Entity
 public class DairyFishPoultry extends Category {
-    private boolean outdoor = false;
     private Type type = Type.DAIRY;
+    private SubType subType;
+    private int amount = 0; // Only used for eggs and milk...
 
-    public DairyFishPoultry() {
-    }
+    public DairyFishPoultry() { }
 
     public enum Type {
         @JsonProperty("Vis")
-        FISH("Vis", 100),
-        @JsonProperty("Zuivel")
-        DAIRY("Zuivelproducten", 50),
-        @JsonProperty("Gevogelte")
-        POULTRY("Gevogelte", 100);
-        private final String fullName;
-        private final int points;
+        FISH("Vis", 20),
+        @JsonProperty("Zuivelproducten")
+        DAIRY("Zuivelproducten"),
+        @JsonProperty("Kip")
+        CHICKEN("Kip", 20),
+        @JsonProperty("Kalkoen")
+        TURKEY("Kalkoen", 20),
+        @JsonProperty("Eieren")
+        EGG("Ei",20);
+        private final String FULLNAME;
+        private final int POINTS;
+
+        Type(String fullName) {
+            this.FULLNAME = fullName;
+            this.POINTS = 0;
+        }
 
         Type(String fullName, int points) {
-            this.fullName = fullName;
-            this.points = points;
+            this.FULLNAME = fullName;
+            this.POINTS = points;
         }
 
         public int getPoints(){
-            return points;
+            return POINTS;
         }
 
         @Override
         public String toString() {
-            return this.fullName;
+            return this.FULLNAME;
         }
     }
 
-    public DairyFishPoultry(boolean outdoor, Type type) {
-        this.setEnumCategory();
-        this.setType(type);
-        this.setOutdoor(outdoor);
+    public enum SubType {
+        @JsonProperty("Hollandse Kaas")
+        DUTCHCHEESE("Hollandse Kaas",50),
+        @JsonProperty("Smeerkaas")
+        CHEESESPREAD("Smeerkaas, Platte Kaas of Kruidenkaas",30),
+        @JsonProperty("Melk")
+        MILK("Melk",20),
+        @JsonProperty("Natuur Yoghurt")
+        NATURALYOGHURT("Natuuryoghurt",20),
+        @JsonProperty("Andere Yoghurt")
+        OTHERYOGHURT("Andere Yoghurt",45);
+        private final String FULLNAME;
+        private final int POINTS;
+
+        SubType(String fullName, int points) {
+            this.FULLNAME = fullName;
+            this.POINTS = points;
+        }
+
+        public int getPoints() {
+            return this.POINTS;
+        }
+
+        @Override
+        public String toString() {
+            return this.FULLNAME;
+        }
     }
 
+    public DairyFishPoultry(Type type) {
+        this.setEnumCategory();
+        this.setType(type);
+    }
 
     public Type getType() {
         return type;
@@ -53,22 +89,32 @@ public class DairyFishPoultry extends Category {
         this.setPoints();
     }
 
-    public boolean isOutdoor() {
-        return outdoor;
+    @Override
+    protected void setPoints() {
+        if(type == Type.EGG) points = type.getPoints() * amount;
+        else if(subType != null && subType == SubType.MILK) points = type.getPoints() * amount;
+        else {
+            if(subType != null) this.points = subType.getPoints();
+            else this.points = type.getPoints();
+        }
     }
 
-    public void setOutdoor(boolean outdoor) {
-        this.outdoor = outdoor;
+    public void setSubType(SubType subType) {
+        this.subType = subType;
         this.setPoints();
     }
 
-    @Override
-    protected void setPoints() {
-        if (outdoor){
-            this.points = this.type.getPoints() - 100;
-        } else {
-            this.points = this.type.getPoints();
-        }
+    public void setAmount(int amount) {
+        this.amount = amount;
+        this.setPoints();
+    }
+
+    public SubType getSubType() {
+        return this.subType;
+    }
+
+    public int getAmount() {
+        return this.amount;
     }
 
     @Override
