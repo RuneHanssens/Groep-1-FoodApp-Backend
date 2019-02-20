@@ -37,7 +37,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import javax.persistence.Entity;
 
 @Entity
-public class StarchProduct extends Category {
+public class StarchProduct extends FoodItem {
     private boolean outdoor = false;
     private Type type = Type.AARDAPPELEN;
     private SubType subType;

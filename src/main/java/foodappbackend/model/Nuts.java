@@ -3,7 +3,7 @@ package foodappbackend.model;
 import javax.persistence.Entity;
 
 @Entity
-public class Nuts extends Category {
+public class Nuts extends FoodItem {
     private boolean salted;
 
     public Nuts() {

@@ -1,47 +1,27 @@
+/*
 package foodappbackend.model;
 
-import org.springframework.stereotype.Repository;
+import java.util.ArrayList;
 
-import javax.persistence.*;
-import java.util.UUID;
+public class Category<E extends FoodItem> extends ArrayList<E> {
+    private int totalPoints, min, max;
 
-@Entity
-public abstract class Category {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private UUID id;
-
-    protected EnumCategory enumCategory;
-
-    protected int points;
-    public Category(){
-        this.setEnumCategory();
+    public Category(int min, int max) {
+        this.min = min;
+        this.max = max;
+        this.totalPoints = 0;
     }
 
-    public int getPoints() {
-        return points;
+    @Override
+    public boolean add(E e) {
+        this.totalPoints += e.getPoints();
+        return super.add(e);
     }
-    protected abstract void setPoints();
 
-    protected abstract void setEnumCategory();
-
-    public EnumCategory getEnumCategory() {
-        return enumCategory;
+    public int getTotalPoints() {
+        return this.totalPoints;
     }
+
 
 }
-
-/*
-public interface Category {
-
-    EnumCategory enumCategory = null;
-    int points = 50;
-
-    public int getPoints();
-
-    abstract void setPoints();
-    abstract void setEnumCategory();
-
-
-}*/
+*/

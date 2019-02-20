@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import javax.persistence.Entity;
 
 @Entity
-public class FattyFood extends Category {
+public class FattyFood extends FoodItem {
     private Type type = Type.BUTTER;
 
     public FattyFood() { }

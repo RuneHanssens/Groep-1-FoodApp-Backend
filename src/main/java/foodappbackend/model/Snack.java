@@ -3,7 +3,7 @@ package foodappbackend.model;
 import javax.persistence.Entity;
 
 @Entity
-public class Snack extends Category {
+public class Snack extends FoodItem {
     private Type type = Type.ALCOHOL;
     private Amount amount = Amount.EENBEETJE;
     private boolean outdoors = false;

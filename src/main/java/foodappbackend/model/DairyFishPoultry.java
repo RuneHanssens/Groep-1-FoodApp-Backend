@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import javax.persistence.Entity;
 
 @Entity
-public class DairyFishPoultry extends Category {
+public class DairyFishPoultry extends FoodItem {
     private Type type = Type.DAIRY;
     private SubType subType;
     private int amount = 0; // Only used for eggs and milk...
@@ -92,7 +92,7 @@ public class DairyFishPoultry extends Category {
     @Override
     protected void setPoints() {
         if(type == Type.EGG) points = type.getPoints() * amount;
-        else if(subType != null && subType == SubType.MILK) points = type.getPoints() * amount;
+        else if(subType != null && subType == SubType.MILK) points = subType.getPoints() * amount;
         else {
             if(subType != null) this.points = subType.getPoints();
             else this.points = type.getPoints();

@@ -1,8 +1,6 @@
 package foodappbackend.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
-import org.springframework.stereotype.Repository;
 
 
 import javax.persistence.*;
@@ -19,21 +17,19 @@ public class Day {
 
     @OneToMany(cascade = CascadeType.ALL)
     @CollectionTable(name="list_of_categories")
-    private List<Category> categories;
+    private List<FoodItem> foodItems = new ArrayList<>();
 
     public Day() {
         creationDate = LocalDate.now();
-        categories = new ArrayList<Category>();
     }
 
     public Day(LocalDate localDate) {
         creationDate = localDate;
-        categories = new ArrayList<Category>();
     }
 
-    public ArrayList<Category> getCategory(EnumCategory enumCategory){
-        ArrayList<Category> categories = new ArrayList<>();
-        for (Category c: this.categories) {
+    public ArrayList<FoodItem> getCategory(EnumCategory enumCategory){
+        ArrayList<FoodItem> categories = new ArrayList<>();
+        for (FoodItem c: this.foodItems) {
             if (c.enumCategory == enumCategory){
                 categories.add(c);
             }
@@ -45,7 +41,7 @@ public class Day {
     }
     public int getPointsCategory(EnumCategory enumCategory){
         int points = 0;
-        for (Category c: categories) {
+        for (FoodItem c: foodItems) {
             //System.out.println("zit in getPoints for categorie");
             if (c.enumCategory == enumCategory){
                 points += c.getPoints();
@@ -53,12 +49,12 @@ public class Day {
         }
         return points;
     }
-    public void add(Category category){
-        categories.add(category);
+    public void add(FoodItem foodItem){
+        foodItems.add(foodItem);
     }
 
-    public List<Category> getCategories() {
-        return this.categories;
+    public List<FoodItem> getFoodItems() {
+        return this.foodItems;
     }
 
     public LocalDate getDate() {

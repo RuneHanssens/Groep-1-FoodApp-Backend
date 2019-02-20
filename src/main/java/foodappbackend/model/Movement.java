@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import javax.persistence.Entity;
 
 @Entity
-public class Movement extends Category {
+public class Movement extends FoodItem {
     private Type type = Type.ANDERS;
     private int time = 0;
 

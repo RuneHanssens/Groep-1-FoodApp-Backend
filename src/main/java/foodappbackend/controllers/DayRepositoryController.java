@@ -6,7 +6,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 
@@ -18,6 +20,34 @@ public class DayRepositoryController {
         this.dayRepository = dayRepository;
 
     }
+
+    // FOR DEBUGGING PURPOSES
+    @RequestMapping(value = "/api", method = RequestMethod.GET)
+    public String APIBasePage() {
+        return "<a href=\"/api/status\">/api/status</a><br>" +
+                "<a href=\"/api/days\">/api/days</a><br>" +
+                "<a href=\"/api/day\">/api/day</a><br>" +
+                "&emsp;<a href=\"/api/day/points\">/points</a><br>" +
+                "&emsp;<a href=\"/api/day/vegetable\">/vegetable</a><br>" +
+                "&emsp;&emsp;<a href=\"/api/day/vegetable/points\">/points</a><br>" +
+                "&emsp;<a href=\"/api/day/water\">/water</a><br>" +
+                "&emsp;&emsp;<a href=\"/api/day/water/points\">/points</a><br>" +
+                "&emsp;<a href=\"/api/day/snack\">/snack</a><br>" +
+                "&emsp;&emsp;<a href=\"/api/day/snack/points\">/points</a><br>" +
+                "&emsp;<a href=\"/api/day/nuts\">/nuts</a><br>" +
+                "&emsp;&emsp;<a href=\"/api/day/nuts/points\">/points</a><br>" +
+                "&emsp;<a href=\"/api/day/movement\">/movement</a><br>" +
+                "&emsp;&emsp;<a href=\"/api/day/movement/points\">/points</a><br>" +
+                "&emsp;<a href=\"/api/day/fruit\">/fruit</a><br>" +
+                "&emsp;&emsp;<a href=\"/api/day/fruit/points\">/points</a><br>" +
+                "&emsp;<a href=\"/api/day/starchproduct\">/starchproduct</a><br>" +
+                "&emsp;&emsp;<a href=\"/api/day/starchproduct/points\">/points</a><br>" +
+                "&emsp;<a href=\"/api/day/fattyfood\">/fattyfood</a><br>" +
+                "&emsp;&emsp;<a href=\"/api/day/fattyfood/points\">/points</a><br>" +
+                "&emsp;<a href=\"/api/day/dairyfishpoultry\">/dairyfishpoultry</a><br>" +
+                "&emsp;&emsp;<a href=\"/api/day/dairyfishpoultry/points\">/points</a><br>";
+    }
+
     /************************************ STATUS ************************************/
     @RequestMapping(value = "/api/status", method = RequestMethod.GET)
     public String checkStatus() {
@@ -57,6 +87,8 @@ public class DayRepositoryController {
         Day day = this.getDay(date);
         for (EnumCategory c : EnumCategory.values()) {
             map.put(c.toString(), day.getPointsCategory(c));
+//            map.put(c.toString() + "overMin", );
+//            map.put(c.toString() + "overMax", day.getPointsCategory(c));
         }
         return map;
     }
@@ -80,7 +112,7 @@ public class DayRepositoryController {
 
     /************************************ WATER ******************************************/
     @RequestMapping(value = "/api/day/water", method = RequestMethod.GET)
-    public Iterable<Category> getWaterInDayRepository(@RequestParam(name = "date", required = false) String date) {
+    public Iterable<FoodItem> getWaterInDayRepository(@RequestParam(name = "date", required = false) String date) {
         Day day = this.getDay(date);
         return day.getCategory(EnumCategory.WATER);
     }
@@ -99,7 +131,7 @@ public class DayRepositoryController {
 
     /************************************ SNACK ******************************************/
     @RequestMapping(value = "/api/day/snack", method = RequestMethod.GET)
-    public Iterable<Category> getSnackInDayRepository(@RequestParam(name = "date", required = false) String date) {
+    public Iterable<FoodItem> getSnackInDayRepository(@RequestParam(name = "date", required = false) String date) {
         Day day = this.getDay(date);
         return day.getCategory(EnumCategory.SNACK);
     }
@@ -117,7 +149,7 @@ public class DayRepositoryController {
 
     /************************************ NUTS ******************************************/
     @RequestMapping(value = "/api/day/nuts", method = RequestMethod.GET)
-    public Iterable<Category> getNutsInDayRepository(@RequestParam(name = "date", required = false) String date) {
+    public Iterable<FoodItem> getNutsInDayRepository(@RequestParam(name = "date", required = false) String date) {
         Day day = this.getDay(date);
         return day.getCategory(EnumCategory.NUTS);
     }
@@ -135,7 +167,7 @@ public class DayRepositoryController {
 
     /************************************ MOVEMENT ******************************************/
     @RequestMapping(value = "/api/day/movement", method = RequestMethod.GET)
-    public Iterable<Category> getMovementInDayRepository(@RequestParam(name = "date", required = false) String date) {
+    public Iterable<FoodItem> getMovementInDayRepository(@RequestParam(name = "date", required = false) String date) {
         Day day = this.getDay(date);
         return day.getCategory(EnumCategory.MOVEMENT);
     }
@@ -153,7 +185,7 @@ public class DayRepositoryController {
     }
     /************************************ FRUIT ******************************************/
     @RequestMapping(value = "/api/day/fruit", method = RequestMethod.GET)
-    public Iterable<Category> getFruitInDayRepository(@RequestParam(name = "date", required = false) String date) {
+    public Iterable<FoodItem> getFruitInDayRepository(@RequestParam(name = "date", required = false) String date) {
         Day day = this.getDay(date);
         return day.getCategory(EnumCategory.FRUIT);
     }
@@ -171,7 +203,7 @@ public class DayRepositoryController {
     }
     /************************************ STARCHPRODUCT ******************************************/
     @RequestMapping(value = "/api/day/starchproduct", method = RequestMethod.GET)
-    public Iterable<Category> getStarchProductInDayRepository(@RequestParam(name = "date", required = false) String date) {
+    public Iterable<FoodItem> getStarchProductInDayRepository(@RequestParam(name = "date", required = false) String date) {
         Day day = this.getDay(date);
         return day.getCategory(EnumCategory.STARCHPRODUCT);
     }
@@ -189,7 +221,7 @@ public class DayRepositoryController {
     }
     /************************************ DAIRYFISHPOULTRY ******************************************/
     @RequestMapping(value = "/api/day/dairyfishpoultry", method = RequestMethod.GET)
-    public Iterable<Category> getDairyFishPoultryInDayRepository(@RequestParam(name = "date", required = false) String date) {
+    public Iterable<FoodItem> getDairyFishPoultryInDayRepository(@RequestParam(name = "date", required = false) String date) {
         Day day = this.getDay(date);
         return day.getCategory(EnumCategory.DAIRYFISHPOULTRY);
     }
@@ -207,7 +239,7 @@ public class DayRepositoryController {
     }
     /************************************ FATTYFOOD ******************************************/
     @RequestMapping(value = "/api/day/fattyfood", method = RequestMethod.GET)
-    public Iterable<Category> getFattyFoodInDayRepository(@RequestParam(name = "date", required = false) String date) {
+    public Iterable<FoodItem> getFattyFoodInDayRepository(@RequestParam(name = "date", required = false) String date) {
         Day day = this.getDay(date);
         return day.getCategory(EnumCategory.FATTYFOOD);
     }
@@ -223,8 +255,19 @@ public class DayRepositoryController {
         Day day = this.getDay(date);
         return day.getPointsCategory(EnumCategory.FATTYFOOD);
     }
+
+    // Overview functions
+
+    @RequestMapping(value = "/api/overview", method = RequestMethod.GET)
+    public List<Day> getOverview(@RequestParam(name = "date", required = false) String date) {
+        Day[] week = new Day[7];
+        for(int i = 0; i < 7; i++) {
+            week[i] = this.getDay(date);
+        }
+        return getWeek(date);
+    }
 /****************************************** SIDE FUNCTIONS ************************/
-    private void addToDayRepo(Category item, String date) {
+    private void addToDayRepo(FoodItem item, String date) {
         if (item == null) {
             throw new DayRepositoryControllerException("Adding empty item is not allowed");
         } else {
@@ -234,5 +277,24 @@ public class DayRepositoryController {
             // System.out.println("water has been added to the day:" + day.getDate() + " : " + item.toString());
             // return this.getDayWaterPoints(date);
         }
+    }
+
+    private List<Day> getWeek(String date) {
+        ArrayList<Day> week = new ArrayList<>();
+        LocalDate localDate;
+        if (date == null || date.trim().isEmpty()) {
+            localDate = LocalDate.now();
+        } else {
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+            localDate = LocalDate.parse(date, formatter);
+        }
+        for(int i = 0; i<7; i++) {
+            if (dayRepository.findById(localDate).isPresent()) {
+                week.add(dayRepository.findById(localDate).get());
+            }
+            localDate = localDate.minusDays(1);
+        }
+
+        return week;
     }
 }
