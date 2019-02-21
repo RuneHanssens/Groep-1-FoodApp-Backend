@@ -11,6 +11,8 @@ public class FattyFood extends FoodItem {
     public FattyFood() { }
 
     public enum Type {
+        @JsonProperty("Beleg")
+        SPREADS("Beleg", 30),
         @JsonProperty("Boter")
         BUTTER("Boter", 20),
         @JsonProperty("Rood Vlees")

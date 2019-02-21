@@ -29,4 +29,8 @@ public class Category<E extends FoodItem> extends ArrayList<E> implements Serial
     public boolean getOverMax() {
         return totalPoints >= max;
     }
+
+    public void removeLast() {
+        super.remove(this.size() - 1);
+    }
 }

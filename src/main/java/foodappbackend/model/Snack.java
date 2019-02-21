@@ -1,52 +1,77 @@
 package foodappbackend.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import javax.persistence.Entity;
 
 @Entity
 public class Snack extends FoodItem {
-    private Type type = Type.ALCOHOL;
-    private Amount amount = Amount.EENBEETJE;
-    private boolean outdoors = false;
+    private Type type;
+    private SubType subType;
 
     public Snack(){};
 
-    public enum Amount {
-        EENHEELKLEINBEETJE("Een heel klein beetje", 25),
-        EENBEETJE("Een beetje", 50),
-        WELWAT("Wel wat", 75),
-        VEEL("Veel", 100);
-
-        private final String fullName;
-        private final int points;
-
-        Amount(String fullName, int points) {
-            this.fullName = fullName;
-            this.points = points;
-        }
-        public int getPoints(){
-            return points;
-        }
-        @Override
-        public String toString() {
-            return this.fullName;
-        }
-    }
     public enum Type {
-        ALCOHOL,
-        FRISDRANK,
-        SNOEP,
-        FASTFOOD
+        @JsonProperty("Alchohol")
+        ALCOHOL(20),
+        @JsonProperty("Frisdrank")
+        FRISDRANK(),
+        @JsonProperty("Zoetigheid")
+        SWEETS(),
+        @JsonProperty("Fastfood")
+        FASTFOOD(40),
+        @JsonProperty("Saus")
+        SAUS(10);
+        private final int POINTS;
+
+        Type() {
+            this.POINTS = 0;
+        }
+
+        Type(int points) {
+            this.POINTS = points;
+        }
+
+        public int getPoints() {
+            return this.POINTS;
+        }
     }
 
-    public Snack(Boolean outdoor, Type type, Amount amount) {
+    public enum SubType {
+        @JsonProperty("Snoep")
+        CANDY(30),
+        @JsonProperty("Chocolade")
+        CHOCOLATE(40),
+        @JsonProperty("Koekjes")
+        COOKIES(30),
+        @JsonProperty("Light")
+        LIGHT(10),
+        @JsonProperty("Normaal")
+        NORMAL(20),
+        @JsonProperty("Gebak")
+        PASTRY(40);
+        private final int POINTS;
+
+        SubType(int points) {
+            this.POINTS = points;
+        }
+
+        public int getPoints() {
+            return this.POINTS;
+        }
+    }
+
+    public Snack(Type type, SubType subType) {
         this.setType(type);
-        this.setAmount(amount);
-        this.setOutdoors(outdoor);
+        this.setSubType(subType);
     }
 
     @Override
     protected void setPoints() {
-        this.points = amount.points;
+        if(subType != null)
+            this.points = subType.getPoints();
+        else
+            this.points = type.getPoints();
     }
 
     public Type getType() {
@@ -58,21 +83,12 @@ public class Snack extends FoodItem {
         this.setPoints();
     }
 
-    public Amount getAmount() {
-        return amount;
+    public SubType getSubType() {
+        return subType;
     }
 
-    public void setAmount(Amount amount) {
-        this.amount = amount;
-        this.setPoints();
-    }
-
-    public boolean isOutdoors() {
-        return outdoors;
-    }
-
-    public void setOutdoors(boolean outdoors) {
-        this.outdoors = outdoors;
+    public void setSubType(SubType subType) {
+        this.subType = subType;
         this.setPoints();
     }
 }

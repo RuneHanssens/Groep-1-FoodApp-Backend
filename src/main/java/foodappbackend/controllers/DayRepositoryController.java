@@ -321,10 +321,6 @@ public class DayRepositoryController {
 
     @RequestMapping(value = "/api/overview", method = RequestMethod.GET)
     public List<Day> getOverview(@RequestParam(name = "date", required = false) String date) {
-        Day[] week = new Day[7];
-        for(int i = 0; i < 7; i++) {
-            week[i] = this.getDay(date);
-        }
         return getWeek(date);
     }
 /****************************************** SIDE FUNCTIONS ************************/
@@ -340,6 +336,11 @@ public class DayRepositoryController {
         }
     }
 
+    /**
+     * Removes the last item added to a category from a specified day.
+     * @param category The Category to remove the last item from.
+     * @param date A String in the yyyy-MM-dd format that defines which date the item will be removed from.
+     */
     private void removeFromDayRepo(EnumCategory category, String date) {
         Day day = this.getDay(date);
         day.removeLast(category);
@@ -366,7 +367,7 @@ public class DayRepositoryController {
     }
 
     /**
-     * Helper method to turn a date string into a usable localdate object.
+     * Helper method to turn a date string into a usable localdate object, if the date is incomprehensible today's date will be used.
      * @param date The String to convert to a LocalDate object, in the yyyy-MM-dd format.
      * @return A new LocalDate object.
      */
@@ -374,7 +375,7 @@ public class DayRepositoryController {
         if (date == null || date.trim().isEmpty()) {
             return LocalDate.now();
         } else {
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("[yyyy-MM-dd][yyyy/MM/dd][dd/MM/yyyy][dd-MM-yyyy]");
             return LocalDate.parse(date, formatter);
         }
     }
