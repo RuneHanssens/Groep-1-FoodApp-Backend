@@ -17,7 +17,7 @@ public class Day {
     @JsonFormat(pattern="yyyy-MM-dd")
     private LocalDate creationDate;
 
-    //@OneToMany(cascade = CascadeType.ALL)
+//    @OneToMany(cascade = CascadeType.ALL)
     //@CollectionTable(name="list_of_categories")
     //private List<FoodItem> foodItems = new ArrayList<>();
     @Lob
