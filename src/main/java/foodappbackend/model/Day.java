@@ -6,7 +6,9 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Entity
 @Table(name = "day_table")
@@ -15,55 +17,43 @@ public class Day {
     @JsonFormat(pattern="yyyy-MM-dd")
     private LocalDate creationDate;
 
-    @OneToMany(cascade = CascadeType.ALL)
-    @CollectionTable(name="list_of_categories")
-    private List<FoodItem> foodItems = new ArrayList<>();
+    //@OneToMany(cascade = CascadeType.ALL)
+    //@CollectionTable(name="list_of_categories")
+    //private List<FoodItem> foodItems = new ArrayList<>();
+    @Lob
+    @ElementCollection
+    private Map<EnumCategory,Category<FoodItem>> categories = new HashMap<>();
 
     public Day() {
-        creationDate = LocalDate.now();
+        this(LocalDate.now());
     }
 
     public Day(LocalDate localDate) {
         creationDate = localDate;
+        for(EnumCategory e : EnumCategory.values()) {
+            categories.put(e,new Category<>(e.getMin(),e.getMax()));
+        }
     }
 
-    public ArrayList<FoodItem> getCategory(EnumCategory enumCategory){
-        ArrayList<FoodItem> categories = new ArrayList<>();
-        for (FoodItem c: this.foodItems) {
-            if (c.enumCategory == enumCategory){
-                categories.add(c);
-            }
-        }
-//        if(category == null){
-//            throw new CategoryException("Deze categorie is niet aanwezig in het dag object!");
-//        }
-        return categories;
+    public Category getCategory(EnumCategory enumCategory){
+        return categories.get(enumCategory);
     }
+
     public int getPointsCategory(EnumCategory enumCategory){
-        int points = 0;
-        for (FoodItem c: foodItems) {
-            //System.out.println("zit in getPoints for categorie");
-            if (c.enumCategory == enumCategory){
-                points += c.getPoints();
-            }
-        }
-        return points;
-    }
-    public void add(FoodItem foodItem){
-        foodItems.add(foodItem);
+        return categories.get(enumCategory).getTotalPoints();
     }
 
-    public List<FoodItem> getFoodItems() {
-        return this.foodItems;
+    public void add(FoodItem foodItem){
+        categories.get(foodItem.getEnumCategory()).add(foodItem);
+    }
+
+    public Map<EnumCategory, Category<FoodItem>> getFoodItems() {
+        return this.categories;
     }
 
     public LocalDate getDate() {
         return creationDate;
     }
-    //        return creationDate;
-//    public LocalDate getCreationDate() {
-
-//    }
 
     public void setCreationDate(LocalDate creationDate) {
         this.creationDate = creationDate;

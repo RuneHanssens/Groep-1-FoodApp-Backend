@@ -3,10 +3,11 @@ package foodappbackend.model;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.UUID;
 
 @Entity
-public abstract class FoodItem {
+public abstract class FoodItem implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
