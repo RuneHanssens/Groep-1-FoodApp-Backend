@@ -58,4 +58,9 @@ public class Day {
     public void setCreationDate(LocalDate creationDate) {
         this.creationDate = creationDate;
     }
+
+    public void removeLast(EnumCategory category) {
+        System.out.println(categories.get(category).size() - 1);
+        categories.get(category).remove(categories.get(category).size() - 1);
+    }
 }

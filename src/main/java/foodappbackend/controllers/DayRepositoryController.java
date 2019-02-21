@@ -3,6 +3,7 @@ package foodappbackend.controllers;
 import foodappbackend.model.*;
 import foodappbackend.repositories.DayRepository;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.view.RedirectView;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -30,22 +31,39 @@ public class DayRepositoryController {
                 "&emsp;<a href=\"/api/day/points\">/points</a><br>" +
                 "&emsp;<a href=\"/api/day/vegetable\">/vegetable</a><br>" +
                 "&emsp;&emsp;<a href=\"/api/day/vegetable/points\">/points</a><br>" +
+                "&emsp;&emsp;<a href=\"/api/day/vegetable/undo\">/undo</a><br>" +
                 "&emsp;<a href=\"/api/day/water\">/water</a><br>" +
                 "&emsp;&emsp;<a href=\"/api/day/water/points\">/points</a><br>" +
+                "&emsp;&emsp;<a href=\"/api/day/water/undo\">/undo</a><br>" +
                 "&emsp;<a href=\"/api/day/snack\">/snack</a><br>" +
                 "&emsp;&emsp;<a href=\"/api/day/snack/points\">/points</a><br>" +
+                "&emsp;&emsp;<a href=\"/api/day/snack/undo\">/undo</a><br>" +
                 "&emsp;<a href=\"/api/day/nuts\">/nuts</a><br>" +
                 "&emsp;&emsp;<a href=\"/api/day/nuts/points\">/points</a><br>" +
+                "&emsp;&emsp;<a href=\"/api/day/nuts/undo\">/undo</a><br>" +
                 "&emsp;<a href=\"/api/day/movement\">/movement</a><br>" +
                 "&emsp;&emsp;<a href=\"/api/day/movement/points\">/points</a><br>" +
+                "&emsp;&emsp;<a href=\"/api/day/movement/undo\">/undo</a><br>" +
                 "&emsp;<a href=\"/api/day/fruit\">/fruit</a><br>" +
                 "&emsp;&emsp;<a href=\"/api/day/fruit/points\">/points</a><br>" +
+                "&emsp;&emsp;<a href=\"/api/day/fruit/undo\">/undo</a><br>" +
                 "&emsp;<a href=\"/api/day/starchproduct\">/starchproduct</a><br>" +
                 "&emsp;&emsp;<a href=\"/api/day/starchproduct/points\">/points</a><br>" +
+                "&emsp;&emsp;<a href=\"/api/day/starchproduct/undo\">/undo</a><br>" +
                 "&emsp;<a href=\"/api/day/fattyfood\">/fattyfood</a><br>" +
                 "&emsp;&emsp;<a href=\"/api/day/fattyfood/points\">/points</a><br>" +
+                "&emsp;&emsp;<a href=\"/api/day/fattyfood/undo\">/undo</a><br>" +
                 "&emsp;<a href=\"/api/day/dairyfishpoultry\">/dairyfishpoultry</a><br>" +
-                "&emsp;&emsp;<a href=\"/api/day/dairyfishpoultry/points\">/points</a><br>";
+                "&emsp;&emsp;<a href=\"/api/day/dairyfishpoultry/points\">/points</a><br>" +
+                "&emsp;&emsp;<a href=\"/api/day/dairyfishpoultry/undo\">/undo</a><br>" +
+                "<br><a href=\"/api/day/fruit/add\">ADD A FRUIT, TESTING PURPOSES ONLY</a>";
+    }
+
+    // TODO REMOVE THIS METHOD WHEN TESTING IS NO LONGER REQUIRED
+    @RequestMapping(value = "/api/day/fruit/add", method = RequestMethod.GET)
+    public RedirectView addTestFruit() {
+        this.addToDayRepo(EnumCategory.FRUIT, new Fruit(), "");
+        return new RedirectView("/api");
     }
 
     /************************************ STATUS ************************************/
@@ -64,14 +82,7 @@ public class DayRepositoryController {
     @RequestMapping(value = "/api/day", method = RequestMethod.GET)
     public Day getDay(@RequestParam(name = "date", required = false) String date) {
 
-        LocalDate localDate;
-
-        if (date == null || date.trim().isEmpty()) {
-            localDate = LocalDate.now();
-        } else {
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-            localDate = LocalDate.parse(date, formatter);
-        }
+        LocalDate localDate = getDate(date);
 
         if (dayRepository.findById(localDate).isPresent()) {
             return dayRepository.findById(localDate).get();
@@ -110,6 +121,11 @@ public class DayRepositoryController {
         return day.getPointsCategory(EnumCategory.VEGETABLE);
     }
 
+    @RequestMapping(value = "/api/day/vegetable/undo", method = RequestMethod.GET)
+    public void removeLastVegetable(@RequestParam(name = "date", required = false) String date) {
+        this.removeFromDayRepo(EnumCategory.VEGETABLE, date);
+    }
+
     /************************************ WATER ******************************************/
     @RequestMapping(value = "/api/day/water", method = RequestMethod.GET)
     public Iterable<FoodItem> getWaterInDayRepository(@RequestParam(name = "date", required = false) String date) {
@@ -129,6 +145,11 @@ public class DayRepositoryController {
         return day.getPointsCategory(EnumCategory.WATER);
     }
 
+    @RequestMapping(value = "/api/day/water/undo", method = RequestMethod.GET)
+    public void removeLastWater(@RequestParam(name = "date", required = false) String date) {
+        this.removeFromDayRepo(EnumCategory.WATER, date);
+    }
+
     /************************************ SNACK ******************************************/
     @RequestMapping(value = "/api/day/snack", method = RequestMethod.GET)
     public Iterable<FoodItem> getSnackInDayRepository(@RequestParam(name = "date", required = false) String date) {
@@ -141,10 +162,16 @@ public class DayRepositoryController {
         this.addToDayRepo(EnumCategory.SNACK, snack, date);
         return this.getDaySnackPoints(date);
     }
+
     @RequestMapping(value = "/api/day/snack/points", method = RequestMethod.GET)
     public int getDaySnackPoints(@RequestParam(name = "date", required = false) String date) {
         Day day = this.getDay(date);
         return day.getPointsCategory(EnumCategory.SNACK);
+    }
+
+    @RequestMapping(value = "/api/day/snack/undo", method = RequestMethod.GET)
+    public void removeLastSnack(@RequestParam(name = "date", required = false) String date) {
+        this.removeFromDayRepo(EnumCategory.SNACK, date);
     }
 
     /************************************ NUTS ******************************************/
@@ -165,6 +192,11 @@ public class DayRepositoryController {
         return day.getPointsCategory(EnumCategory.NUTS);
     }
 
+    @RequestMapping(value = "/api/day/nuts/undo", method = RequestMethod.GET)
+    public void removeLastNuts(@RequestParam(name = "date", required = false) String date) {
+        this.removeFromDayRepo(EnumCategory.NUTS, date);
+    }
+
     /************************************ MOVEMENT ******************************************/
     @RequestMapping(value = "/api/day/movement", method = RequestMethod.GET)
     public Iterable<FoodItem> getMovementInDayRepository(@RequestParam(name = "date", required = false) String date) {
@@ -183,6 +215,12 @@ public class DayRepositoryController {
         Day day = this.getDay(date);
         return day.getPointsCategory(EnumCategory.MOVEMENT);
     }
+
+    @RequestMapping(value = "/api/day/movement/undo", method = RequestMethod.GET)
+    public void removeLastMovement(@RequestParam(name = "date", required = false) String date) {
+        this.removeFromDayRepo(EnumCategory.MOVEMENT, date);
+    }
+
     /************************************ FRUIT ******************************************/
     @RequestMapping(value = "/api/day/fruit", method = RequestMethod.GET)
     public Iterable<FoodItem> getFruitInDayRepository(@RequestParam(name = "date", required = false) String date) {
@@ -201,6 +239,12 @@ public class DayRepositoryController {
         Day day = this.getDay(date);
         return day.getPointsCategory(EnumCategory.FRUIT);
     }
+
+    @RequestMapping(value = "/api/day/fruit/undo", method = RequestMethod.GET)
+    public void removeLastFruit(@RequestParam(name = "date", required = false) String date) {
+        this.removeFromDayRepo(EnumCategory.FRUIT, date);
+    }
+
     /************************************ STARCHPRODUCT ******************************************/
     @RequestMapping(value = "/api/day/starchproduct", method = RequestMethod.GET)
     public Iterable<FoodItem> getStarchProductInDayRepository(@RequestParam(name = "date", required = false) String date) {
@@ -219,6 +263,12 @@ public class DayRepositoryController {
         Day day = this.getDay(date);
         return day.getPointsCategory(EnumCategory.STARCHPRODUCT);
     }
+
+    @RequestMapping(value = "/api/day/starchproduct/undo", method = RequestMethod.GET)
+    public void removeLastStarchProduct(@RequestParam(name = "date", required = false) String date) {
+        this.removeFromDayRepo(EnumCategory.STARCHPRODUCT, date);
+    }
+
     /************************************ DAIRYFISHPOULTRY ******************************************/
     @RequestMapping(value = "/api/day/dairyfishpoultry", method = RequestMethod.GET)
     public Iterable<FoodItem> getDairyFishPoultryInDayRepository(@RequestParam(name = "date", required = false) String date) {
@@ -237,6 +287,12 @@ public class DayRepositoryController {
         Day day = this.getDay(date);
         return day.getPointsCategory(EnumCategory.DAIRYFISHPOULTRY);
     }
+
+    @RequestMapping(value = "/api/day/dairyfishpoultry/undo", method = RequestMethod.GET)
+    public void removeLastDairyFishPoultry(@RequestParam(name = "date", required = false) String date) {
+        this.removeFromDayRepo(EnumCategory.DAIRYFISHPOULTRY, date);
+    }
+
     /************************************ FATTYFOOD ******************************************/
     @RequestMapping(value = "/api/day/fattyfood", method = RequestMethod.GET)
     public Iterable<FoodItem> getFattyFoodInDayRepository(@RequestParam(name = "date", required = false) String date) {
@@ -254,6 +310,11 @@ public class DayRepositoryController {
     public int getDayFattyFoodPoints(@RequestParam(name = "date", required = false) String date) {
         Day day = this.getDay(date);
         return day.getPointsCategory(EnumCategory.FATTYFOOD);
+    }
+
+    @RequestMapping(value = "/api/day/fattyfood/undo", method = RequestMethod.GET)
+    public void removeLastFattyFood(@RequestParam(name = "date", required = false) String date) {
+        this.removeFromDayRepo(EnumCategory.FATTYFOOD, date);
     }
 
     // Overview functions
@@ -279,22 +340,42 @@ public class DayRepositoryController {
         }
     }
 
+    private void removeFromDayRepo(EnumCategory category, String date) {
+        Day day = this.getDay(date);
+        day.removeLast(category);
+        this.dayRepository.save(day);
+    }
+
+    /**
+     * Returns an object that holds all the info of the last 5 days for inspection.
+     * @param date The yyyy-MM-dd form of the LAST day to be retrieved.
+     * @return A List of five Day objects.
+     */
     private List<Day> getWeek(String date) {
         ArrayList<Day> week = new ArrayList<>();
-        LocalDate localDate;
-        if (date == null || date.trim().isEmpty()) {
-            localDate = LocalDate.now();
-        } else {
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-            localDate = LocalDate.parse(date, formatter);
-        }
-        for(int i = 0; i<7; i++) {
-            if (dayRepository.findById(localDate).isPresent()) {
+        LocalDate localDate = getDate(date);
+        for(int i = 0; i<5; i++) {
+            if (dayRepository.findById(localDate).isPresent())
                 week.add(dayRepository.findById(localDate).get());
-            }
+            else
+                week.add(dayRepository.save(new Day((localDate))));
             localDate = localDate.minusDays(1);
         }
 
         return week;
+    }
+
+    /**
+     * Helper method to turn a date string into a usable localdate object.
+     * @param date The String to convert to a LocalDate object, in the yyyy-MM-dd format.
+     * @return A new LocalDate object.
+     */
+    private LocalDate getDate(String date) {
+        if (date == null || date.trim().isEmpty()) {
+            return LocalDate.now();
+        } else {
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+            return LocalDate.parse(date, formatter);
+        }
     }
 }
