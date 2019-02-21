@@ -11,6 +11,8 @@ public class FattyFood extends FoodItem {
     public FattyFood() { }
 
     public enum Type {
+        @JsonProperty("Beleg")
+        SPREADS("Beleg", 30),
         @JsonProperty("Boter")
         BUTTER("Boter", 20),
         @JsonProperty("Rood Vlees")
@@ -36,7 +38,6 @@ public class FattyFood extends FoodItem {
     }
 
     public FattyFood(boolean outdoor, Type type) {
-        this.setEnumCategory();
         this.setType(type);
     }
 
@@ -52,10 +53,5 @@ public class FattyFood extends FoodItem {
     public void setType(Type type) {
         this.type = type;
         this.setPoints();
-    }
-
-    @Override
-    protected void setEnumCategory() {
-        this.enumCategory = EnumCategory.FATTYFOOD;
     }
 }

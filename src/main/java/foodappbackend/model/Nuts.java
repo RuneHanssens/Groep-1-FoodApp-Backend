@@ -7,7 +7,6 @@ public class Nuts extends FoodItem {
     private boolean salted;
 
     public Nuts() {
-        this.setEnumCategory();
         this.setPoints();
     }
 
@@ -26,10 +25,5 @@ public class Nuts extends FoodItem {
             this.points = 50;
         else
             this.points = 20;
-    }
-
-    @Override
-    protected void setEnumCategory() {
-        this.enumCategory = EnumCategory.NUTS;
     }
 }

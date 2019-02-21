@@ -9,7 +9,6 @@ public class Water extends FoodItem {
     public Water(){};
 
     public Water(int amount){
-        this.setEnumCategory();
         this.setAmount(amount);
     }
 
@@ -25,9 +24,5 @@ public class Water extends FoodItem {
 
     public int getAmount() {
         return amount;
-    }
-    @Override
-    protected void setEnumCategory() {
-        this.enumCategory=EnumCategory.WATER;
     }
 }

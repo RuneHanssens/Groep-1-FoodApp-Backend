@@ -3,40 +3,23 @@ package foodappbackend.model;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.UUID;
 
 @Entity
-public abstract class FoodItem {
+public abstract class FoodItem implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
 
-    protected EnumCategory enumCategory;
-
     protected int points;
-    public FoodItem(){
-        this.setEnumCategory();
-    }
+    public FoodItem(){ }
 
     public int getPoints() {
         return points;
     }
     protected abstract void setPoints();
-
-    protected abstract void setEnumCategory();
-
-    public EnumCategory getEnumCategory() {
-        return enumCategory;
-    }
-
-    public boolean isOverMax(){
-        return this.getPoints() > this.getEnumCategory().getMax();
-    }
-
-    public boolean isOverMin(){
-        return this.getPoints() >= this.getEnumCategory().getMin();
-    }
 }
 
 /*

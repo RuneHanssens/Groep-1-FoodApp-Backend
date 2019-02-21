@@ -109,7 +109,6 @@ public class StarchProduct extends FoodItem {
     }
 
     public StarchProduct(boolean outdoor, Type type) {
-        this.setEnumCategory();
         this.setOutdoor(outdoor);
         this.setType(type);
     }
@@ -142,10 +141,5 @@ public class StarchProduct extends FoodItem {
     public void setSubType(SubType subType) {
         this.subType = subType;
         this.setPoints();
-    }
-
-    @Override
-    protected void setEnumCategory() {
-        this.enumCategory = EnumCategory.STARCHPRODUCT;
     }
 }

@@ -13,25 +13,24 @@ public enum EnumCategory {
     FATTYFOOD(100, 1000),
     DAIRYFISHPOULTRY(100, 1000);
 
-    private long min;
-    private long max;
-    private EnumCategory(long min, long max){
+    private int min, max;
+    private EnumCategory(int min, int max){
         setMin(min);
         setMax(max);
     }
 
-    public long getMin() {
+    public int getMin() {
         return min;
     }
-    private void setMin(long min) {
+    private void setMin(int min) {
         this.min = min;
     }
 
-    public long getMax() {
+    public int getMax() {
         return max;
     }
 
-    private void setMax(long max) {
+    private void setMax(int max) {
         this.max = max;
     }
 }

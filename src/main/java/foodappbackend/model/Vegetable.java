@@ -9,7 +9,6 @@ public class Vegetable extends FoodItem {
     public Vegetable(){}
 
     public Vegetable(boolean more){
-        this.setEnumCategory();
         this.setMore(more);
     }
 
@@ -28,11 +27,6 @@ public class Vegetable extends FoodItem {
     public void setMore(boolean more) {
         this.more = more;
         this.setPoints();
-    }
-
-    @Override
-    protected void setEnumCategory() {
-        this.enumCategory = EnumCategory.VEGETABLE;
     }
 
 }
