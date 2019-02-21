@@ -10,7 +10,6 @@ public class Fruit extends FoodItem {
     public Fruit() { }
 
     public Fruit(boolean outdoor, int amount) {
-        this.setEnumCategory();
         this.setOutdoor(outdoor);
         this.setAmount(amount);
     }
@@ -37,10 +36,5 @@ public class Fruit extends FoodItem {
     public void setOutdoor(boolean outdoor) {
         this.outdoor = outdoor;
         this.setPoints();
-    }
-
-    @Override
-    protected void setEnumCategory() {
-        this.enumCategory = EnumCategory.FRUIT;
     }
 }

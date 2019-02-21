@@ -43,8 +43,8 @@ public class Day {
         return categories.get(enumCategory).getTotalPoints();
     }
 
-    public void add(FoodItem foodItem){
-        categories.get(foodItem.getEnumCategory()).add(foodItem);
+    public void add(EnumCategory category, FoodItem foodItem){
+        categories.get(category).add(foodItem);
     }
 
     public Map<EnumCategory, Category<FoodItem>> getFoodItems() {

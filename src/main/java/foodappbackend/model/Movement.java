@@ -41,7 +41,6 @@ public class Movement extends FoodItem {
     }
 
     public Movement(Type type, int time) {
-        this.setEnumCategory();
         this.setType(type);
         this.setTime(time);
     }
@@ -66,10 +65,5 @@ public class Movement extends FoodItem {
 
     private void setType(Type type) {
         this.type = type;
-    }
-
-    @Override
-    protected void setEnumCategory() {
-        this.enumCategory = EnumCategory.MOVEMENT;
     }
 }

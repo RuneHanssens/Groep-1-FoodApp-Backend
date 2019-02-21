@@ -39,7 +39,6 @@ public class Snack extends FoodItem {
     }
 
     public Snack(Boolean outdoor, Type type, Amount amount) {
-        this.setEnumCategory();
         this.setType(type);
         this.setAmount(amount);
         this.setOutdoors(outdoor);
@@ -75,10 +74,5 @@ public class Snack extends FoodItem {
     public void setOutdoors(boolean outdoors) {
         this.outdoors = outdoors;
         this.setPoints();
-    }
-
-    @Override
-    protected void setEnumCategory() {
-        this.enumCategory = EnumCategory.SNACK;
     }
 }

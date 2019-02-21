@@ -76,7 +76,6 @@ public class DairyFishPoultry extends FoodItem {
     }
 
     public DairyFishPoultry(Type type) {
-        this.setEnumCategory();
         this.setType(type);
     }
 
@@ -115,10 +114,5 @@ public class DairyFishPoultry extends FoodItem {
 
     public int getAmount() {
         return this.amount;
-    }
-
-    @Override
-    protected void setEnumCategory() {
-        this.enumCategory = EnumCategory.DAIRYFISHPOULTRY;
     }
 }
