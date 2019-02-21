@@ -95,9 +95,9 @@ public class DayRepositoryController {
 
     /************************************ VEGETABLES **************************************/
     @RequestMapping(value = "/api/day/vegetable", method = RequestMethod.GET)
-    public int getDayVegetableRepository(@RequestParam(name = "date", required = false) String date) {
+    public Iterable<FoodItem> getDayVegetableRepository(@RequestParam(name = "date", required = false) String date) {
         Day day = this.getDay(date);
-        return day.getPointsCategory(EnumCategory.VEGETABLE);
+        return day.getCategory(EnumCategory.VEGETABLE);
     }
     @RequestMapping(value = "/api/day/vegetable", method = RequestMethod.POST)
     public int putVegetableInDayRepository(@RequestBody Vegetable vegetable, @RequestParam(name = "date", required = false) String date) {

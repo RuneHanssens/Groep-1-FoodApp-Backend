@@ -35,7 +35,7 @@ public class Day {
         }
     }
 
-    public Category getCategory(EnumCategory enumCategory){
+    public Category<FoodItem> getCategory(EnumCategory enumCategory){
         return categories.get(enumCategory);
     }
 
