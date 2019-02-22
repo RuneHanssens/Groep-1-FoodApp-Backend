@@ -27,9 +27,10 @@ public class UserRepositoryController {
     public Iterable<User> getDayRepository() {
         return this.userRepository.findAll();
     }
-    @RequestMapping(value = "/user-api/user", method = RequestMethod.POST)
-    public void putDayInUserInUserRepository(@RequestBody Day day, @RequestParam(name = "id", required = true)UUID id) {
-        User user = this.userRepository.findById(id).get();
+    @RequestMapping(value = "/user-api/user/day", method = RequestMethod.POST)
+    public void putDayInUserInUserRepository(@RequestBody Day day, @RequestParam(name = "id", required = true)String id) {
+
+        User user = this.userRepository.findById(UUID.fromString(id)).get();
         //this.userRepository.save(D)
     }
 //    @RequestMapping(value = "/user-api/user/login", method = RequestMethod.POST)
