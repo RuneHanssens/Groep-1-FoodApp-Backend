@@ -6,5 +6,7 @@ import org.springframework.data.repository.CrudRepository;
 import java.time.LocalDate;
 import java.util.UUID;
 
-public interface UserRepository extends CrudRepository<User,UUID> {};
+public interface UserRepository extends CrudRepository<User,UUID> {
+//    public UUID login(String mail,String password);
+}
 

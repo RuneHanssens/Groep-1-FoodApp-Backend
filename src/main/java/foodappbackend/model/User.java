@@ -1,37 +1,44 @@
 package foodappbackend.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import java.security.SecureRandom;
+import javax.persistence.*;
+import java.time.LocalDate;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 
 @Entity
+@Table(name = "table_user")
 public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
-
-    private String name;
-    private String lastname;
+//    @Id
     private String mail;
-    private String password;
-    private long age;
+    private String name;
+    private String lastName;
+//    private String password;
+//    private long age;
     private boolean admin = false;
 
-    public  User(){
+    @Lob
+    @ElementCollection
+    private Map<LocalDate,Day> days;
+
+    public User() {
 
     }
-    public User(String name,String lastname,String mail,String password,long age,boolean admin){
+
+    public User(String name, String lastName, String mail,/* String password, *//*long age,*/ boolean admin) {
         setName(name);
-        setLastname(lastname);
+        setLastName(lastName);
         setMail(mail);
-        setPassword(password);
-        setAge(age);
+//        setPassword(password);
+//        setAge(age);
         setAdmin(admin);
+        setDays(new HashMap<>());
     }
+
     public UUID getId() {
         return id;
     }
@@ -48,6 +55,7 @@ public class User {
     public void setAdmin(boolean admin) {
         this.admin = admin;
     }
+
     public String getName() {
         return name;
     }
@@ -56,12 +64,12 @@ public class User {
         this.name = name;
     }
 
-    public String getLastname() {
-        return lastname;
+    public String getLastName() {
+        return lastName;
     }
 
-    public void setLastname(String lastname) {
-        this.lastname = lastname;
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
     public String getMail() {
@@ -72,21 +80,35 @@ public class User {
         this.mail = mail;
     }
 
-    public String getPassword() {
-        return password;
+//    public String getPassword() {
+//        return password;
+//    }
+//
+//    public void setPassword(String password) {
+//        this.password = password;
+//    }
+
+    public Map<LocalDate, Day> getDays() {
+        return days;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public void setDays(Map<LocalDate, Day> days) {
+        this.days = days;
+    }
+    public void addDay(Day day){
+        this.days.put(day.getDate(), day);
+    }
+    public Day getDay(LocalDate date){
+        return this.days.get(date);
     }
 
-    public long getAge() {
-        return age;
-    }
-
-    public void setAge(long age) {
-        this.age = age;
-    }
+//    public long getAge() {
+//        return age;
+//    }
+//
+//    public void setAge(long age) {
+//        this.age = age;
+//    }
 //    private String HashFunction(String string){
 //        String Hashed;
 //

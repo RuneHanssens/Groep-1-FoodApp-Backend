@@ -1,12 +1,14 @@
 package foodappbackend.controllers;
 
 import foodappbackend.model.Day;
+import foodappbackend.model.EnumCategory;
 import foodappbackend.model.User;
+import foodappbackend.model.Vegetable;
 import foodappbackend.repositories.DayRepository;
 import foodappbackend.repositories.UserRepository;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.UUID;
 
 @RestController
 public class UserRepositoryController {
@@ -25,5 +27,15 @@ public class UserRepositoryController {
     public Iterable<User> getDayRepository() {
         return this.userRepository.findAll();
     }
+    @RequestMapping(value = "/user-api/user", method = RequestMethod.POST)
+    public void putDayInUserInUserRepository(@RequestBody Day day, @RequestParam(name = "id", required = true)UUID id) {
+        User user = this.userRepository.findById(id).get();
+        //this.userRepository.save(D)
+    }
+//    @RequestMapping(value = "/user-api/user/login", method = RequestMethod.POST)
+//    public void login(@RequestBody String mail,String password) {
+//        User user = this.userRepository.findById(uuid).get();
+//        //this.userRepository.save(D)
+//    }
 
 }

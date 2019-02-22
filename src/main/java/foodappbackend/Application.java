@@ -45,9 +45,9 @@ public class Application {
         return (args) -> {
             User user = new User();
             userRepository.save(user);
-            User user2 = new User("Reinout","Vanhauwaert","Reinout.Vanhauwaert@student.ucll.be","t",23,true);
+            User user2 = new User("Reinout","Vanhauwaert","Reinout.Vanhauwaert@student.ucll.be",true);
             userRepository.save(user2);
-            User user3 = new User("Gebruiker","Gebruiker","Gebruiker@Gebruiker.com","t",26,false);
+            User user3 = new User("Gebruiker","Gebruiker","Gebruiker@Gebruiker.com",false);
             userRepository.save(user3);
         };
     }
