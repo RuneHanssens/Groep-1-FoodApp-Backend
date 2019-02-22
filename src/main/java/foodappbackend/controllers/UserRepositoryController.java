@@ -8,6 +8,7 @@ import foodappbackend.repositories.DayRepository;
 import foodappbackend.repositories.UserRepository;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.UUID;
 
 @RestController
@@ -27,12 +28,48 @@ public class UserRepositoryController {
     public Iterable<User> getDayRepository() {
         return this.userRepository.findAll();
     }
-    @RequestMapping(value = "/user-api/user/day", method = RequestMethod.POST)
-    public void putDayInUserInUserRepository(@RequestBody Day day, @RequestParam(name = "id", required = true)String id) {
+    @RequestMapping(value = "/user-api/user/login-non-admin", method = RequestMethod.POST)
+    public String login(@RequestParam(name = "mail", required = true)String mail) {
+        String response = "404";
+        Iterable<User> users = this.userRepository.findAll();
+        for (User u:users){
+            if(mail == null || u.getMail().equals(mail)){
+                response =  u.getId().toString();
+            }
+        }
+        if(response.equals("404")){
+            this.userRepository.save(new User(mail,false));
+            response = this.login(mail);
+        }
+        return response;
 
-        User user = this.userRepository.findById(UUID.fromString(id)).get();
-        //this.userRepository.save(D)
     }
+    @RequestMapping(value = "/user-api/user/login-admin", method = RequestMethod.POST)
+    public String loginAdmin(@RequestParam(name = "mail", required = true)String mail) {
+        String response = "404";
+        Iterable<User> users = this.userRepository.findAll();
+        for (User u:users){
+            if(mail == null || u.getMail().equals(mail)){
+                response =  u.getId().toString();
+            }
+        }
+        if(response.equals("404")){
+            this.userRepository.save(new User(mail,true));
+            response = this.login(mail);
+        }
+        return response;
+
+    }
+//    @RequestMapping(value = "/user-api/user/day", method = RequestMethod.POST)
+//    public void putDayInUserInUserRepository(@RequestBody Day day, @RequestParam(name = "id", required = true)String id) {
+//        User user = null;
+//        if(this.userRepository.findById(UUID.fromString(id)).isPresent()){
+//            user = this.userRepository.findById(UUID.fromString(id)).get();
+//            user.addDay(day);
+//        }else {
+//            return;
+//        }
+//    }
 //    @RequestMapping(value = "/user-api/user/login", method = RequestMethod.POST)
 //    public void login(@RequestBody String mail,String password) {
 //        User user = this.userRepository.findById(uuid).get();

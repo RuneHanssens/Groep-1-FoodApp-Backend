@@ -43,11 +43,11 @@ public class Application {
     @Bean
     public CommandLineRunner UserCommandLineRunner(UserRepository userRepository){
         return (args) -> {
-            User user = new User();
-            userRepository.save(user);
-            User user2 = new User("Reinout","Vanhauwaert","Reinout.Vanhauwaert@student.ucll.be",true);
+//            User user = new User();
+//            userRepository.save(user);
+            User user2 = new User("Reinout.Vanhauwaert@student.ucll.be",true);
             userRepository.save(user2);
-            User user3 = new User("Gebruiker","Gebruiker","Gebruiker@Gebruiker.com",false);
+            User user3 = new User("Gebruiker@Gebruiker.com",false);
             userRepository.save(user3);
         };
     }
