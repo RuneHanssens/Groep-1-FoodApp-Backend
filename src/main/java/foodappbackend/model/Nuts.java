@@ -9,6 +9,9 @@ public class Nuts extends FoodItem {
     public Nuts() {
         this.setPoints();
     }
+    public Nuts(Boolean salted) {
+        this.setSalted(salted);
+    }
 
     public boolean getSalted() {
         return this.salted;
