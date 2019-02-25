@@ -5,9 +5,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 @Entity
@@ -15,7 +13,7 @@ import java.util.Map;
 public class Day {
     @Id
     @JsonFormat(pattern="yyyy-MM-dd")
-    private LocalDate creationDate;
+    private LocalDate date;
 
 //    @OneToMany(cascade = CascadeType.ALL)
     //@CollectionTable(name="list_of_categories")
@@ -29,7 +27,7 @@ public class Day {
     }
 
     public Day(LocalDate localDate) {
-        creationDate = localDate;
+        date = localDate;
         for(EnumCategory e : EnumCategory.values()) {
             categories.put(e,new Category<>(e.getMin(),e.getMax()));
         }
@@ -52,11 +50,11 @@ public class Day {
     }
 
     public LocalDate getDate() {
-        return creationDate;
+        return date;
     }
 
-    public void setCreationDate(LocalDate creationDate) {
-        this.creationDate = creationDate;
+    public void setDate(LocalDate date) {
+        this.date = date;
     }
 
     public void removeLast(EnumCategory category) {

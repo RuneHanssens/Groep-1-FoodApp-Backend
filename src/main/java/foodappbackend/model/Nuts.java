@@ -4,7 +4,7 @@ import javax.persistence.Entity;
 
 @Entity
 public class Nuts extends FoodItem {
-    private boolean salted;
+    private boolean salted, outdoors;
 
     public Nuts() {
         this.setPoints();
@@ -28,5 +28,13 @@ public class Nuts extends FoodItem {
             this.points = 50;
         else
             this.points = 20;
+    }
+
+    public boolean isOutdoors() {
+        return outdoors;
+    }
+
+    public void setOutdoors(boolean outdoors) {
+        this.outdoors = outdoors;
     }
 }

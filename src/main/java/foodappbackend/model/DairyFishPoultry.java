@@ -6,21 +6,28 @@ import javax.persistence.Entity;
 
 @Entity
 public class DairyFishPoultry extends FoodItem {
+    private boolean outdoors;
     private Type type = Type.DAIRY;
     private SubType subType;
     private int amount = 0; // Only used for eggs and milk...
 
     public DairyFishPoultry() { }
 
+    public boolean isOutdoors() {
+        return outdoors;
+    }
+
+    public void setOutdoors(boolean outdoors) {
+        this.outdoors = outdoors;
+    }
+
     public enum Type {
         @JsonProperty("Vis")
         FISH("Vis", 20),
         @JsonProperty("Zuivelproducten")
         DAIRY("Zuivelproducten"),
-        @JsonProperty("Kip")
+        @JsonProperty("Kip of Kalkoen")
         CHICKEN("Kip", 20),
-        @JsonProperty("Kalkoen")
-        TURKEY("Kalkoen", 20),
         @JsonProperty("Eieren")
         EGG("Ei",20);
         private final String FULLNAME;

@@ -6,9 +6,18 @@ import javax.persistence.Entity;
 
 @Entity
 public class FattyFood extends FoodItem {
+    private boolean outdoors;
     private Type type = Type.BUTTER;
 
     public FattyFood() { }
+
+    public boolean isOutdoors() {
+        return outdoors;
+    }
+
+    public void setOutdoors(boolean outdoors) {
+        this.outdoors = outdoors;
+    }
 
     public enum Type {
         @JsonProperty("Beleg")

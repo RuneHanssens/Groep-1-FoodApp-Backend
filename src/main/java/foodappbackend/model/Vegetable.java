@@ -4,7 +4,7 @@ import javax.persistence.Entity;
 
 @Entity
 public class Vegetable extends FoodItem {
-    private boolean more;
+    private boolean more, outdoors;
 
     public Vegetable(){}
 
@@ -15,9 +15,10 @@ public class Vegetable extends FoodItem {
     @Override
     protected void setPoints() {
         if(more)
-            this.points = 50;
+            this.points = 100;
         else
-            this.points = 20;
+            this.points = 50;
+        if(outdoors) this.points -= 20;
     }
 
     public boolean getMore() {
@@ -29,4 +30,12 @@ public class Vegetable extends FoodItem {
         this.setPoints();
     }
 
+    public boolean getOutdoors() {
+        return this.outdoors;
+    }
+
+    public void setOutdoors(boolean outdoors) {
+        this.outdoors = outdoors;
+        this.setPoints();
+    }
 }

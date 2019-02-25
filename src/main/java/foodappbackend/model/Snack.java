@@ -12,7 +12,7 @@ public class Snack extends FoodItem {
     public Snack(){};
 
     public enum Type {
-        @JsonProperty("Alchohol")
+        @JsonProperty("Alcohol")
         ALCOHOL(20),
         @JsonProperty("Frisdrank")
         FRISDRANK(),
@@ -46,7 +46,7 @@ public class Snack extends FoodItem {
         COOKIES(30),
         @JsonProperty("Light")
         LIGHT(10),
-        @JsonProperty("Normaal")
+        @JsonProperty("Gewoon")
         NORMAL(20),
         @JsonProperty("Gebak")
         PASTRY(40);

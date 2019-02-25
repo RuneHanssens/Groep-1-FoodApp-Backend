@@ -19,7 +19,6 @@ public class DayRepositoryController {
 
     public DayRepositoryController(DayRepository dayRepository) {
         this.dayRepository = dayRepository;
-
     }
 
     // FOR DEBUGGING PURPOSES
@@ -93,13 +92,15 @@ public class DayRepositoryController {
 
 
     @RequestMapping(value = "/api/day/points", method = RequestMethod.GET)
-    public Map<String, String> getDayPoints(@RequestParam(name = "date", required = false) String date) {
-        Map<String, String> map = new HashMap<>();
+    public Map<String, Map<String, String>> getDayPoints(@RequestParam(name = "date", required = false) String date) {
+        Map<String, Map<String, String>> map = new HashMap<>();
         Day day = this.getDay(date);
         for (EnumCategory c : EnumCategory.values()) {
-            map.put(c.toString(), String.valueOf(day.getPointsCategory(c)));
-            map.put(c.toString() + "overMin", String.valueOf(day.getCategory(c).getOverMin()));
-            map.put(c.toString() + "overMax", String.valueOf(day.getCategory(c).getOverMax()));
+            map.put(c.toString(), new HashMap<String, String>(){{
+                put("Points",String.valueOf(day.getPointsCategory(c)));
+                put("OverMin", String.valueOf(day.getCategory(c).getOverMin()));
+                put("OverMax", String.valueOf(day.getCategory(c).getOverMax()));
+            }});
         }
         return map;
     }
