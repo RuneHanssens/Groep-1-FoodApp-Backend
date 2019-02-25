@@ -1,6 +1,6 @@
 package foodappbackend.controllers;
 
-import foodappbackend.user.User;
+import foodappbackend.user.ApplicationUser;
 import foodappbackend.repositories.UserRepository;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -25,24 +25,24 @@ public class UserRepositoryController {
     }
 
     @RequestMapping(value = "/users", method = RequestMethod.GET)
-    public Iterable<User> getDayRepository() {
+    public Iterable<ApplicationUser> getDayRepository() {
         return this.userRepository.findAll();
     }
 
     @RequestMapping(value = "/user/sign-up", method = RequestMethod.POST)
-    public void signUp(@RequestBody User user) throws Exception {
-        if(this.userRepository.findByMail(user.getMail()) != null) throw new Exception("A user with the submitted email already exists.");
-        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
-        this.userRepository.save(user);
+    public void signUp(@RequestBody ApplicationUser applicationUser) throws Exception {
+        if(this.userRepository.findByMail(applicationUser.getMail()) != null) throw new Exception("A applicationUser with the submitted email already exists.");
+        applicationUser.setPassword(bCryptPasswordEncoder.encode(applicationUser.getPassword()));
+        this.userRepository.save(applicationUser);
     }
 
     @RequestMapping(value = "/user/sign-in", method = RequestMethod.POST)
     public String signIn(@RequestBody String mail, String password) throws UsernameNotFoundException {
-        User user = this.userRepository.findByMail(mail);
-        if(user == null) throw new UsernameNotFoundException(mail);
+        ApplicationUser applicationUser = this.userRepository.findByMail(mail);
+        if(applicationUser == null) throw new UsernameNotFoundException(mail);
 //        String response = "404";
-//        Iterable<User> users = this.userRepository.findAll();
-//        for (User u : users) {
+//        Iterable<ApplicationUser> users = this.userRepository.findAll();
+//        for (ApplicationUser u : users) {
 //            if (mail == null || u.getMail().equals(mail)) {
 //                response = u.getId().toString();
 //            }
@@ -52,7 +52,7 @@ public class UserRepositoryController {
     }
 //    @RequestMapping(value = "/user/day", method = RequestMethod.POST)
 //    public void putDayInUserInUserRepository(@RequestBody Day day, @RequestParam(name = "id", required = true)String id) {
-//        User user = null;
+//        ApplicationUser user = null;
 //        if(this.userRepository.findById(UUID.fromString(id)).isPresent()){
 //            user = this.userRepository.findById(UUID.fromString(id)).get();
 //            user.addDay(day);
@@ -62,7 +62,7 @@ public class UserRepositoryController {
 //    }
 //    @RequestMapping(value = "/user/login", method = RequestMethod.POST)
 //    public void login(@RequestBody String mail,String password) {
-//        User user = this.userRepository.findById(uuid).get();
+//        ApplicationUser user = this.userRepository.findById(uuid).get();
 //        //this.userRepository.save(D)
 //    }
 

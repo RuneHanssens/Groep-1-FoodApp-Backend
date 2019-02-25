@@ -10,7 +10,7 @@ import java.util.UUID;
 
 @Entity
 @Table(name = "table_user")
-public class User {
+public class ApplicationUser {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -28,11 +28,11 @@ public class User {
     @ElementCollection
     private Map<LocalDate, Day> days;
 
-    public User() {
+    public ApplicationUser() {
 
     }
 
-    public User(/*String name, String lastName, */String mail, String password, /*long age,*/ boolean admin) {
+    public ApplicationUser(/*String name, String lastName, */String mail, String password, /*long age,*/ boolean admin) {
 //        setName(name);
 //        setLastName(lastName);
         setMail(mail);

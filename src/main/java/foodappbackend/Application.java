@@ -3,7 +3,7 @@ import foodappbackend.model.*;
 
 import foodappbackend.repositories.DayRepository;
 import foodappbackend.repositories.UserRepository;
-import foodappbackend.user.User;
+import foodappbackend.user.ApplicationUser;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -51,12 +51,12 @@ public class Application {
     @Bean
     public CommandLineRunner UserCommandLineRunner(UserRepository userRepository){
         return (args) -> {
-//            User user = new User();
+//            ApplicationUser user = new ApplicationUser();
 //            userRepository.save(user);
-            User user2 = new User("Reinout.Vanhauwaert@student.ucll.be","t",true);
-            userRepository.save(user2);
-            User user3 = new User("Gebruiker@Gebruiker.com","t",false);
-            userRepository.save(user3);
+            ApplicationUser applicationUser2 = new ApplicationUser("Reinout.Vanhauwaert@student.ucll.be","t",true);
+            userRepository.save(applicationUser2);
+            ApplicationUser applicationUser3 = new ApplicationUser("Gebruiker@Gebruiker.com","t",false);
+            userRepository.save(applicationUser3);
         };
     }
     @Bean
