@@ -16,8 +16,7 @@ public class Fruit extends FoodItem {
 
     @Override
     protected void setPoints() {
-        if(outdoor) this.points = 20;
-        else this.points = amount * 40;
+        this.points = amount * 50;
     }
 
     public int getAmount() {

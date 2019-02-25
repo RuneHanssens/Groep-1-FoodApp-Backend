@@ -3,15 +3,15 @@ package foodappbackend.model;
 import javax.persistence.Entity;
 
 public enum EnumCategory {
-    VEGETABLE(100,1000),
+    VEGETABLE(100,400),
     WATER(100,1000),
-    SNACK(0, 1000),
-    STARCHPRODUCT(100, 1000),
-    NUTS(100, 1000),
+    SNACK(0, 50),
+    STARCHPRODUCT(20, 110),
+    NUTS(0, 110),
     MOVEMENT(100, 1000),
-    FRUIT(100, 1000),
-    FATTYFOOD(100, 1000),
-    DAIRYFISHPOULTRY(100, 1000);
+    FRUIT(100, 400),
+    FATTYFOOD(0, 50),
+    DAIRYFISHPOULTRY(40, 110);
 
     private int min, max;
     private EnumCategory(int min, int max){
