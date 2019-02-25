@@ -1,22 +1,16 @@
 package foodappbackend;
 import foodappbackend.model.*;
 
-import javax.sql.DataSource;
 import foodappbackend.repositories.DayRepository;
 import foodappbackend.repositories.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import foodappbackend.user.User;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
-import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.datasource.embedded.EmbeddedDatabase;
-import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseBuilder;
-import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
-import java.math.BigDecimal;
 import java.time.LocalDate;
 
 @SpringBootApplication
@@ -34,7 +28,7 @@ public class Application {
             day.add(EnumCategory.WATER,new Water(5));
             day.add(EnumCategory.MOVEMENT,new Movement(Movement.Type.ZWEMMEN,60));
             day.add(EnumCategory.DAIRYFISHPOULTRY,new DairyFishPoultry(DairyFishPoultry.Type.EGG));
-            day.add(EnumCategory.DAIRYFISHPOULTRY,new DairyFishPoultry(DairyFishPoultry.Type.TURKEY));
+            day.add(EnumCategory.DAIRYFISHPOULTRY,new DairyFishPoultry(DairyFishPoultry.Type.CHICKEN));
             dayRepository.save(day);
 
             Day day2 = new Day(LocalDate.of(2019,2,20));

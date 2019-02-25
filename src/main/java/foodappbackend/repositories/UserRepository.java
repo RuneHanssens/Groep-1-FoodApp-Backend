@@ -1,12 +1,11 @@
 package foodappbackend.repositories;
 
-import foodappbackend.model.User;
-import org.springframework.data.repository.CrudRepository;
+import foodappbackend.user.User;
+import org.springframework.data.jpa.repository.JpaRepository;
 
-import java.time.LocalDate;
 import java.util.UUID;
 
-public interface UserRepository extends CrudRepository<User,UUID> {
-//    public UUID login(String mail,String password);
+public interface UserRepository extends JpaRepository<User,UUID> {
+    User findByMail(String mail);
 }
 

@@ -1,4 +1,6 @@
-package foodappbackend.model;
+package foodappbackend.user;
+
+import foodappbackend.model.Day;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -14,6 +16,7 @@ public class User {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
 //    @Id
+    @Column(unique = true)
     private String mail;
 //    private String name;
 //    private String lastName;
@@ -23,7 +26,7 @@ public class User {
 
     @Lob
     @ElementCollection
-    private Map<LocalDate,Day> days;
+    private Map<LocalDate, Day> days;
 
     public User() {
 
