@@ -17,7 +17,7 @@ public class User {
     private String mail;
 //    private String name;
 //    private String lastName;
-//    private String password;
+    private String password;
 //    private long age;
     private boolean admin = false;
 
@@ -29,11 +29,11 @@ public class User {
 
     }
 
-    public User(/*String name, String lastName, */String mail/* String password, *//*long age,*/ ,boolean admin) {
+    public User(/*String name, String lastName, */String mail, String password, /*long age,*/ boolean admin) {
 //        setName(name);
 //        setLastName(lastName);
         setMail(mail);
-//        setPassword(password);
+        setPassword(password);
 //        setAge(age);
 //        setAdmin(admin);
         setDays(new HashMap<>());
@@ -80,13 +80,13 @@ public class User {
         this.mail = mail;
     }
 
-//    public String getPassword() {
-//        return password;
-//    }
-//
-//    public void setPassword(String password) {
-//        this.password = password;
-//    }
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
 
     public Map<LocalDate, Day> getDays() {
         return days;

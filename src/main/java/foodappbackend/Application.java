@@ -14,6 +14,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabase;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseBuilder;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -53,17 +54,21 @@ public class Application {
             dayRepository.save(today);
         };
     }
-//    @Bean
-//    public CommandLineRunner UserCommandLineRunner(UserRepository userRepository){
-//        return (args) -> {
-////            User user = new User();
-////            userRepository.save(user);
-////            User user2 = new User("Reinout.Vanhauwaert@student.ucll.be",true);
-////            userRepository.save(user2);
-////            User user3 = new User("Gebruiker@Gebruiker.com",false);
-////            userRepository.save(user3);
-//        };
-//    }
+    @Bean
+    public CommandLineRunner UserCommandLineRunner(UserRepository userRepository){
+        return (args) -> {
+//            User user = new User();
+//            userRepository.save(user);
+            User user2 = new User("Reinout.Vanhauwaert@student.ucll.be","t",true);
+            userRepository.save(user2);
+            User user3 = new User("Gebruiker@Gebruiker.com","t",false);
+            userRepository.save(user3);
+        };
+    }
+    @Bean
+    public BCryptPasswordEncoder bCryptPasswordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
 //    @Autowired
 //    JdbcTemplate jdbcTemplate;
 //    @Bean
