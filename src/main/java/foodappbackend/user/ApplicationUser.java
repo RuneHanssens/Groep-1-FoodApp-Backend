@@ -1,14 +1,9 @@
 package foodappbackend.user;
 
-import foodappbackend.controllers.DayRepositoryController;
-import foodappbackend.model.Day;
 import foodappbackend.repositories.DayRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.persistence.*;
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.UUID;
 
 @Entity
@@ -19,24 +14,26 @@ public class ApplicationUser {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
     @Column(unique = true)
-    private String mail;
+    private String userName;
     private String password;
     private boolean admin = false;
     //@OneToMany(cascade = CascadeType.ALL)
     @Lob
 //    private ArrayList<Day> days = new ArrayList<Day>();
 //    private HashMap<LocalDate, Day> days;
+    @Autowired
     private DayRepository dayRepository;
 
     public ApplicationUser() {
 
     }
 
-    public ApplicationUser(/*String name, String lastName, */String mail, String password, /*long age,*/ boolean admin) {
+    public ApplicationUser(/*String name, String lastName, */String userName, String password, /*long age,*/ boolean admin, DayRepository dayRepository) {
 
-        setMail(mail);
+        setUserName(userName);
         setPassword(password);
         setAdmin(admin);
+        setDayRepository(dayRepository);
     }
 
     public UUID getId() {
@@ -56,12 +53,12 @@ public class ApplicationUser {
         this.admin = admin;
     }
 
-    public String getMail() {
-        return mail;
+    public String getUserName() {
+        return userName;
     }
 
-    public void setMail(String mail) {
-        this.mail = mail;
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 
     public String getPassword() {

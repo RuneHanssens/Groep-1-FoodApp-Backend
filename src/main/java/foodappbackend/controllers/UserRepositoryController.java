@@ -31,19 +31,19 @@ public class UserRepositoryController {
 
     @RequestMapping(value = "/user/sign-up", method = RequestMethod.POST)
     public void signUp(@RequestBody ApplicationUser applicationUser) throws Exception {
-        if(this.userRepository.findByMail(applicationUser.getMail()) != null) throw new Exception("A applicationUser with the submitted email already exists.");
+        if(this.userRepository.findByUserName(applicationUser.getUserName()) != null) throw new Exception("A applicationUser with the submitted email already exists.");
         applicationUser.setPassword(bCryptPasswordEncoder.encode(applicationUser.getPassword()));
         this.userRepository.save(applicationUser);
     }
 
     @RequestMapping(value = "/user/sign-in", method = RequestMethod.POST)
     public String signIn(@RequestBody String mail, String password) throws UsernameNotFoundException {
-        ApplicationUser applicationUser = this.userRepository.findByMail(mail);
+        ApplicationUser applicationUser = this.userRepository.findByUserName(mail);
         if(applicationUser == null) throw new UsernameNotFoundException(mail);
 //        String response = "404";
 //        Iterable<ApplicationUser> users = this.userRepository.findAll();
 //        for (ApplicationUser u : users) {
-//            if (mail == null || u.getMail().equals(mail)) {
+//            if (mail == null || u.getUserName().equals(mail)) {
 //                response = u.getId().toString();
 //            }
 //        }

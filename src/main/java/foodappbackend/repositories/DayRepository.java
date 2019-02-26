@@ -7,6 +7,7 @@ import org.springframework.stereotype.Repository;
 
 import java.time.LocalDate;
 
+@Repository
 public interface  DayRepository extends CrudRepository<Day,LocalDate>{}
 
 //import org.apache.tomcat.jni.Local;
