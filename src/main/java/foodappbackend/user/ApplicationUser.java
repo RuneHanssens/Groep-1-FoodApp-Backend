@@ -1,7 +1,9 @@
 package foodappbackend.user;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
+import com.fasterxml.jackson.datatype.jsr310.deser.key.LocalDateKeyDeserializer;
 import foodappbackend.model.Day;
 import foodappbackend.repositories.DayRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +29,7 @@ public class ApplicationUser {
     //@OneToMany(mappedBy = "applicationUser")
     @Lob
     @ElementCollection
+    @JsonDeserialize(keyUsing = LocalDateKeyDeserializer.class)
     //@MapKeyTemporal(TemporalType.TIMESTAMP)
 //    private ArrayList<Day> days = new ArrayList<Day>();
     private Map<LocalDate, Day> days = new HashMap<>();
