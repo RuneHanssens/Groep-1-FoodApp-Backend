@@ -2,14 +2,19 @@ package foodappbackend.controllers;
 
 import com.auth0.jwt.JWT;
 import foodappbackend.model.Day;
+import foodappbackend.model.EnumCategory;
+import foodappbackend.model.FoodItem;
 import foodappbackend.repositories.DayRepository;
 import foodappbackend.repositories.UserRepository;
 import foodappbackend.user.ApplicationUser;
+import org.apache.tomcat.jni.Local;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.HashMap;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api")
@@ -55,13 +60,30 @@ public class MainController {
     }
     @RequestMapping(value = "/user/day", method = RequestMethod.GET)
     public Day getDay(@RequestHeader("Authorization") String authorizationHeader, @RequestParam(name = "date", required = false) String date){
+        Map<LocalDate, Day> days = this.userRepository.findByUserName(this.getUserName(authorizationHeader)).getDays();
+        days.putIfAbsent(this.getDate(date), new Day());
+        return days.get(this.getDate(date));
+    }
 
-        DayRepository dayRepository = this.userRepository.findByUserName(this.getUserName(authorizationHeader)).getDayRepository();
-        LocalDate localDate = this.getDate(date);
-        if (dayRepository.findById(localDate).isPresent()) {
-            return dayRepository.findById(localDate).get();
-        }
+    @RequestMapping(value = "/day-api/day/{food_type}", method = RequestMethod.GET)
+    public Iterable<FoodItem> getDayVegetableRepository(@RequestHeader("Authorization") String authorizationHeader, @RequestParam(name = "date", required = false) String date, @PathVariable String food_type) {
+        Day day = this.getDay(authorizationHeader, date);
+        return day.getCategory(EnumCategory.valueOf(food_type.toUpperCase()));
+    }
+    @RequestMapping(value = "/day-api/day/{food_type}", method = RequestMethod.POST)
+    public int putFoodItemInDayRepository(@RequestHeader("Authorization") String authorizationHeader, @RequestBody FoodItem foodItem, @RequestParam(name = "date", required = false) String date, @PathVariable String food_type) throws ClassNotFoundException {
+        this.getDay(authorizationHeader, date).add(EnumCategory.valueOf(food_type.toUpperCase()), foodItem);
+        //this.addToDayRepo(EnumCategory.valueOf(food_type.toUpperCase()), (FoodItem)(Class.forName("foodappbackend.model." + food_type.substring(0,1).toUpperCase() + food_type.substring(1))).cast(foodItem), date);
+        return this.getDayCategoryPoints(authorizationHeader, date, food_type);
+    }
+    @RequestMapping(value = "/day-api/day/{food_type}/points", method = RequestMethod.GET)
+    public int getDayCategoryPoints(@RequestHeader("Authorization") String authorizationHeader, @RequestParam(name = "date", required = false) String date, @PathVariable String food_type) {
+        Day day = this.getDay(authorizationHeader, date);
+        return day.getPointsCategory(EnumCategory.valueOf(food_type.toUpperCase()));
+    }
 
-        return dayRepository.save(new Day(localDate));
+    @RequestMapping(value = "/day-api/day/{food_type}/undo", method = RequestMethod.GET)
+    public void removeLastFoodItem(@RequestHeader("Authorization") String authorizationHeader, @RequestParam(name = "date", required = false) String date, @PathVariable String food_type) {
+        this.getDay(authorizationHeader, date).removeLast(EnumCategory.valueOf(food_type.toUpperCase()));
     }
 }

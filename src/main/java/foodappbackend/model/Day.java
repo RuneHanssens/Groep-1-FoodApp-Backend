@@ -1,6 +1,7 @@
 package foodappbackend.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import foodappbackend.user.ApplicationUser;
 
 
 import javax.persistence.*;
@@ -14,7 +15,6 @@ public class Day {
     @Id
     @JsonFormat(pattern="yyyy-MM-dd")
     private LocalDate date;
-
 //    @OneToMany(cascade = CascadeType.ALL)
     //@CollectionTable(name="list_of_categories")
     //private List<FoodItem> foodItems = new ArrayList<>();
@@ -41,7 +41,8 @@ public class Day {
         return categories.get(enumCategory).getTotalPoints();
     }
 
-    public void add(EnumCategory category, FoodItem foodItem){
+    public void add(EnumCategory category, FoodItem foodItem) throws IllegalArgumentException {
+        if(foodItem == null) throw new IllegalArgumentException("An empty FoodItem cannot be added.");
         categories.get(category).add(foodItem);
     }
 

@@ -1,9 +1,16 @@
 package foodappbackend.user;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
+import foodappbackend.model.Day;
 import foodappbackend.repositories.DayRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
+import java.time.LocalDate;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 
 @Entity
@@ -17,23 +24,22 @@ public class ApplicationUser {
     private String userName;
     private String password;
     private boolean admin = false;
-    //@OneToMany(cascade = CascadeType.ALL)
+    //@OneToMany(mappedBy = "applicationUser")
     @Lob
+    @ElementCollection
+    //@MapKeyTemporal(TemporalType.TIMESTAMP)
 //    private ArrayList<Day> days = new ArrayList<Day>();
-//    private HashMap<LocalDate, Day> days;
-    @Autowired
-    private DayRepository dayRepository;
+    private Map<LocalDate, Day> days = new HashMap<>();
+//    @Autowired
+//    private DayRepository dayRepository;
 
-    public ApplicationUser() {
+    public ApplicationUser() { }
 
-    }
-
-    public ApplicationUser(/*String name, String lastName, */String userName, String password, /*long age,*/ boolean admin, DayRepository dayRepository) {
+    public ApplicationUser(/*String name, String lastName, */String userName, String password, /*long age,*/ boolean admin) {
 
         setUserName(userName);
         setPassword(password);
         setAdmin(admin);
-        setDayRepository(dayRepository);
     }
 
     public UUID getId() {
@@ -76,6 +82,7 @@ public class ApplicationUser {
 //        this.days = days;
 //    }
 
+    /*
     public DayRepository getDayRepository() {
         return dayRepository;
     }
@@ -83,14 +90,15 @@ public class ApplicationUser {
     public void setDayRepository(DayRepository dayRepository) {
         this.dayRepository = dayRepository;
     }
+    */
 
-//    public Map<LocalDate, Day> getDays() {
-//        return days;
-//    }
-//
-//    public void setDays(HashMap<LocalDate, Day> days) {
-//        this.days = days;
-//    }
+    public Map<LocalDate, Day> getDays() {
+        return days;
+    }
+
+    public void setDays(HashMap<LocalDate, Day> days) {
+        this.days = days;
+    }
 }
 //    public void addDay(Day day){
 //        this.days.put(day.getDate(), day);
