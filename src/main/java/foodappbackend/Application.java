@@ -53,10 +53,12 @@ public class Application {
         return (args) -> {
 //            ApplicationUser user = new ApplicationUser();
 //            userRepository.save(user);
-            ApplicationUser applicationUser2 = new ApplicationUser("Reinout.Vanhauwaert@student.ucll.be","t",true);
-            userRepository.save(applicationUser2);
-            ApplicationUser applicationUser3 = new ApplicationUser("Gebruiker@Gebruiker.com","t",false);
-            userRepository.save(applicationUser3);
+//            ApplicationUser applicationUser = new ApplicationUser("Rune","t",true);
+//            userRepository.save(applicationUser);
+//            ApplicationUser applicationUser2 = new ApplicationUser("Reinout.Vanhauwaert@student.ucll.be","t",true);
+//            userRepository.save(applicationUser2);
+//            ApplicationUser applicationUser3 = new ApplicationUser("Gebruiker@Gebruiker.com","t",false);
+//            userRepository.save(applicationUser3);
         };
     }
     @Bean

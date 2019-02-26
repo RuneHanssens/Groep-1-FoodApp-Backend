@@ -1,9 +1,12 @@
 package foodappbackend.user;
 
+import foodappbackend.controllers.DayRepositoryController;
 import foodappbackend.model.Day;
+import foodappbackend.repositories.DayRepository;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
@@ -15,31 +18,25 @@ public class ApplicationUser {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
-//    @Id
     @Column(unique = true)
     private String mail;
-//    private String name;
-//    private String lastName;
     private String password;
-//    private long age;
     private boolean admin = false;
-
+    //@OneToMany(cascade = CascadeType.ALL)
     @Lob
-    @ElementCollection
-    private Map<LocalDate, Day> days;
+//    private ArrayList<Day> days = new ArrayList<Day>();
+//    private HashMap<LocalDate, Day> days;
+    private DayRepository dayRepository;
 
     public ApplicationUser() {
 
     }
 
     public ApplicationUser(/*String name, String lastName, */String mail, String password, /*long age,*/ boolean admin) {
-//        setName(name);
-//        setLastName(lastName);
+
         setMail(mail);
         setPassword(password);
-//        setAge(age);
-//        setAdmin(admin);
-        setDays(new HashMap<>());
+        setAdmin(admin);
     }
 
     public UUID getId() {
@@ -51,30 +48,14 @@ public class ApplicationUser {
     }
 
 
-//    public boolean isAdmin() {
-//        return admin;
-//    }
-//
-//    public void setAdmin(boolean admin) {
-//        this.admin = admin;
-//    }
-//
-//    public String getName() {
-//        return name;
-//    }
-//
-//    public void setName(String name) {
-//        this.name = name;
-//    }
-//
-//    public String getLastName() {
-//        return lastName;
-//    }
-//
-//    public void setLastName(String lastName) {
-//        this.lastName = lastName;
-//    }
-//
+    public boolean isAdmin() {
+        return admin;
+    }
+
+    public void setAdmin(boolean admin) {
+        this.admin = admin;
+    }
+
     public String getMail() {
         return mail;
     }
@@ -90,36 +71,33 @@ public class ApplicationUser {
     public void setPassword(String password) {
         this.password = password;
     }
-
-    public Map<LocalDate, Day> getDays() {
-        return days;
-    }
-
-    public void setDays(Map<LocalDate, Day> days) {
-        this.days = days;
-    }
-    public void addDay(Day day){
-        this.days.put(day.getDate(), day);
-    }
-    public Day getDay(LocalDate date){
-        return this.days.get(date);
-    }
-
-//    public long getAge() {
-//        return age;
+//    public ArrayList<Day> getDays() {
+//        return days;
 //    }
 //
-//    public void setAge(long age) {
-//        this.age = age;
+//    public void setDays(ArrayList<Day> days) {
+//        this.days = days;
 //    }
-//    private String HashFunction(String string){
-//        String Hashed;
+
+    public DayRepository getDayRepository() {
+        return dayRepository;
+    }
+
+    public void setDayRepository(DayRepository dayRepository) {
+        this.dayRepository = dayRepository;
+    }
+
+//    public Map<LocalDate, Day> getDays() {
+//        return days;
+//    }
 //
-//        HashCohashCode();
-////        SecureRandom secureRandom = new SecureRandom();
-////        byte[] salt = new byte[16];
-////        secureRandom.nextBytes(salt);
-//
-//        return Hashed;
+//    public void setDays(HashMap<LocalDate, Day> days) {
+//        this.days = days;
 //    }
 }
+//    public void addDay(Day day){
+//        this.days.put(day.getDate(), day);
+//    }
+//    public Day getDay(LocalDate date){
+//        return this.days.get(date);
+//    }

@@ -38,6 +38,7 @@ dependencies {
     //compile("org.springframework.security:spring-boot-starter-security")
     compile("org.springframework.security:spring-security-config")
     compile("com.auth0:java-jwt:3.4.0")
+//    compile("com.auth0:auth0-spring-security-api")
 //    compile("org.apache.derby:derby:10.14.2.0")
     compile("org.springframework.boot:spring-boot-starter-web")
     testCompile("junit:junit")
