@@ -59,18 +59,18 @@ public class MainController {
     @RequestMapping(value = "/user/day", method = RequestMethod.GET)
     public Day getDay(@RequestHeader("Authorization") String authorizationHeader, @RequestParam(name = "date", required = false) String date){
         //LocalDate localDate = this.getDate(date);
-        System.out.println(this.getDate(date));
-        System.out.println(this.getUserName(authorizationHeader));
-        System.out.println(this.userRepository.findByUserName(this.getUserName(authorizationHeader)).getDayIfExists(this.getDate(date)));
-        return this.userRepository.findByUserName(this.getUserName(authorizationHeader)).getDayIfExists(this.getDate(date)/*localDate*/);
+        return this.getUser(authorizationHeader).getDayIfExists(this.getDate(date)/*localDate*/);
 //        days.putIfAbsent(this.getDate(date), new Day());
 ////        return days.get(this.getDate(date));
     }
 
+    private ApplicationUser getUser(String authorizationHeader) {
+        return this.userRepository.findByUserName(this.getUserName(authorizationHeader));
+    }
+
     @RequestMapping(value = "/user/day/{food_type}", method = RequestMethod.GET)
-    public Iterable<FoodItem> getDayVegetableRepository(@RequestHeader("Authorization") String authorizationHeader, @RequestParam(name = "date", required = false) String date, @PathVariable String food_type) {
+    public Iterable<FoodItem> getDayCategoryRepository(@RequestHeader("Authorization") String authorizationHeader, @RequestParam(name = "date", required = false) String date, @PathVariable String food_type) {
         Day day = this.getDay(authorizationHeader, date);
-        System.out.println(EnumCategory.valueOf(food_type.toUpperCase()));
         return day.getCategory(EnumCategory.valueOf(food_type.toUpperCase()));
     }
     @RequestMapping(value = "/user/day/{food_type}/points", method = RequestMethod.GET)
@@ -129,9 +129,10 @@ public class MainController {
     @RequestMapping(value = "/user/day/water", method = RequestMethod.POST)
     public int putWaterInDayRepository(@RequestHeader("Authorization") String authorizationHeader, @RequestBody Water water, @RequestParam(name = "date", required = false) String date) throws ClassNotFoundException {
         //LocalDate localDate = this.getDate(date);
-        System.out.println(date/*localDate.toString()*/);
-        this.getDay(authorizationHeader, date/*localDate.toString()*/).add(EnumCategory.WATER, water);
-        return this.getDayCategoryPoints(authorizationHeader, date/*localDate.toString()*/, "water");
+        ApplicationUser user = this.getUser(authorizationHeader);
+        user.getDayIfExists(this.getDate(date)).add(EnumCategory.WATER, water);
+        this.userRepository.save(user);
+        return this.getDayCategoryPoints(authorizationHeader, date, "water");
     }
 
 }

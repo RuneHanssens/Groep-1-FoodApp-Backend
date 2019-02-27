@@ -6,6 +6,8 @@ import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.deser.key.LocalDateKeyDeserializer;
 import foodappbackend.model.Day;
 import foodappbackend.repositories.DayRepository;
+import org.hibernate.annotations.NotFound;
+import org.hibernate.annotations.NotFoundAction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -100,13 +102,11 @@ public class ApplicationUser {
         return days;
     }
     public Day getDayIfExists(LocalDate date) {
-        LocalDate localDate;
         if(date == null){
-            localDate = LocalDate.now();
-        }else{
-            localDate = date;
+            date = LocalDate.now();
         }
-        return this.days.putIfAbsent(date, new Day(date));
+        this.days.putIfAbsent(date, new Day(date));
+        return this.days.get(date);
     }
 
     public void setDays(HashMap<LocalDate, Day> days) {
