@@ -24,9 +24,9 @@ public class Day {
 
     //@CollectionTable(name="list_of_categories")
     //private List<FoodItem> foodItems = new ArrayList<>();
-//    @Lob
-//    @ElementCollection
-    @OneToMany(cascade = CascadeType.ALL)
+    @Lob
+    @ElementCollection
+//    @OneToMany(cascade = CascadeType.ALL)
     private Map<EnumCategory,Category<FoodItem>> categories = new HashMap<>();
 
     public Day(LocalDate localDate) {
@@ -37,10 +37,11 @@ public class Day {
     }
 
     public Category<FoodItem> getCategory(EnumCategory enumCategory){
-        return categories.get(enumCategory);
+        return this.categories.get(enumCategory);
     }
 
     public int getPointsCategory(EnumCategory enumCategory){
+
         return categories.get(enumCategory).getTotalPoints();
     }
 

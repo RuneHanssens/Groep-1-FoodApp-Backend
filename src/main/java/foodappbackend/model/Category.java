@@ -8,18 +8,18 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.UUID;
 
-@Entity
+//@Entity
 public class Category<E extends FoodItem> extends ArrayList<E> implements Serializable {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private UUID uuid;
-    public void setUuid(UUID uuid) {
-        this.uuid = uuid;
-    }
-    public UUID getUuid() {
-        return uuid;
-    }
+//    @Id
+//    @GeneratedValue(strategy = GenerationType.AUTO)
+//    private UUID uuid;
+//    public void setUuid(UUID uuid) {
+//        this.uuid = uuid;
+//    }
+//    public UUID getUuid() {
+//        return uuid;
+//    }
 
 
     private int totalPoints, min, max;

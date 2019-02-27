@@ -24,7 +24,7 @@ public class ApplicationUser {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private UUID id;
+    private long id;
     @Column(unique = true)
     private String userName;
     private String password;
@@ -40,17 +40,16 @@ public class ApplicationUser {
     }
 
     public ApplicationUser(/*String name, String lastName, */String userName, String password, /*long age,*/ boolean admin) {
-
         setUserName(userName);
         setPassword(password);
         setAdmin(admin);
     }
 
-    public UUID getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(UUID id) {
+    public void setId(long id) {
         this.id = id;
     }
 
@@ -82,11 +81,16 @@ public class ApplicationUser {
     public Map<LocalDate, Day> getDays() {
         return days;
     }
+
     public Day getDayIfExists(LocalDate date) {
         if(date == null){
             date = LocalDate.now();
         }
-        this.days.putIfAbsent(date, new Day(date));
+        if (this.days.containsKey(date)){
+
+        } else {
+            this.addDay( new Day(date));
+        }
         return this.days.get(date);
     }
 

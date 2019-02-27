@@ -51,6 +51,7 @@ public class MainController {
         if(this.userRepository.findByUserName(applicationUser.getUserName()) != null) throw new Exception("A applicationUser with the submitted email already exists.");
         applicationUser.setPassword(bCryptPasswordEncoder.encode(applicationUser.getPassword()));
         this.userRepository.save(applicationUser);
+        System.out.println("MainController - sign up - aantal users: " + this.userRepository.count());
     }
     @RequestMapping(value = "/users", method = RequestMethod.GET)
     public Iterable<ApplicationUser> getDayRepository() {
@@ -73,6 +74,13 @@ public class MainController {
         Day day = this.getDay(authorizationHeader, date);
         return day.getCategory(EnumCategory.valueOf(food_type.toUpperCase()));
     }
+
+    @RequestMapping(value = "/user/day/item/{food_type}", method = RequestMethod.GET)
+    public FoodItem test(@RequestHeader("Authorization") String authorizationHeader, @RequestParam(name = "date", required = false) String date, @PathVariable String food_type) {
+        Day day = this.getDay(authorizationHeader, date);
+        return day.getCategory(EnumCategory.valueOf(food_type.toUpperCase())).get(0);
+    }
+
     @RequestMapping(value = "/user/day/{food_type}/points", method = RequestMethod.GET)
     public int getDayCategoryPoints(@RequestHeader("Authorization") String authorizationHeader, @RequestParam(name = "date", required = false) String date, @PathVariable String food_type) {
         Day day = this.getDay(authorizationHeader, date);
@@ -87,43 +95,60 @@ public class MainController {
     /***************************************** POST ***************************************/
     @RequestMapping(value = "/user/day/dairyfishpoultry", method = RequestMethod.POST)
     public int putDairyFishPoultryInDayRepository(@RequestHeader("Authorization") String authorizationHeader, @RequestBody DairyFishPoultry dairyFishPoultry, @RequestParam(name = "date", required = false) String date) throws ClassNotFoundException {
-        this.getDay(authorizationHeader, date).add(EnumCategory.DAIRYFISHPOULTRY, dairyFishPoultry);
-        //this.addToDayRepo(EnumCategory.valueOf(food_type.toUpperCase()), (FoodItem)(Class.forName("foodappbackend.model." + food_type.substring(0,1).toUpperCase() + food_type.substring(1))).cast(foodItem), date);
+        ApplicationUser user = this.getUser(authorizationHeader);
+        user.getDayIfExists(this.getDate(date)).add(EnumCategory.DAIRYFISHPOULTRY, dairyFishPoultry);
+        this.userRepository.save(user);
         return this.getDayCategoryPoints(authorizationHeader, date, "dairyfishpoultry");
     }
     @RequestMapping(value = "/user/day/fattyfood", method = RequestMethod.POST)
     public int putFattyFoodInDayRepository(@RequestHeader("Authorization") String authorizationHeader, @RequestBody FattyFood fattyFood, @RequestParam(name = "date", required = false) String date) throws ClassNotFoundException {
-        this.getDay(authorizationHeader, date).add(EnumCategory.FATTYFOOD, fattyFood);
+        ApplicationUser user = this.getUser(authorizationHeader);
+        user.getDayIfExists(this.getDate(date)).add(EnumCategory.FATTYFOOD, fattyFood);
+        this.userRepository.save(user);
         return this.getDayCategoryPoints(authorizationHeader, date, "fattyfood");
     }
     @RequestMapping(value = "/user/day/fruit", method = RequestMethod.POST)
     public int putFruitInDayRepository(@RequestHeader("Authorization") String authorizationHeader, @RequestBody Fruit fruit, @RequestParam(name = "date", required = false) String date) throws ClassNotFoundException {
-        this.getDay(authorizationHeader, date).add(EnumCategory.FRUIT, fruit);
+        ApplicationUser user = this.getUser(authorizationHeader);
+        user.getDayIfExists(this.getDate(date)).add(EnumCategory.FRUIT, fruit);
+        this.userRepository.save(user);
         return this.getDayCategoryPoints(authorizationHeader, date, "fruit");
     }
     @RequestMapping(value = "/user/day/movement", method = RequestMethod.POST)
     public int putMovementInDayRepository(@RequestHeader("Authorization") String authorizationHeader, @RequestBody Movement movement, @RequestParam(name = "date", required = false) String date) throws ClassNotFoundException {
+        ApplicationUser user = this.getUser(authorizationHeader);
+        user.getDayIfExists(this.getDate(date)).add(EnumCategory.MOVEMENT, movement);
         this.getDay(authorizationHeader, date).add(EnumCategory.MOVEMENT, movement);
+        this.userRepository.save(user);
         return this.getDayCategoryPoints(authorizationHeader, date, "movement");
     }
     @RequestMapping(value = "/user/day/nuts", method = RequestMethod.POST)
     public int putNutsInDayRepository(@RequestHeader("Authorization") String authorizationHeader, @RequestBody Nuts nuts, @RequestParam(name = "date", required = false) String date) throws ClassNotFoundException {
+        ApplicationUser user = this.getUser(authorizationHeader);
+        user.getDayIfExists(this.getDate(date)).add(EnumCategory.NUTS, nuts);
         this.getDay(authorizationHeader, date).add(EnumCategory.NUTS, nuts);
+        this.userRepository.save(user);
         return this.getDayCategoryPoints(authorizationHeader, date, "nuts");
     }
     @RequestMapping(value = "/user/day/snack", method = RequestMethod.POST)
     public int putSnackInDayRepository(@RequestHeader("Authorization") String authorizationHeader, @RequestBody Snack snack, @RequestParam(name = "date", required = false) String date) throws ClassNotFoundException {
-        this.getDay(authorizationHeader, date).add(EnumCategory.SNACK, snack);
+        ApplicationUser user = this.getUser(authorizationHeader);
+        user.getDayIfExists(this.getDate(date)).add(EnumCategory.SNACK, snack);
+        this.userRepository.save(user);
         return this.getDayCategoryPoints(authorizationHeader, date, "snack");
     }
     @RequestMapping(value = "/user/day/starchproduct", method = RequestMethod.POST)
     public int putStarchProductInDayRepository(@RequestHeader("Authorization") String authorizationHeader, @RequestBody StarchProduct starchProduct, @RequestParam(name = "date", required = false) String date) throws ClassNotFoundException {
-        this.getDay(authorizationHeader, date).add(EnumCategory.STARCHPRODUCT, starchProduct);
+        ApplicationUser user = this.getUser(authorizationHeader);
+        user.getDayIfExists(this.getDate(date)).add(EnumCategory.STARCHPRODUCT, starchProduct);
+        this.userRepository.save(user);
         return this.getDayCategoryPoints(authorizationHeader, date, "starchproduct");
     }
     @RequestMapping(value = "/user/day/vegetable", method = RequestMethod.POST)
     public int putVegetableInDayRepository(@RequestHeader("Authorization") String authorizationHeader, @RequestBody Vegetable vegetable, @RequestParam(name = "date", required = false) String date) throws ClassNotFoundException {
-        this.getDay(authorizationHeader, date).add(EnumCategory.VEGETABLE, vegetable);
+        ApplicationUser user = this.getUser(authorizationHeader);
+        user.getDayIfExists(this.getDate(date)).add(EnumCategory.VEGETABLE, vegetable);
+        this.userRepository.save(user);
         return this.getDayCategoryPoints(authorizationHeader, date, "vegetable");
     }
     @RequestMapping(value = "/user/day/water", method = RequestMethod.POST)

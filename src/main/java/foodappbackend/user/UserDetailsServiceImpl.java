@@ -25,6 +25,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         if (applicationUser == null) {
             throw new UsernameNotFoundException(userName);
         }
+        System.out.println("token user loaded");
         return new User(applicationUser.getUserName(), applicationUser.getPassword(), emptyList());
     }
 }
