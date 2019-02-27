@@ -32,6 +32,7 @@ public class ApplicationUser {
     @Lob
     @ElementCollection
     @JsonDeserialize(keyUsing = LocalDateKeyDeserializer.class)
+    @OneToMany(cascade = CascadeType.ALL)
     //@MapKeyTemporal(TemporalType.TIMESTAMP)
 //    private ArrayList<Day> days = new ArrayList<Day>();
     private Map<LocalDate, Day> days = new HashMap<>();
