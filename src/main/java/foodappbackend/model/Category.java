@@ -1,11 +1,31 @@
 package foodappbackend.model;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.UUID;
 
+@Entity
 public class Category<E extends FoodItem> extends ArrayList<E> implements Serializable {
-    private int totalPoints, min, max;
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private UUID uuid;
+    public void setUuid(UUID uuid) {
+        this.uuid = uuid;
+    }
+    public UUID getUuid() {
+        return uuid;
+    }
+
+
+    private int totalPoints, min, max;
+    public Category(){
+
+    }
     public Category(int min, int max) {
         this.min = min;
         this.max = max;

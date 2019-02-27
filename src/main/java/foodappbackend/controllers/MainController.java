@@ -2,7 +2,7 @@ package foodappbackend.controllers;
 
 import com.auth0.jwt.JWT;
 import foodappbackend.model.*;
-import foodappbackend.repositories.DayRepository;
+//import foodappbackend.repositories.DayRepository;
 import foodappbackend.repositories.UserRepository;
 import foodappbackend.user.ApplicationUser;
 import org.apache.tomcat.jni.Local;

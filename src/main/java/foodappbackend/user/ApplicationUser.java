@@ -5,7 +5,7 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.deser.key.LocalDateKeyDeserializer;
 import foodappbackend.model.Day;
-import foodappbackend.repositories.DayRepository;
+//import foodappbackend.repositories.DayRepository;
 import org.hibernate.annotations.NotFound;
 import org.hibernate.annotations.NotFoundAction;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +15,7 @@ import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.TreeMap;
 import java.util.UUID;
 
 @Entity
@@ -28,16 +29,12 @@ public class ApplicationUser {
     private String userName;
     private String password;
     private boolean admin = false;
-    //@OneToMany(mappedBy = "applicationUser")
-    @Lob
-    @ElementCollection
+
+//    @Lob
+    //@ElementCollection
     @JsonDeserialize(keyUsing = LocalDateKeyDeserializer.class)
     @OneToMany(cascade = CascadeType.ALL)
-    //@MapKeyTemporal(TemporalType.TIMESTAMP)
-//    private ArrayList<Day> days = new ArrayList<Day>();
     private Map<LocalDate, Day> days = new HashMap<>();
-//    @Autowired
-//    private DayRepository dayRepository;
 
     public ApplicationUser() {
     }
@@ -81,23 +78,6 @@ public class ApplicationUser {
     public void setPassword(String password) {
         this.password = password;
     }
-//    public ArrayList<Day> getDays() {
-//        return days;
-//    }
-//
-//    public void setDays(ArrayList<Day> days) {
-//        this.days = days;
-//    }
-
-    /*
-    public DayRepository getDayRepository() {
-        return dayRepository;
-    }
-
-    public void setDayRepository(DayRepository dayRepository) {
-        this.dayRepository = dayRepository;
-    }
-    */
 
     public Map<LocalDate, Day> getDays() {
         return days;

@@ -1,7 +1,7 @@
 package foodappbackend;
 import foodappbackend.model.*;
 
-import foodappbackend.repositories.DayRepository;
+//import foodappbackend.repositories.DayRepository;
 import foodappbackend.repositories.UserRepository;
 import foodappbackend.user.ApplicationUser;
 import org.springframework.boot.CommandLineRunner;
@@ -48,19 +48,19 @@ public class Application {
 //            dayRepository.save(today);
 //        };
 //    }
-    @Bean
-    public CommandLineRunner UserCommandLineRunner(UserRepository userRepository){
-        return (args) -> {
-//            ApplicationUser user = new ApplicationUser();
-//            userRepository.save(user);
-//            ApplicationUser applicationUser = new ApplicationUser("Rune","t",true);
-//            userRepository.save(applicationUser);
-//            ApplicationUser applicationUser2 = new ApplicationUser("Reinout.Vanhauwaert@student.ucll.be","t",true);
-//            userRepository.save(applicationUser2);
-//            ApplicationUser applicationUser3 = new ApplicationUser("Gebruiker@Gebruiker.com","t",false);
-//            userRepository.save(applicationUser3);
-        };
-    }
+//    @Bean
+//    public CommandLineRunner UserCommandLineRunner(UserRepository userRepository){
+//        return (args) -> {
+////            ApplicationUser user = new ApplicationUser();
+////            userRepository.save(user);
+////            ApplicationUser applicationUser = new ApplicationUser("Rune","t",true);
+////            userRepository.save(applicationUser);
+////            ApplicationUser applicationUser2 = new ApplicationUser("Reinout.Vanhauwaert@student.ucll.be","t",true);
+////            userRepository.save(applicationUser2);
+////            ApplicationUser applicationUser3 = new ApplicationUser("Gebruiker@Gebruiker.com","t",false);
+////            userRepository.save(applicationUser3);
+//        };
+//    }
     @Bean
     public BCryptPasswordEncoder bCryptPasswordEncoder() {
         return new BCryptPasswordEncoder();
