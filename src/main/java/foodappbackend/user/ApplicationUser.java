@@ -36,7 +36,8 @@ public class ApplicationUser {
 //    @Autowired
 //    private DayRepository dayRepository;
 
-    public ApplicationUser() { }
+    public ApplicationUser() {
+    }
 
     public ApplicationUser(/*String name, String lastName, */String userName, String password, /*long age,*/ boolean admin) {
 
@@ -98,14 +99,25 @@ public class ApplicationUser {
     public Map<LocalDate, Day> getDays() {
         return days;
     }
+    public Day getDayIfExists(LocalDate date) {
+        LocalDate localDate;
+        if(date == null){
+            localDate = LocalDate.now();
+        }else{
+            localDate = date;
+        }
+        return this.days.putIfAbsent(date, new Day(date));
+    }
 
     public void setDays(HashMap<LocalDate, Day> days) {
         this.days = days;
     }
+
+    public void addDay(Day day) {
+        this.days.putIfAbsent(day.getDate(), day);
+    }
+
+    public Day getDay(LocalDate date) {
+        return this.days.get(date);
+    }
 }
-//    public void addDay(Day day){
-//        this.days.put(day.getDate(), day);
-//    }
-//    public Day getDay(LocalDate date){
-//        return this.days.get(date);
-//    }
