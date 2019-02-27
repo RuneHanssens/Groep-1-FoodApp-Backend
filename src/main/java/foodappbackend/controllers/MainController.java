@@ -118,7 +118,6 @@ public class MainController {
     public int putMovementInDayRepository(@RequestHeader("Authorization") String authorizationHeader, @RequestBody Movement movement, @RequestParam(name = "date", required = false) String date) throws ClassNotFoundException {
         ApplicationUser user = this.getUser(authorizationHeader);
         user.getDayIfExists(this.getDate(date)).add(EnumCategory.MOVEMENT, movement);
-        this.getDay(authorizationHeader, date).add(EnumCategory.MOVEMENT, movement);
         this.userRepository.save(user);
         return this.getDayCategoryPoints(authorizationHeader, date, "movement");
     }
@@ -126,7 +125,6 @@ public class MainController {
     public int putNutsInDayRepository(@RequestHeader("Authorization") String authorizationHeader, @RequestBody Nuts nuts, @RequestParam(name = "date", required = false) String date) throws ClassNotFoundException {
         ApplicationUser user = this.getUser(authorizationHeader);
         user.getDayIfExists(this.getDate(date)).add(EnumCategory.NUTS, nuts);
-        this.getDay(authorizationHeader, date).add(EnumCategory.NUTS, nuts);
         this.userRepository.save(user);
         return this.getDayCategoryPoints(authorizationHeader, date, "nuts");
     }
@@ -156,6 +154,7 @@ public class MainController {
         //LocalDate localDate = this.getDate(date);
         ApplicationUser user = this.getUser(authorizationHeader);
         user.getDayIfExists(this.getDate(date)).add(EnumCategory.WATER, water);
+        System.out.println("saving user for water");
         this.userRepository.save(user);
         return this.getDayCategoryPoints(authorizationHeader, date, "water");
     }
