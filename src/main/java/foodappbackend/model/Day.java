@@ -19,10 +19,10 @@ public class Day {
     @Id
     @Column(name = "day_id")
     @JsonFormat(pattern="yyyy-MM-dd")
-    private LocalDate date;
+    public LocalDate date;
     @Id
     @JoinColumn(name = "user_id")
-    private ApplicationUser user;
+    public ApplicationUser user;
     public Day() { }
 
     //@CollectionTable(name="list_of_categories")
