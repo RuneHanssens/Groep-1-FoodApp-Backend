@@ -71,8 +71,8 @@ public class MainController {
         return this.getUser(authorizationHeader).getDayIfExists(this.getDate(date)/*localDate*/);
     }
 
-    private Day getDay(String authorizationHeader, LocalDate date) {
-        return this.getUser(authorizationHeader).getDayIfExists(date);
+    private Day getDay(String username, LocalDate date) {
+        return this.userRepository.findByUserName(username).getDayIfExists(date);
     }
 
     private ApplicationUser getUser(String authorizationHeader) {
@@ -94,10 +94,10 @@ public class MainController {
     }
 
     @RequestMapping(value = "/user/dayrange", method = RequestMethod.GET)
-    public Map<String, Map<String, String>> getTimePeriod(@RequestHeader("Authorization") String authorizationHeader, @RequestParam(name = "startdate", required = false) String startDate, @RequestParam(name = "endDate", required = false) String endDate, @RequestParam(name = "category") String category) {
+    public Map<String, Map<String, String>> getTimePeriod(@RequestParam(name = "startdate", required = false) String startDate, @RequestParam(name = "endDate", required = false) String endDate, @RequestParam(name = "category") String category, @RequestParam(value = "username") String username) {
         HashMap<String, Map<String, String>> res = new HashMap<>();
         for(LocalDate current = this.getDate(startDate); !current.isAfter(this.getDate(endDate)); current.plusDays(1)) {
-            Day day = this.getDay(authorizationHeader, current);
+            Day day = this.getDay(username, current);
             res.put(current.toString(), new HashMap<String, String>(){{
                 put("Points", String.valueOf(day.getPointsCategory(category)));
                 put("OverMin", String.valueOf(day.getCategory(category).getOverMin()));
