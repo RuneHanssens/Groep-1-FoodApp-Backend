@@ -19,9 +19,6 @@ public class Day {
     @Column(name = "day_id")
     @JsonFormat(pattern="yyyy-MM-dd")
     private LocalDate date;
-    @OneToOne
-    @JoinColumn
-    private ApplicationUser user;
     public Day() { }
 
     //@CollectionTable(name="list_of_categories")
@@ -31,9 +28,8 @@ public class Day {
 //    @OneToMany(cascade = CascadeType.ALL)
     private Map<EnumCategory,Category<FoodItem>> categories = new HashMap<>();
 
-    public Day(LocalDate localDate, ApplicationUser user) {
+    public Day(LocalDate localDate) {
         date = localDate;
-        this.user = user;
         for(EnumCategory e : EnumCategory.values()) {
             categories.put(e,new Category<>(e.getMin(),e.getMax()));
         }

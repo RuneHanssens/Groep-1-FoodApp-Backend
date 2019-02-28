@@ -34,6 +34,7 @@ public class ApplicationUser {
     //@ElementCollection
     @JsonDeserialize(keyUsing = LocalDateKeyDeserializer.class)
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
+    @JoinColumn(name = "user_id")
     private Map<LocalDate, Day> days = new HashMap<>();
 
     public ApplicationUser() {
@@ -89,7 +90,7 @@ public class ApplicationUser {
         if (this.days.containsKey(date)){
 
         } else {
-            this.addDay( new Day(date, this));
+            this.addDay( new Day(date));
         }
         return this.days.get(date);
     }
