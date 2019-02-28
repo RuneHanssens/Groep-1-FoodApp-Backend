@@ -57,12 +57,17 @@ public class MainController {
     public Iterable<ApplicationUser> getDayRepository() {
         return this.userRepository.findAll();
     }
+    @RequestMapping(value = "/user/change-password", method = RequestMethod.GET)
+    public void changeUserPassword(@RequestHeader("Authorization") String authorizationHeader, @RequestBody String password) throws Exception{
+        ApplicationUser applicationUser = this.userRepository.findByUserName(this.getUser(authorizationHeader).getUserName());
+        if(applicationUser == null) throw new Exception("Invalid Credentials for a password change");
+        applicationUser.setPassword(bCryptPasswordEncoder.encode(password));
+        this.userRepository.save(applicationUser);
+        System.out.println("password of user: "+applicationUser.getUserName()+" has changed.");
+    }
     @RequestMapping(value = "/user/day", method = RequestMethod.GET)
     public Day getDay(@RequestHeader("Authorization") String authorizationHeader, @RequestParam(name = "date", required = false) String date){
-        //LocalDate localDate = this.getDate(date);
         return this.getUser(authorizationHeader).getDayIfExists(this.getDate(date)/*localDate*/);
-//        days.putIfAbsent(this.getDate(date), new Day());
-////        return days.get(this.getDate(date));
     }
 
     private ApplicationUser getUser(String authorizationHeader) {
