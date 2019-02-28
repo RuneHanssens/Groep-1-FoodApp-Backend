@@ -20,9 +20,9 @@ public class Day {
     @Column(name = "day_id")
     @JsonFormat(pattern="yyyy-MM-dd")
     private LocalDate date;
-    @Id
-    @GeneratedValue()
-    private Long id;
+    @ManyToOne
+    @JoinColumn
+    private ApplicationUser user;
     public Day() {
         this(LocalDate.now());
     }
