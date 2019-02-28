@@ -89,7 +89,7 @@ public class ApplicationUser {
         if (this.days.containsKey(date)){
 
         } else {
-            this.addDay( new Day(date));
+            this.addDay( new Day(date, this));
         }
         return this.days.get(date);
     }
