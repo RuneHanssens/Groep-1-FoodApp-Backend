@@ -14,14 +14,15 @@ import java.util.TreeMap;
 
 @Entity
 @Table(name = "day_table")
+@IdClass(CompositeKey.class)
 public class Day {
     @Id
     @Column(name = "day_id")
     @JsonFormat(pattern="yyyy-MM-dd")
     private LocalDate date;
-    @JoinColumn(name = "day_id")
+    @Id
     @GeneratedValue()
-    public Long ID;
+    private Long id;
     public Day() {
         this(LocalDate.now());
     }
