@@ -21,7 +21,7 @@ public class Day {
     private LocalDate date;
     @JoinColumn(name = "day_id")
     @GeneratedValue()
-    private Long ID;
+    public Long ID;
     public Day() {
         this(LocalDate.now());
     }
