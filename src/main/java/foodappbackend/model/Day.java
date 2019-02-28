@@ -14,7 +14,6 @@ import java.util.TreeMap;
 
 @Entity
 @Table(name = "day_table")
-@IdClass(CompositeKey.class)
 public class Day {
     @Id
     @Column(name = "day_id")
