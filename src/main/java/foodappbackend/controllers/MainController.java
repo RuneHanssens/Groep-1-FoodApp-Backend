@@ -1,6 +1,7 @@
 package foodappbackend.controllers;
 
 import com.auth0.jwt.JWT;
+import foodappbackend.Application;
 import foodappbackend.model.*;
 //import foodappbackend.repositories.DayRepository;
 import foodappbackend.repositories.UserRepository;
@@ -125,8 +126,11 @@ public class MainController {
     }
 
     @RequestMapping(value = "/user/day/{food_type}/undo", method = RequestMethod.GET)
-    public void removeLastFoodItem(@RequestHeader("Authorization") String authorizationHeader, @RequestParam(name = "date", required = false) String date, @PathVariable String food_type) {
-        this.getDay(authorizationHeader, date).removeLast(EnumCategory.valueOf(food_type.toUpperCase()));
+    public int removeLastFoodItem(@RequestHeader("Authorization") String authorizationHeader, @RequestParam(name = "date", required = false) String date, @PathVariable String food_type) {
+        ApplicationUser user = this.getUser(authorizationHeader);
+        user.getDayIfExists(this.getDate(date)).removeLast(EnumCategory.valueOf(food_type.toUpperCase()));
+        this.userRepository.save(user);
+        return this.getDayCategoryPoints(authorizationHeader, date, food_type);
     }
 
     /***************************************** POST ***************************************/
