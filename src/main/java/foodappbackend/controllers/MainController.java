@@ -68,7 +68,12 @@ public class MainController {
     }
     @RequestMapping(value = "/user/day", method = RequestMethod.GET)
     public Day getDay(@RequestHeader("Authorization") String authorizationHeader, @RequestParam(name = "date", required = false) String date){
-        return this.getUser(authorizationHeader).getDayIfExists(this.getDate(date)/*localDate*/);
+        try {
+            return this.getUser(authorizationHeader).getDayIfExists(this.getDate(date)/*localDate*/);
+        } catch(NullPointerException e) {
+            System.out.println(e.getStackTrace());
+            System.out.println(this.getUser(authorizationHeader + "\n" + date));
+        }
     }
 
     private Day getDay(String username, LocalDate date) {
