@@ -73,6 +73,7 @@ public class MainController {
         } catch(NullPointerException e) {
             System.out.println(e.getStackTrace());
             System.out.println(this.getUser(authorizationHeader + "\n" + date));
+            return null;
         }
     }
 
