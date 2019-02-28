@@ -51,6 +51,9 @@ public class Category<E extends FoodItem> extends ArrayList<E> implements Serial
     }
 
     public void removeLast() {
-        super.remove(this.size() - 1);
+        if(this.size() > 0) {
+            this.totalPoints -= this.get(this.size() - 1).getPoints();
+            super.remove(this.size() - 1);
+        }
     }
 }
