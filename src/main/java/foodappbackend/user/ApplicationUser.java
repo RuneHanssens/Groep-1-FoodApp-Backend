@@ -33,8 +33,8 @@ public class ApplicationUser {
 //    @Lob
     //@ElementCollection
     @JsonDeserialize(keyUsing = LocalDateKeyDeserializer.class)
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
-    @JoinColumn(name = "user_id")
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
     private Map<LocalDate, Day> days = new HashMap<>();
 
     public ApplicationUser() {
