@@ -40,9 +40,16 @@ public class Day {
         return this.categories.get(enumCategory);
     }
 
-    public int getPointsCategory(EnumCategory enumCategory){
+    public Category<FoodItem> getCategory(String string){
+        return this.getCategory(EnumCategory.valueOf(string.toUpperCase()));
+    }
 
+    public int getPointsCategory(EnumCategory enumCategory){
         return categories.get(enumCategory).getTotalPoints();
+    }
+
+    public int getPointsCategory(String string) {
+        return this.getPointsCategory(EnumCategory.valueOf(string.toUpperCase()));
     }
 
     public void add(EnumCategory category, FoodItem foodItem) throws IllegalArgumentException {

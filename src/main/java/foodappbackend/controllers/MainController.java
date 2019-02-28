@@ -70,6 +70,10 @@ public class MainController {
         return this.getUser(authorizationHeader).getDayIfExists(this.getDate(date)/*localDate*/);
     }
 
+    private Day getDay(String authorizationHeader, LocalDate date) {
+        return this.getUser(authorizationHeader).getDayIfExists(date);
+    }
+
     private ApplicationUser getUser(String authorizationHeader) {
         return this.userRepository.findByUserName(this.getUserName(authorizationHeader));
     }
@@ -86,6 +90,20 @@ public class MainController {
             }});
         }
         return map;
+    }
+
+    @RequestMapping(value = "/user/dayrange", method = RequestMethod.GET)
+    public Map<String, Map<String, String>> getTimePeriod(@RequestHeader("Authorization") String authorizationHeader, @RequestParam(name = "startdate", required = false) String startDate, @RequestParam(name = "endDate", required = false) String endDate, @RequestParam(name = "category") String category) {
+        HashMap<String, Map<String, String>> res = new HashMap<>();
+        for(LocalDate current = this.getDate(startDate); !current.isAfter(this.getDate(endDate)); current.plusDays(1)) {
+            Day day = this.getDay(authorizationHeader, current);
+            res.put(current.toString(), new HashMap<String, String>(){{
+                put("Points", String.valueOf(day.getPointsCategory(category)));
+                put("OverMin", String.valueOf(day.getCategory(category).getOverMin()));
+                put("OverMax", String.valueOf(day.getCategory(category).getOverMax()));
+            }});
+        }
+        return null;
     }
 
     @RequestMapping(value = "/user/day/{food_type}", method = RequestMethod.GET)
