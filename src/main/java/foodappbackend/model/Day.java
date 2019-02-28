@@ -19,6 +19,7 @@ public class Day {
     @Column(name = "day_id")
     @JsonFormat(pattern="yyyy-MM-dd")
     private LocalDate date;
+    @OneToOne
     @JoinColumn
     private ApplicationUser user;
     public Day() { }
