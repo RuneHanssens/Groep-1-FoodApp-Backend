@@ -74,6 +74,20 @@ public class MainController {
         return this.userRepository.findByUserName(this.getUserName(authorizationHeader));
     }
 
+    @RequestMapping(value = "/user/day/points", method = RequestMethod.GET)
+    public Map<String, Map<String, String>> getDayPoints(@RequestHeader("Authorization") String authorizationHeader, @RequestParam(name = "date", required = false) String date) {
+        Map<String, Map<String, String>> map = new HashMap<>();
+        Day day = this.getDay(authorizationHeader, date);
+        for (EnumCategory c : EnumCategory.values()) {
+            map.put(c.toString(), new HashMap<String, String>(){{
+                put("Points",String.valueOf(day.getPointsCategory(c)));
+                put("OverMin", String.valueOf(day.getCategory(c).getOverMin()));
+                put("OverMax", String.valueOf(day.getCategory(c).getOverMax()));
+            }});
+        }
+        return map;
+    }
+
     @RequestMapping(value = "/user/day/{food_type}", method = RequestMethod.GET)
     public Iterable<FoodItem> getDayCategoryRepository(@RequestHeader("Authorization") String authorizationHeader, @RequestParam(name = "date", required = false) String date, @PathVariable String food_type) {
         Day day = this.getDay(authorizationHeader, date);
