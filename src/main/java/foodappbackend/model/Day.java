@@ -16,8 +16,12 @@ import java.util.TreeMap;
 @Table(name = "day_table")
 public class Day {
     @Id
+    @Column(name = "day_id")
     @JsonFormat(pattern="yyyy-MM-dd")
     private LocalDate date;
+    @JoinColumn(name = "day_id")
+    @GeneratedValue()
+    private Long ID;
     public Day() {
         this(LocalDate.now());
     }
