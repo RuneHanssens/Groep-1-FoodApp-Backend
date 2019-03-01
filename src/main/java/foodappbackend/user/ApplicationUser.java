@@ -78,12 +78,12 @@ public class ApplicationUser implements Serializable {
         if(date == null){
             date = LocalDate.now();
         }
-        if (this.days.containsKey(date)){
+        if (this.days.containsKey(date + ":" + this)){
 
         } else {
             this.addDay( new Day(date, this));
         }
-        return this.days.get(date);
+        return this.days.get(date + ":" + this);
     }
 
     public void setDays(HashMap<String, Day> days) {
