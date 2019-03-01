@@ -29,7 +29,7 @@ public class ApplicationUser implements Serializable {
 //    @Lob
     //@ElementCollection
     @JsonDeserialize(keyUsing = LocalDateKeyDeserializer.class)
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user_id")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
     private Map<LocalDate, Day> days = new HashMap<>();
 
     public ApplicationUser() {
