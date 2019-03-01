@@ -28,7 +28,7 @@ public class ApplicationUser implements Serializable {
 
     //@JsonDeserialize(keyUsing = LocalDateKeyDeserializer.class)
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
-    private Map<String, Day> days = new HashMap<>();
+    private Map<String, Day> days;
 
     public ApplicationUser() { }
 
@@ -36,6 +36,7 @@ public class ApplicationUser implements Serializable {
         setUsername(username);
         setPassword(password);
         setAdmin(admin);
+        this.days = new HashMap<>();
     }
 
     public long getId() {
