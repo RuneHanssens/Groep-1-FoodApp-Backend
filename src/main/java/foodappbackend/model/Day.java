@@ -34,8 +34,9 @@ public class Day {
 //    @OneToMany(cascade = CascadeType.ALL)
     private Map<EnumCategory,Category<FoodItem>> categories = new HashMap<>();
 
-    public Day(LocalDate localDate) {
+    public Day(LocalDate localDate, ApplicationUser user) {
         date = localDate;
+        this.user = user;
         for(EnumCategory e : EnumCategory.values()) {
             categories.put(e,new Category<>(e.getMin(),e.getMax()));
         }

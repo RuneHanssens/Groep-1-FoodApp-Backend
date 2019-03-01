@@ -20,10 +20,10 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     }
 
     @Override
-    public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException {
-        ApplicationUser applicationUser = userRepository.findByUsername(userName);
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        ApplicationUser applicationUser = userRepository.findByUsername(username);
         if (applicationUser == null) {
-            throw new UsernameNotFoundException(userName);
+            throw new UsernameNotFoundException(username);
         }
         System.out.println("token user loaded");
         return new User(applicationUser.getUsername(), applicationUser.getPassword(), emptyList());
