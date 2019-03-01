@@ -26,15 +26,13 @@ public class ApplicationUser implements Serializable {
     @Column(name = "admin")
     private boolean admin = false;
 
-    //@Lob
-    //@ElementCollection
-    @JsonDeserialize(keyUsing = LocalDateKeyDeserializer.class)
+    //@JsonDeserialize(keyUsing = LocalDateKeyDeserializer.class)
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
-    private Map<LocalDate, Day> days = new HashMap<>();
+    private Map<String, Day> days = new HashMap<>();
 
     public ApplicationUser() { }
 
-    public ApplicationUser(/*String name, String lastName, */String username, String password, /*long age,*/ boolean admin) {
+    public ApplicationUser(String username, String password, boolean admin) {
         setUsername(username);
         setPassword(password);
         setAdmin(admin);
@@ -47,7 +45,6 @@ public class ApplicationUser implements Serializable {
     public void setId(long id) {
         this.id = id;
     }
-
 
     public boolean isAdmin() {
         return admin;
@@ -73,7 +70,7 @@ public class ApplicationUser implements Serializable {
         this.password = password;
     }
 
-    public Map<LocalDate, Day> getDays() {
+    public Map<String, Day> getDays() {
         return days;
     }
 
@@ -89,12 +86,12 @@ public class ApplicationUser implements Serializable {
         return this.days.get(date);
     }
 
-    public void setDays(HashMap<LocalDate, Day> days) {
+    public void setDays(HashMap<String, Day> days) {
         this.days = days;
     }
 
     public void addDay(Day day) {
-        this.days.putIfAbsent(day.getDate(), day);
+        this.days.putIfAbsent(day.getDate() + ":" + this, day);
     }
 
     public Day getDay(LocalDate date) {
