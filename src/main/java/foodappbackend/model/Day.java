@@ -23,7 +23,7 @@ public class Day {
     @Id
     @JoinColumn(name = "user_id")
     @ManyToOne(fetch = FetchType.LAZY)
-    public String username;
+    public ApplicationUser user;
     public Day() { }
 
     //@CollectionTable(name="list_of_categories")
@@ -34,9 +34,9 @@ public class Day {
 //    @OneToMany(cascade = CascadeType.ALL)
     private Map<EnumCategory,Category<FoodItem>> categories = new HashMap<>();
 
-    public Day(LocalDate localDate, String username) {
+    public Day(LocalDate localDate, ApplicationUser user) {
         date = localDate;
-        this.username = username;
+        this.user = user;
         for(EnumCategory e : EnumCategory.values()) {
             categories.put(e,new Category<>(e.getMin(),e.getMax()));
         }
