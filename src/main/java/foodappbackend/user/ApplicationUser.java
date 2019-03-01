@@ -36,7 +36,7 @@ public class ApplicationUser implements Serializable {
         setUsername(username);
         setPassword(password);
         setAdmin(admin);
-        this.days = new HashMap<>();
+        //this.days = new HashMap<>();
     }
 
     public long getId() {
