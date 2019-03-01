@@ -27,7 +27,7 @@ public class ApplicationUser implements Serializable {
     private boolean admin = false;
 
     //@JsonDeserialize(keyUsing = LocalDateKeyDeserializer.class)
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "username")
     private Map<String, Day> days = new HashMap<>();
 
     public ApplicationUser() { }
@@ -81,7 +81,7 @@ public class ApplicationUser implements Serializable {
         if (this.days.containsKey(date + ":" + this)){
 
         } else {
-            this.addDay( new Day(date, this));
+            this.addDay( new Day(date, this.getUsername()));
         }
         return this.days.get(date + ":" + this.getUsername());
     }
