@@ -47,7 +47,7 @@ public class MainController {
     }
     @RequestMapping(value = "/sign-up", method = RequestMethod.POST)
     public void signUp(@RequestBody ApplicationUser applicationUser) throws Exception {
-        if(this.userRepository.findByUserName(applicationUser.getUsername()) != null) throw new Exception("A applicationUser with the submitted email already exists.");
+        if(this.userRepository.findByUsername(applicationUser.getUsername()) != null) throw new Exception("A applicationUser with the submitted email already exists.");
         applicationUser.setPassword(bCryptPasswordEncoder.encode(applicationUser.getPassword()));
         this.userRepository.save(applicationUser);
         System.out.println("MainController - sign up - aantal users: " + this.userRepository.count());
@@ -58,7 +58,7 @@ public class MainController {
     }
     @RequestMapping(value = "/user/change-password", method = RequestMethod.GET)
     public void changeUserPassword(@RequestHeader("Authorization") String authorizationHeader, @RequestBody String password) throws Exception{
-        ApplicationUser applicationUser = this.userRepository.findByUserName(this.getUser(authorizationHeader).getUsername());
+        ApplicationUser applicationUser = this.userRepository.findByUsername(this.getUser(authorizationHeader).getUsername());
         if(applicationUser == null) throw new Exception("Invalid Credentials for a password change");
         applicationUser.setPassword(bCryptPasswordEncoder.encode(password));
         this.userRepository.save(applicationUser);
@@ -76,11 +76,11 @@ public class MainController {
     }
 
     private Day getDay(String username, LocalDate date) {
-        return this.userRepository.findByUserName(username).getDayIfExists(date);
+        return this.userRepository.findByUsername(username).getDayIfExists(date);
     }
 
     private ApplicationUser getUser(String authorizationHeader) {
-        return this.userRepository.findByUserName(this.getUserName(authorizationHeader));
+        return this.userRepository.findByUsername(this.getUserName(authorizationHeader));
     }
 
     @RequestMapping(value = "/user/day/points", method = RequestMethod.GET)
