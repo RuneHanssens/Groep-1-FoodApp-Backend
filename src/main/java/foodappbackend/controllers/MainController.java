@@ -1,12 +1,10 @@
 package foodappbackend.controllers;
 
 import com.auth0.jwt.JWT;
-import foodappbackend.Application;
 import foodappbackend.model.*;
 //import foodappbackend.repositories.DayRepository;
 import foodappbackend.repositories.UserRepository;
 import foodappbackend.user.ApplicationUser;
-import org.apache.tomcat.jni.Local;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
@@ -49,7 +47,7 @@ public class MainController {
     }
     @RequestMapping(value = "/sign-up", method = RequestMethod.POST)
     public void signUp(@RequestBody ApplicationUser applicationUser) throws Exception {
-        if(this.userRepository.findByUserName(applicationUser.getUserName()) != null) throw new Exception("A applicationUser with the submitted email already exists.");
+        if(this.userRepository.findByUserName(applicationUser.getUsername()) != null) throw new Exception("A applicationUser with the submitted email already exists.");
         applicationUser.setPassword(bCryptPasswordEncoder.encode(applicationUser.getPassword()));
         this.userRepository.save(applicationUser);
         System.out.println("MainController - sign up - aantal users: " + this.userRepository.count());
@@ -60,11 +58,11 @@ public class MainController {
     }
     @RequestMapping(value = "/user/change-password", method = RequestMethod.GET)
     public void changeUserPassword(@RequestHeader("Authorization") String authorizationHeader, @RequestBody String password) throws Exception{
-        ApplicationUser applicationUser = this.userRepository.findByUserName(this.getUser(authorizationHeader).getUserName());
+        ApplicationUser applicationUser = this.userRepository.findByUserName(this.getUser(authorizationHeader).getUsername());
         if(applicationUser == null) throw new Exception("Invalid Credentials for a password change");
         applicationUser.setPassword(bCryptPasswordEncoder.encode(password));
         this.userRepository.save(applicationUser);
-        System.out.println("password of user: "+applicationUser.getUserName()+" has changed.");
+        System.out.println("password of user: "+applicationUser.getUsername()+" has changed.");
     }
     @RequestMapping(value = "/user/day", method = RequestMethod.GET)
     public Day getDay(@RequestHeader("Authorization") String authorizationHeader, @RequestParam(name = "date", required = false) String date){

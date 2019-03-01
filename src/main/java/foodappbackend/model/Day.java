@@ -13,20 +13,22 @@ import java.util.Map;
 import java.util.TreeMap;
 
 @Entity
-@Table(name = "day_table")
+@Table(name = "days")
 @IdClass(CompositeKey.class)
 public class Day {
     @Id
-    @Column(name = "day_id")
+    @Column(name = "localDate")
     @JsonFormat(pattern="yyyy-MM-dd")
     public LocalDate date;
     @Id
     @JoinColumn(name = "user_id")
+    @ManyToOne(fetch = FetchType.LAZY)
     public ApplicationUser user;
     public Day() { }
 
     //@CollectionTable(name="list_of_categories")
     //private List<FoodItem> foodItems = new ArrayList<>();
+    @Column(name = "categories")
     @Lob
     @ElementCollection
 //    @OneToMany(cascade = CascadeType.ALL)

@@ -31,7 +31,7 @@
 //
 //    @RequestMapping(value = "/user/sign-up", method = RequestMethod.POST)
 //    public void signUp(@RequestBody ApplicationUser applicationUser) throws Exception {
-//        if(this.userRepository.findByUserName(applicationUser.getUserName()) != null) throw new Exception("A applicationUser with the submitted email already exists.");
+//        if(this.userRepository.findByUserName(applicationUser.getUsername()) != null) throw new Exception("A applicationUser with the submitted email already exists.");
 //        applicationUser.setPassword(bCryptPasswordEncoder.encode(applicationUser.getPassword()));
 //        this.userRepository.save(applicationUser);
 //    }
@@ -43,7 +43,7 @@
 ////        String response = "404";
 ////        Iterable<ApplicationUser> users = this.userRepository.findAll();
 ////        for (ApplicationUser u : users) {
-////            if (mail == null || u.getUserName().equals(mail)) {
+////            if (mail == null || u.getUsername().equals(mail)) {
 ////                response = u.getId().toString();
 ////            }
 ////        }
