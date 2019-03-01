@@ -98,7 +98,7 @@ public class MainController {
     }
 
     @RequestMapping(value = "/user/dayrange", method = RequestMethod.GET)
-    public Map<String, Map<String, String>> getTimePeriod(@RequestParam(name = "startdate", required = false) String startDate, @RequestParam(name = "endDate", required = false) String endDate, @RequestParam(name = "category") String category, @RequestParam(value = "username") String username) {
+    public Map<String, Map<String, String>> getTimePeriod(@RequestParam(name = "startDate", required = false) String startDate, @RequestParam(name = "endDate", required = false) String endDate, @RequestParam(name = "category") String category, @RequestParam(value = "username") String username) {
         HashMap<String, Map<String, String>> res = new HashMap<>();
         for(LocalDate current = this.getDate(startDate); !current.isAfter(this.getDate(endDate)); current.plusDays(1)) {
             Day day = this.getDay(username, current);
