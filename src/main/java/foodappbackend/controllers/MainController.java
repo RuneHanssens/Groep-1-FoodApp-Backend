@@ -108,7 +108,7 @@ public class MainController {
                 put("OverMax", String.valueOf(day.getCategory(category).getOverMax()));
             }});
         }
-        return null;
+        return res;
     }
 
     @RequestMapping(value = "/user/day/{food_type}", method = RequestMethod.GET)
