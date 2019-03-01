@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.Map;
@@ -20,7 +21,7 @@ import java.util.UUID;
 
 @Entity
 @Table(name = "table_user")
-public class ApplicationUser {
+public class ApplicationUser implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
