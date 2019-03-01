@@ -83,7 +83,7 @@ public class ApplicationUser implements Serializable {
         } else {
             this.addDay( new Day(date, this));
         }
-        return this.days.get(date + ":" + this);
+        return this.days.get(date + ":" + this.getUsername());
     }
 
     public void setDays(HashMap<String, Day> days) {
@@ -91,7 +91,7 @@ public class ApplicationUser implements Serializable {
     }
 
     public void addDay(Day day) {
-        this.days.putIfAbsent(day.getDate() + ":" + this, day);
+        this.days.putIfAbsent(day.getDate() + ":" + this.getUsername(), day);
     }
 
     public Day getDay(LocalDate date) {
