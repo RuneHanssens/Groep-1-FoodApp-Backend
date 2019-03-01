@@ -79,9 +79,7 @@ public class ApplicationUser implements Serializable {
         if(date == null){
             date = LocalDate.now();
         }
-        if (this.days.containsKey(date + ":" + this)){
-
-        } else {
+        if (!this.days.containsKey(date + ":" + this.getUsername())){
             this.addDay( new Day(date, this));
         }
         return this.days.get(date + ":" + this.getUsername());
