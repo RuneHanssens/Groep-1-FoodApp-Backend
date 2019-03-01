@@ -76,6 +76,7 @@ public class MainController {
     }
 
     private Day getDay(String username, LocalDate date) {
+        if (this.userRepository.findByUsername(username) == null) throw new IllegalArgumentException("User with username " + username + " was not found.");
         return this.userRepository.findByUsername(username).getDayIfExists(date);
     }
 
