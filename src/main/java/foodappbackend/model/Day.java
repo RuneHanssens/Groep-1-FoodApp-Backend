@@ -21,7 +21,7 @@ public class Day {
     @JsonFormat(pattern="yyyy-MM-dd")
     public LocalDate date;
     @Id
-    //@JoinColumn(name = "user_id")
+    @JoinColumn(name = "user_id")
     public ApplicationUser user;
     public Day() { }
 
