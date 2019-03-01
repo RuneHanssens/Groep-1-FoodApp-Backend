@@ -101,7 +101,6 @@ public class MainController {
     @RequestMapping(value = "/user/dayrange", method = RequestMethod.GET)
     public Map<String, Map<String, String>> getTimePeriod(@RequestParam(name = "startDate", required = false) String startDate, @RequestParam(name = "endDate", required = false) String endDate, @RequestParam(name = "category") String category, @RequestParam(value = "username") String username) {
         Map<String, Map<String, String>> res = new HashMap<>();
-        System.out.println("WHAT THE FUCK");
         for(LocalDate current = this.getDate(startDate); !current.isAfter(this.getDate(endDate)); current = current.plusDays(1)) {
             Day day = this.getDay(username, current);
             res.put(current.toString(), new HashMap<String, String>(){{
@@ -109,7 +108,6 @@ public class MainController {
                 put("OverMin", String.valueOf(day.getCategory(category).getOverMin()));
                 put("OverMax", String.valueOf(day.getCategory(category).getOverMax()));
             }});
-            System.out.println(current);
         }
         return res;
     }
