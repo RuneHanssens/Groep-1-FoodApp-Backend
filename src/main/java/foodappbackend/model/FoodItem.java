@@ -1,12 +1,11 @@
 package foodappbackend.model;
 
-import org.springframework.stereotype.Repository;
-
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.UUID;
 
 @Entity
+@Inheritance(strategy = InheritanceType.JOINED)
 public abstract class FoodItem implements Serializable {
 
     @Id
@@ -23,17 +22,3 @@ public abstract class FoodItem implements Serializable {
 
     public abstract String getReadableString();
 }
-
-/*
-public interface FoodItem {
-
-    EnumCategory enumCategory = null;
-    int points = 50;
-
-    public int getPoints();
-
-    abstract void setPoints();
-    abstract void setEnumCategory();
-
-
-}*/

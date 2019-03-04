@@ -125,13 +125,13 @@ public class MainController {
         return res;
     }
 
-    @RequestMapping(value = "/user/day/{food_type}", method = RequestMethod.GET)
+    @GetMapping(value = "/user/day/{food_type}")
     public Iterable<FoodItem> getDayCategoryRepository(@RequestHeader("Authorization") String authorizationHeader, @RequestParam(name = "date", required = false) String date, @PathVariable String food_type) {
         Day day = this.getDay(authorizationHeader, date);
         return day.getCategory(EnumCategory.valueOf(food_type.toUpperCase()));
     }
 
-    @RequestMapping(value = "/site/user/day/{food_type}", method = RequestMethod.GET)
+    @GetMapping(value = "/site/user/day/{food_type}")
     public List<String> getDayCategoryRepositoryByUsername(@RequestParam("username") String username, @RequestParam(name = "date", required = false) String date, @PathVariable String food_type) {
         Day day = this.getDay(username, this.getDate(date));
         List<String> res = new ArrayList<>();
@@ -141,24 +141,32 @@ public class MainController {
         return res;
     }
 
-    @RequestMapping(value = "/user/day/item/{food_type}", method = RequestMethod.GET)
+    @GetMapping(value = "/user/day/item/{food_type}")
     public FoodItem test(@RequestHeader("Authorization") String authorizationHeader, @RequestParam(name = "date", required = false) String date, @PathVariable String food_type) {
         Day day = this.getDay(authorizationHeader, date);
         return day.getCategory(EnumCategory.valueOf(food_type.toUpperCase())).get(0);
     }
 
-    @RequestMapping(value = "/user/day/{food_type}/points", method = RequestMethod.GET)
+    @GetMapping(value = "/user/day/{food_type}/points")
     public int getDayCategoryPoints(@RequestHeader("Authorization") String authorizationHeader, @RequestParam(name = "date", required = false) String date, @PathVariable String food_type) {
         Day day = this.getDay(authorizationHeader, date);
         return day.getPointsCategory(EnumCategory.valueOf(food_type.toUpperCase()));
     }
 
-    @RequestMapping(value = "/user/day/{food_type}/undo", method = RequestMethod.GET)
+    @GetMapping(value = "/user/day/{food_type}/undo")
     public int removeLastFoodItem(@RequestHeader("Authorization") String authorizationHeader, @RequestParam(name = "date", required = false) String date, @PathVariable String food_type) {
         ApplicationUser user = this.getUser(authorizationHeader);
         user.getDayIfExists(this.getDate(date)).removeLast(EnumCategory.valueOf(food_type.toUpperCase()));
         this.userRepository.save(user);
         return this.getDayCategoryPoints(authorizationHeader, date, food_type);
+    }
+
+    @GetMapping(value = "/user/{food_type}")
+    public Map<String, Integer> getExtrema(@PathVariable String food_type) {
+        return new HashMap<String, Integer>(){{
+            this.put("min: ", EnumCategory.valueOf(food_type.toUpperCase()).getMin());
+            this.put("max: ", EnumCategory.valueOf(food_type.toUpperCase()).getMax());
+        }};
     }
 
     /***************************************** POST ***************************************/
