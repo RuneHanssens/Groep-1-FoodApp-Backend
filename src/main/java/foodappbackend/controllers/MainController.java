@@ -114,13 +114,13 @@ public class MainController {
 
     @RequestMapping(value = "/user/day/{food_type}", method = RequestMethod.GET)
     public Iterable<FoodItem> getDayCategoryRepository(@RequestHeader("Authorization") String authorizationHeader, @RequestParam(name = "date", required = false) String date, @PathVariable String food_type) {
-        Day day = this.getDay(authorizationHeader, this.getDate(date));
+        Day day = this.getDay(authorizationHeader, date);
         return day.getCategory(EnumCategory.valueOf(food_type.toUpperCase()));
     }
 
     @RequestMapping(value = "/site/user/day/{food_type}", method = RequestMethod.GET)
     public String getDayCategoryRepositoryByUsername(@RequestParam("username") String username, @RequestParam(name = "date", required = false) String date, @PathVariable String food_type) {
-        Day day = this.getDay(username, date);
+        Day day = this.getDay(username, this.getDate(date));
         String res = "";
         for(FoodItem f : day.getCategory(EnumCategory.valueOf(food_type.toUpperCase()))) {
             res += f.getReadableString() + "\n";
