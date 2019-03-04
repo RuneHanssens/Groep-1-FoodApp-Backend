@@ -49,7 +49,7 @@ public class MainController {
     }
     @RequestMapping(value = "/sign-up", method = RequestMethod.POST)
     public void signUp(@RequestBody ApplicationUser applicationUser) throws Exception {
-        if(this.userRepository.findByUsername(applicationUser.getUsername()) != null) throw new Exception("A applicationUser with the submitted email already exists.");
+        if(this.userRepository.findByUsername(applicationUser.getUsername()) != null) throw new Exception("An applicationUser with the submitted email already exists.");
         applicationUser.setPassword(bCryptPasswordEncoder.encode(applicationUser.getPassword()));
         this.userRepository.save(applicationUser);
         System.out.println("MainController - sign up - aantal users: " + this.userRepository.count());
@@ -85,7 +85,7 @@ public class MainController {
     @PostMapping(value = "/user")
     public String getUserFromToken(@RequestHeader("Authorization") String token) {
         try {
-            return this.getUserName(token);
+            return this.userRepository.findByUsername(this.getUserName(token)).getUsername();
         } catch(NullPointerException | IllegalArgumentException e) {
             return "User not found.";
         }
