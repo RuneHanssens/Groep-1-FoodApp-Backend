@@ -10,7 +10,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -119,11 +121,11 @@ public class MainController {
     }
 
     @RequestMapping(value = "/site/user/day/{food_type}", method = RequestMethod.GET)
-    public String getDayCategoryRepositoryByUsername(@RequestParam("username") String username, @RequestParam(name = "date", required = false) String date, @PathVariable String food_type) {
+    public List<String> getDayCategoryRepositoryByUsername(@RequestParam("username") String username, @RequestParam(name = "date", required = false) String date, @PathVariable String food_type) {
         Day day = this.getDay(username, this.getDate(date));
-        String res = "";
+        List<String> res = new ArrayList<>();
         for(FoodItem f : day.getCategory(EnumCategory.valueOf(food_type.toUpperCase()))) {
-            res += f.getReadableString() + "\n";
+            res.add(f.getReadableString());
         }
         return res;
     }
