@@ -82,6 +82,15 @@ public class MainController {
         return this.userRepository.findByUsername(username).getDayIfExists(date);
     }
 
+    @PostMapping(value = "/user")
+    public String getUserFromToken(@RequestHeader("Authorization") String token) {
+        try {
+            return this.getUserName(token);
+        } catch(NullPointerException e) {
+            return "User not found.";
+        }
+    }
+
     private ApplicationUser getUser(String authorizationHeader) {
         return this.userRepository.findByUsername(this.getUserName(authorizationHeader));
     }
