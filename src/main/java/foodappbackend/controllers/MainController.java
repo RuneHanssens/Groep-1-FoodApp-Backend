@@ -118,7 +118,7 @@ public class MainController {
         return day.getCategory(EnumCategory.valueOf(food_type.toUpperCase()));
     }
 
-    @RequestMapping(value = "/user/day/{food_type}", method = RequestMethod.GET)
+    @RequestMapping(value = "/site/user/day/{food_type}", method = RequestMethod.GET)
     public String getDayCategoryRepositoryByUsername(@RequestParam("username") String username, @RequestParam(name = "date", required = false) String date, @PathVariable String food_type) {
         Day day = this.getDay(username, date);
         String res = "";
