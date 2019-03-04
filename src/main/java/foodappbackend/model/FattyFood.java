@@ -57,7 +57,7 @@ public class FattyFood extends FoodItem {
 
     @Override
     public String getReadableString() {
-        return this.type.toString() + (this.outdoors ? ", buitenshuis." : ".");
+        return this.type.toString() + (this.outdoors ? ", buitenshuis" : "");
     }
 
     public Type getType() {

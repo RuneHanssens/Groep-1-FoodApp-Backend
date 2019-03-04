@@ -32,7 +32,7 @@ public class Nuts extends FoodItem {
 
     @Override
     public String getReadableString() {
-        return (this.salted ? "Gezouten" : "Ongezouten") + " nootjes" + (outdoors ? ", buitenshuis." : ".");
+        return (this.salted ? "Gezouten" : "Ongezouten") + " nootjes" + (outdoors ? ", buitenshuis" : "");
     }
 
     public boolean isOutdoors() {

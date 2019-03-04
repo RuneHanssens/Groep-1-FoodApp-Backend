@@ -122,7 +122,7 @@ public class StarchProduct extends FoodItem {
 
     @Override
     public String getReadableString() {
-        return this.getType().toString() + (this.subType != null ? ", "+ this.subType.toString() : "") + (this.outdoor ? ", buitenshuis." : ".");
+        return this.getType().toString() + (this.subType != null ? ", "+ this.subType.toString() : "") + (this.outdoor ? ", buitenshuis" : "");
     }
 
     public boolean isOutdoor() {

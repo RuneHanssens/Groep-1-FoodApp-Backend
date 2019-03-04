@@ -61,7 +61,7 @@ public class Movement extends FoodItem {
 
     @Override
     public String getReadableString() {
-        return this.getType().toString() + ", " + this.time + " minuten.";
+        return this.getType().toString() + ", " + this.time + " minuten";
     }
 
     public Type getType() {
