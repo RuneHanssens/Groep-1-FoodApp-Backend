@@ -32,7 +32,7 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.POST, "/api/login").permitAll()
                 .antMatchers(HttpMethod.GET, "/api/status").permitAll()
                 .antMatchers(HttpMethod.GET, "/api/user/dayrange").permitAll()
-                .antMatchers(HttpMethod.GET, "/error").permitAll()
+                .antMatchers("/error").permitAll()
                 //.antMatchers(HttpMethod.GET, "/api/**").permitAll()
                 //.antMatchers(HttpMethod.POST, "/api/**").permitAll()
                 .anyRequest().authenticated()

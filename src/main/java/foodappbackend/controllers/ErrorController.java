@@ -1,20 +1,18 @@
 package foodappbackend.controllers;
 
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
 
-@Controller
+@RestController
 public class ErrorController implements org.springframework.boot.web.servlet.error.ErrorController {
-    @RequestMapping(value = "/error", method = RequestMethod.GET)
+    @RequestMapping(value = "/error")
     public String handleError(HttpServletRequest httpRequest) {
         switch (getErrorCode(httpRequest)) {
             case 400:
                 return "Bad Request";
-            case 401:
+            case 403:
                 return "Unauthorized Access";
             case 404:
                 return "Page not found";
