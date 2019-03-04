@@ -49,6 +49,7 @@ public class MainController {
     }
     @RequestMapping(value = "/sign-up", method = RequestMethod.POST)
     public void signUp(@RequestBody ApplicationUser applicationUser) throws Exception {
+        if(applicationUser.getUsername() == null || applicationUser.getPassword() == null) throw new Exception();
         if(this.userRepository.findByUsername(applicationUser.getUsername()) != null) throw new Exception("An applicationUser with the submitted email already exists.");
         applicationUser.setPassword(bCryptPasswordEncoder.encode(applicationUser.getPassword()));
         this.userRepository.save(applicationUser);
@@ -120,6 +121,7 @@ public class MainController {
                 put("OverMax", String.valueOf(day.getCategory(category).getOverMax()));
             }});
         }
+        System.out.println(res);
         return res;
     }
 
