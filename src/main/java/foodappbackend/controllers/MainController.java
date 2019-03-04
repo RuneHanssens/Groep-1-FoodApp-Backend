@@ -118,6 +118,16 @@ public class MainController {
         return day.getCategory(EnumCategory.valueOf(food_type.toUpperCase()));
     }
 
+    @RequestMapping(value = "/user/day/{food_type}", method = RequestMethod.GET)
+    public String getDayCategoryRepositoryByUsername(@RequestParam("username") String username, @RequestParam(name = "date", required = false) String date, @PathVariable String food_type) {
+        Day day = this.getDay(username, date);
+        String res = "";
+        for(FoodItem f : day.getCategory(EnumCategory.valueOf(food_type.toUpperCase()))) {
+            res += f.getReadableString() + "\n";
+        }
+        return res;
+    }
+
     @RequestMapping(value = "/user/day/item/{food_type}", method = RequestMethod.GET)
     public FoodItem test(@RequestHeader("Authorization") String authorizationHeader, @RequestParam(name = "date", required = false) String date, @PathVariable String food_type) {
         Day day = this.getDay(authorizationHeader, date);

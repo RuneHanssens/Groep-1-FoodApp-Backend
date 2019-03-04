@@ -19,6 +19,11 @@ public class Fruit extends FoodItem {
         this.points = amount * 50;
     }
 
+    @Override
+    public String getReadableString() {
+        return this.amount + " stukken fruit" + (this.outdoor ? ", buitenshuis." : ".");
+    }
+
     public int getAmount() {
         return amount;
     }

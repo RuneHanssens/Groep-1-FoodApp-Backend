@@ -30,6 +30,11 @@ public class Nuts extends FoodItem {
             this.points = 20;
     }
 
+    @Override
+    public String getReadableString() {
+        return (this.salted ? "Gezouten" : "Ongezouten") + " nootjes" + (outdoors ? ", buitenshuis." : ".");
+    }
+
     public boolean isOutdoors() {
         return outdoors;
     }

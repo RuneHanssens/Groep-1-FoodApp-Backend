@@ -20,6 +20,8 @@ public abstract class FoodItem implements Serializable {
         return points;
     }
     protected abstract void setPoints();
+
+    public abstract String getReadableString();
 }
 
 /*

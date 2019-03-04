@@ -17,6 +17,11 @@ public class Water extends FoodItem {
         points = 20 * amount;
     }
 
+    @Override
+    public String getReadableString() {
+        return amount + " glazen water.";
+    }
+
     public void setAmount(int amount) {
         this.amount = amount;
         this.setPoints();

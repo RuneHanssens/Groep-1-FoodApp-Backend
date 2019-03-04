@@ -59,6 +59,11 @@ public class Movement extends FoodItem {
         this.points = type.points;
     }
 
+    @Override
+    public String getReadableString() {
+        return this.getType().toString() + ", " + this.time + " minuten.";
+    }
+
     public Type getType() {
         return type;
     }

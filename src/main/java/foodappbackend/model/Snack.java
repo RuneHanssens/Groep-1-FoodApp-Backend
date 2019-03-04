@@ -74,6 +74,11 @@ public class Snack extends FoodItem {
             this.points = type.getPoints();
     }
 
+    @Override
+    public String getReadableString() {
+        return this.getType().toString() + (this.getSubType() != null ? ", " + this.getSubType().toString() + "." : ".");
+    }
+
     public Type getType() {
         return type;
     }

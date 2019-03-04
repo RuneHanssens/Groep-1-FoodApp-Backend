@@ -21,6 +21,15 @@ public class Vegetable extends FoodItem {
         if(outdoors) this.points -= 20;
     }
 
+    @Override
+    public String getReadableString() {
+        String res;
+        if(more) res = "Meer dan 500 gram groenten";
+        else res = "Minder dan 500 gram groenten";
+        if(outdoors) res += ", buitenshuis";
+        return res + ".";
+    }
+
     public boolean getMore() {
         return more;
     }
