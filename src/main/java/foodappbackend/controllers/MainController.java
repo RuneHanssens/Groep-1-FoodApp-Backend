@@ -86,7 +86,7 @@ public class MainController {
     public String getUserFromToken(@RequestHeader("Authorization") String token) {
         try {
             return this.getUserName(token);
-        } catch(NullPointerException e) {
+        } catch(NullPointerException | IllegalArgumentException e) {
             return "User not found.";
         }
     }
