@@ -19,7 +19,7 @@ public class Water extends FoodItem {
 
     @Override
     public String getReadableString() {
-        return amount + (this.amount == 1 ? " glas" : "glazen") + " water";
+        return amount + (this.amount == 1 ? " glas" : " glazen") + " water";
     }
 
     public void setAmount(int amount) {

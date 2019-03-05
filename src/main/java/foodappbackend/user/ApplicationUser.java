@@ -85,6 +85,16 @@ public class ApplicationUser implements Serializable {
         return this.days.get(date + ":" + this.getUsername());
     }
 
+    /**
+     *
+     * @param date
+     * @return
+     */
+    public Day getDayIfExists(String date) {
+        this.days.putIfAbsent(date + ":" + this.getUsername(), new Day(date, this));
+        return this.days.get(date + ":" + this.getUsername());
+    }
+
     public void setDays(HashMap<String, Day> days) {
         this.days = days;
     }

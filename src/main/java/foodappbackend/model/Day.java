@@ -8,9 +8,10 @@ import foodappbackend.user.ApplicationUser;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.TreeMap;
 
 @Entity
 @Table(name = "days")
@@ -24,8 +25,6 @@ public class Day {
     @JoinColumn(name = "user_id")
     @ManyToOne(fetch = FetchType.LAZY)
     public ApplicationUser user;
-    public Day() { }
-
     //@CollectionTable(name="list_of_categories")
     //private List<FoodItem> foodItems = new ArrayList<>();
     @Column(name = "categories")
@@ -34,9 +33,19 @@ public class Day {
 //    @OneToMany(cascade = CascadeType.ALL)
     private Map<EnumCategory,Category<FoodItem>> categories = new HashMap<>();
 
+    public Day() { }
+
     public Day(LocalDate localDate, ApplicationUser user) {
-        date = localDate;
-        this.user = user;
+        this.setDate(localDate);
+        this.setUser(user);
+        for(EnumCategory e : EnumCategory.values()) {
+            categories.put(e,new Category<>(e.getMin(),e.getMax()));
+        }
+    }
+
+    public Day(String date, ApplicationUser user) {
+        this.setDate(date);
+        this.setUser(user);
         for(EnumCategory e : EnumCategory.values()) {
             categories.put(e,new Category<>(e.getMin(),e.getMax()));
         }
@@ -71,8 +80,26 @@ public class Day {
         return date;
     }
 
-    public void setDate(LocalDate date) {
+    private void setDate(LocalDate date) {
         this.date = date;
+    }
+
+    public void setDate(String date) throws DateTimeParseException {
+        if(date == null || date.trim().isEmpty() || date.equals("null")) {
+            this.date = LocalDate.now();
+        } else {
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("[yyyy-MM-dd][yyyy/MM/dd][dd/MM/yyyy][dd-MM-yyyy]");
+            try {
+                this.date = LocalDate.parse(date, formatter);
+            } catch(DateTimeParseException e) {
+                this.date = LocalDate.now();
+            }
+        }
+    }
+
+    private void setUser(ApplicationUser user) {
+        if(user == null) throw new IllegalArgumentException("A day was created without a user");
+        this.user = user;
     }
 
     public void removeLast(EnumCategory category) {
