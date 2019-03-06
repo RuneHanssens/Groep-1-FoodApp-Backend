@@ -22,6 +22,7 @@ public enum EnumCategory {
     public int getMin() {
         return min;
     }
+
     private void setMin(int min) {
         this.min = min;
     }

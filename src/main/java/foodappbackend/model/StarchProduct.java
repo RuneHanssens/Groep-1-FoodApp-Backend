@@ -80,11 +80,11 @@ public class StarchProduct extends FoodItem {
 
     public enum SubType {
         @JsonProperty("Wit")
-        WIT("Wit",55),        // Wit Brood, Witte Rijst, Witte Pasta
+        WIT("Wit",55),        // Witte Rijst, Witte Pasta
         @JsonProperty("Volkoren")
         VOLKOREN("Volkoren",20),   // Volkorenrijst, Volkorenpasta
         @JsonProperty("Donker")
-        DONKER("Donker",20),     // Donker Brood
+        DONKER("Donker",20),     // Donkere Wrap
         @JsonProperty("Gekookt")
         GEKOOKT("Gekookt",20),    // Gekookte Aardappelen
         @JsonProperty("Gebakken")
@@ -94,7 +94,11 @@ public class StarchProduct extends FoodItem {
         @JsonProperty("Frieten")
         FRIETEN("Frieten",55),    // Frieten
         @JsonProperty("Broodje")
-        BROODJE("Broodje", 55);
+        BROODJE("Broodje", 25),
+        @JsonProperty("WitteBoterham")
+        WITBROOD("1 boterham", 20),
+        @JsonProperty("DonkereBoterham")
+        DONKERBROOD("1 boterham", 10);
         private final String FULLNAME;
         private final int POINTS;
 
