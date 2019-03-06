@@ -5,7 +5,7 @@ import javax.persistence.Entity;
 public enum EnumCategory {
     VEGETABLE(100,400),
     WATER(100,1000),
-    SNACK(0, 50),
+    SNACK(0, 20),
     STARCHPRODUCT(20, 110),
     NUTS(0, 110),
     MOVEMENT(100, 1000),

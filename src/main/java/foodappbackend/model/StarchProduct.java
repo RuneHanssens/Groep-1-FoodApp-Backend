@@ -38,6 +38,7 @@ import javax.persistence.Entity;
 
 @Entity
 public class StarchProduct extends FoodItem {
+    private int amount;
     private boolean outdoor = false;
     private Type type = Type.AARDAPPELEN;
     private SubType subType;
@@ -56,7 +57,9 @@ public class StarchProduct extends FoodItem {
         @JsonProperty("Cornflakes")
         CORNFLAKES("Cornflakes", 55),
         @JsonProperty("Granola of Havermout")
-        GRANOLA("Granola", 20);
+        GRANOLA("Granola", 20),
+        @JsonProperty("Wrap")
+        WRAP("Wrap");
         private final String FULLNAME;
         private int points = 0;
 
@@ -89,7 +92,9 @@ public class StarchProduct extends FoodItem {
         @JsonProperty("Gratin")
         GRATIN("Gratin",40),     // Aardappelgratin
         @JsonProperty("Frieten")
-        FRIETEN("Frieten",55);    // Frieten
+        FRIETEN("Frieten",55),    // Frieten
+        @JsonProperty("Broodje")
+        BROODJE("Broodje", 55);
         private final String FULLNAME;
         private final int POINTS;
 
@@ -122,7 +127,7 @@ public class StarchProduct extends FoodItem {
 
     @Override
     public String getReadableString() {
-        return this.getType().toString() + (this.subType != null ? ", "+ this.subType.toString() : "") + (this.outdoor ? ", buitenshuis" : "");
+        return (this.getType() == Type.BROOD && (this.subType == SubType.WIT || this.subType == SubType.DONKER)? "1 sneetje " : "") + this.getType().toString() + (this.subType != null ? ", "+ this.subType.toString() : "") + (this.outdoor ? ", buitenshuis" : "");
     }
 
     public boolean isOutdoor() {
@@ -146,5 +151,13 @@ public class StarchProduct extends FoodItem {
     public void setSubType(SubType subType) {
         this.subType = subType;
         this.setPoints();
+    }
+
+    public int getAmount() {
+        return this.amount;
+    }
+
+    public void setAmount(int amount) {
+        this.amount = amount;
     }
 }
