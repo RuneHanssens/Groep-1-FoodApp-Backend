@@ -95,10 +95,10 @@ public class StarchProduct extends FoodItem {
         FRIETEN("Frieten",55),    // Frieten
         @JsonProperty("Broodje")
         BROODJE("Broodje", 25),
-        @JsonProperty("WitteBoterham")
-        WITBROOD("1 boterham", 20),
-        @JsonProperty("DonkereBoterham")
-        DONKERBROOD("1 boterham", 10);
+        @JsonProperty("Witte Boterham")
+        WITBROOD("1 witte boterham", 20),
+        @JsonProperty("Donkere Boterham")
+        DONKERBROOD("1 donkere boterham", 10);
         private final String FULLNAME;
         private final int POINTS;
 
