@@ -1,5 +1,6 @@
 package foodappbackend.user;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.datatype.jsr310.deser.key.LocalDateKeyDeserializer;
 import foodappbackend.model.Day;
@@ -27,7 +28,8 @@ public class ApplicationUser implements Serializable {
     private boolean admin = false;
 
     //@JsonDeserialize(keyUsing = LocalDateKeyDeserializer.class)
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
+    @JsonBackReference
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user", orphanRemoval = true)
     private Map<String, Day> days;
 
     public ApplicationUser() { }

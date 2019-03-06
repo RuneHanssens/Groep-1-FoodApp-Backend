@@ -1,6 +1,7 @@
 package foodappbackend.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.datatype.jsr310.deser.key.LocalDateKeyDeserializer;
 import foodappbackend.user.ApplicationUser;
@@ -24,6 +25,7 @@ public class Day {
     @Id
     @JoinColumn(name = "user_id")
     @ManyToOne(fetch = FetchType.LAZY)
+    @JsonManagedReference
     public ApplicationUser user;
     //@CollectionTable(name="list_of_categories")
     //private List<FoodItem> foodItems = new ArrayList<>();
