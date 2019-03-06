@@ -21,7 +21,7 @@ public class Fruit extends FoodItem {
 
     @Override
     public String getReadableString() {
-        return this.amount + " stukken fruit" + (this.outdoor ? ", buitenshuis" : "");
+        return this.amount + (this.amount == 1 ? " stuk fruit" : " stukken fruit") + (this.outdoor ? ", buitenshuis" : "");
     }
 
     public int getAmount() {
