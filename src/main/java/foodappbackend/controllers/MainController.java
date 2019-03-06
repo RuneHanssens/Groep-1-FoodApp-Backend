@@ -75,13 +75,26 @@ public class MainController {
         System.out.println("password of user: "+applicationUser.getUsername()+" has changed.");
     }
 
-    @GetMapping(value = "/user/day")
     public Day getDay(@RequestHeader("Authorization") String authorizationHeader, @RequestParam(name = "date", required = false) String date){
         try {
             return this.getUser(authorizationHeader).getDayIfExists(this.getDate(date));
         } catch(NullPointerException e) {
             return null;
         }
+    }
+
+    @GetMapping(value = "/site/day")
+    public Map<String,Map<String,String>> test(@RequestParam("username") String username, @RequestParam("date") String date) {
+        Map<String, Map<String, String>> map = new HashMap<>();
+        Day day = this.userRepository.findByUsername(username).getDayIfExists(this.getDate(date));
+        for (EnumCategory c : EnumCategory.values()) {
+            map.put(c.toString(), new HashMap<String, String>(){{
+                put("Points",String.valueOf(day.getPointsCategory(c)));
+                put("OverMin", String.valueOf(day.getCategory(c).getOverMin()));
+                put("OverMax", String.valueOf(day.getCategory(c).getOverMax()));
+            }});
+        }
+        return map;
     }
 
     private Day getDay(String username, LocalDate date) {
